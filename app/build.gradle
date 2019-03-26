@@ -60,4 +60,18 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile 'com.android.support:multidex:1.0.1'
+
+    //    butterknife
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    //    apache common lang3
+    compile 'org.apache.commons:commons-lang3:3.0'
+
+    //    glide
+    implementation 'com.github.bumptech.glide:glide:4.3.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
+
+    //  viewPager indicator,https://github.com/ongakuer/CircleIndicator
+    compile 'me.relex:circleindicator:1.2.2@aar'
 }

@@ -41,7 +41,7 @@ public class BaseActivity extends AppCompatActivity{
     }
 
     /**
-     * 通过布局文件ID进行初始化
+     * 通过布局文件ID进行初始化操作
      * @param layoutResID
      */
     @Override
@@ -51,7 +51,7 @@ public class BaseActivity extends AppCompatActivity{
     }
 
     /**
-     * 通过View对象进行初始化
+     * 通过View对象进行初始化操作
      * @param view
      */
     @Override
@@ -59,7 +59,10 @@ public class BaseActivity extends AppCompatActivity{
         super.setContentView(view);
         init();
     }
-
+    /**
+     * 通过View对象和LayoutParams对象进行初始化操作
+     * @param view
+     */
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
