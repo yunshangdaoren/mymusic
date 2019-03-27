@@ -15,48 +15,98 @@ import com.luckyliuqs.mymusic.R;
 import org.apache.commons.lang3.StringUtils;
 
 public class ImageUtil {
+    /**
+     *通过图片名称获取到网络图片，将其展示到ImageView控件上
+     * @param activity
+     * @param view
+     * @param name
+     */
     public static void show(Activity activity, ImageView view, String name) {
         if (StringUtils.isBlank(name)) {
-            view.setImageResource(R.drawable.cd_bg);
+            //如果name为空,则默认显示指定图片
+            //view.setImageResource(R.drawable.cd_bg);
         } else {
+            ////如果name为空,则从网上获取图片将其展示到ImageView控件上
             RequestOptions options = getCommentRequestOptions();
             Glide.with(activity).load(getImageURI(name)).apply(options).into(view);
         }
 
     }
 
-    public static void showCircleUri(Activity activity, ImageView view, String name) {
-        showCircle(activity,view,getImageURI(name));
+    /**
+     * 通过路径获取到本地图片，将其圆角化展示到ImageView控件上
+     * @param activity
+     * @param view
+     * @param imagePath
+     */
+    public static void showCircleUri(Activity activity, ImageView view, String imagePath) {
+        showCircle(activity,view,getImageURI(imagePath));
     }
 
-    public static void showCircle(Activity activity, ImageView view, String name) {
+    /**
+     * 通过路径获取到本地图片，将其圆角化展示到ImageView控件上
+     * @param activity
+     * @param view
+     * @param imagePath
+     */
+    public static void showCircle(Activity activity, ImageView view, String imagePath) {
         RequestOptions options = getCommentRequestOptions();
         options.circleCrop();
-        Glide.with(activity).load(name).apply(options).into(view);
+        Glide.with(activity).load(imagePath).apply(options).into(view);
     }
 
-    public static void showCircle(Context context, ImageView view, String name) {
+    /**
+     * 通过路径获取到本地图片，将其圆角化展示到ImageView控件上
+     * @param context
+     * @param view
+     * @param imagePath
+     */
+    public static void showCircle(Context context, ImageView view, String imagePath) {
         RequestOptions options = getCommentRequestOptions();
         options.circleCrop();
-        Glide.with(context).load(name).apply(options).into(view);
+        Glide.with(context).load(imagePath).apply(options).into(view);
     }
 
+    /**
+     * 通过ID获取到本地图片，将其圆角化展示到ImageView控件上
+     * @param activity
+     * @param view
+     * @param imageId
+     */
     public static void showCircle(Activity activity, ImageView view, int imageId) {
         RequestOptions options = getCommentRequestOptions();
         options.circleCrop();
         Glide.with(activity).load(imageId).apply(options).into(view);
     }
 
+    /**
+     * 通过ID获取到本地图片，展示到ImageView控件上
+     * @param activity
+     * @param view
+     * @param imageId
+     */
     public static void showLocalImage(Activity activity, ImageView view, int imageId) {
         RequestOptions options = getCommentRequestOptions();
         Glide.with(activity).load(imageId).apply(options).into(view);
     }
 
+    /**
+     * 通过路径获取到本地图片，展示到ImageView控件上
+     * @param activity
+     * @param view
+     * @param imagePath
+     */
     public static void showLocalImage(Activity activity, ImageView view, String imagePath) {
         RequestOptions options = getCommentRequestOptions();
         Glide.with(activity).load(imagePath).apply(options).into(view);
     }
 
+    /**
+     * 通过路径获取到本地图片，展示到ImageView控件上
+     * @param context
+     * @param view
+     * @param imagePath
+     */
     public static void showLocalImage(Context context, ImageView view, String imagePath) {
         RequestOptions options = getCommentRequestOptions();
         Glide.with(context).load(imagePath).apply(options).into(view);
@@ -78,6 +128,7 @@ public class ImageUtil {
 
     public static RequestOptions getCommentRequestOptions() {
         RequestOptions options = new RequestOptions();
+        //设置占位图片
         options.placeholder(R.drawable.cd_bg);
         options.error(R.drawable.cd_bg);
         options.centerCrop();

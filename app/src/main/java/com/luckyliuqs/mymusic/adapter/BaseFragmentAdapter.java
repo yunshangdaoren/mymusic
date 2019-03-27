@@ -8,12 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Fragment的基类Adapter
+ * FragmentPager适配器基类
  */
 public abstract class BaseFragmentAdapter<T> extends FragmentPagerAdapter {
-    //上下文Context
+    /**
+     * 定义上下文Context对象
+     */
     protected final Context context;
-    //数据
+    /**
+     * 创建ArrayList储存泛型数据资源
+     */
     protected  final List<T> datas = new ArrayList<T>();
 
     public BaseFragmentAdapter(Context context, FragmentManager fm){

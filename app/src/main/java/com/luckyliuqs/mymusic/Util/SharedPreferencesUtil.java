@@ -25,9 +25,9 @@ public class SharedPreferencesUtil {
      * 构造方法，传入Context
      * @param context
      */
-    public SharedPreferencesUtil(Context context){
+    private SharedPreferencesUtil(Context context){
         this.context = context.getApplicationContext();
-        //获取实例对象，操作模式为私有方式储存
+        //通过传入的Context对象获取SharedPreferences实例对象，操作模式为私有方式储存
         mSharedPreferences = this.context.getSharedPreferences(TAG,Context.MODE_PRIVATE);
         //获取到可编辑的Editor对象
         mEditor = mSharedPreferences.edit();
@@ -40,6 +40,7 @@ public class SharedPreferencesUtil {
      */
     public static SharedPreferencesUtil getInstance(Context context){
         if(mSharedPreferencesUtil == null){
+            //实例化SharedPreferencesUtil对象
             mSharedPreferencesUtil = new SharedPreferencesUtil(context);
         }
         return mSharedPreferencesUtil;
@@ -54,18 +55,18 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * 储存传入的key与value值
+     * 储存字符串，传入的key与value值
      * @param key
      * @param value
      */
-    public void put(String key, String value){
+    public void putString(String key, String value){
         mEditor.putString(key,value);
         //提交修改
         mEditor.commit();
     }
 
     /**
-     * 储存博boolean类型数据
+     * 储存boolean类型数据
      * @param key
      * @param value
      */
@@ -80,7 +81,7 @@ public class SharedPreferencesUtil {
      * @return 如果有对应的value，则返回value值；
      *         如果没有value值则返回默认的""值
      */
-    public String get(String key){
+    public String getString(String key){
         return mSharedPreferences.getString(key,"");
     }
 
@@ -109,7 +110,7 @@ public class SharedPreferencesUtil {
      * @param token
      */
     public void setToken(String token){
-        put(USER_TOKEN,token);
+        putString(USER_TOKEN,token);
     }
 
     /**
@@ -117,7 +118,7 @@ public class SharedPreferencesUtil {
      * @return Token
      */
     public String getToken(){
-        return get(USER_TOKEN);
+        return getString(USER_TOKEN);
     }
 
     /**
@@ -125,7 +126,7 @@ public class SharedPreferencesUtil {
      * @param token
      */
     public void setIMToken(String token){
-        put(USER_IM_TOKEN,token);
+        putString(USER_IM_TOKEN,token);
     }
 
     /**
@@ -133,7 +134,7 @@ public class SharedPreferencesUtil {
      * @return IMToken
      */
     public String getIMToken(){
-        return get(USER_IM_TOKEN);
+        return getString(USER_IM_TOKEN);
     }
 
     /**
@@ -142,7 +143,7 @@ public class SharedPreferencesUtil {
      *         如果USER_TOKEN信息为空，则返回true，表示登录
      */
     public boolean isLoginInfoEmpty(){
-        return TextUtils.isEmpty(get(USER_TOKEN));
+        return TextUtils.isEmpty(getString(USER_TOKEN));
     }
 
     /**

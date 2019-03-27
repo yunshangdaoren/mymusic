@@ -15,7 +15,7 @@ public class GuideAdapter extends BaseFragmentAdapter<Integer>{
     }
 
     /**
-     * 返回指定下标的fragment
+     * 通过指定的资源创建一个Fragment并返回
      * @param position
      * @return Fragment
      */

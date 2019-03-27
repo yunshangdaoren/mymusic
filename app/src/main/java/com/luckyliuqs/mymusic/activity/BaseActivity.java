@@ -10,7 +10,7 @@ import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.Consts;
 
 public class BaseActivity extends AppCompatActivity{
-    //创建
+    //创建进度对话框对象
     private ProgressDialog progressDialog;
 
     /**
@@ -32,7 +32,7 @@ public class BaseActivity extends AppCompatActivity{
     }
 
     /**
-     * 调用初始化方法进行初始化
+     * 调用初始化方法进行初始化操作
      */
     private void init(){
         initViews();
@@ -47,6 +47,7 @@ public class BaseActivity extends AppCompatActivity{
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
+        //在加载布局的时候就自动进行初始化操作
         init();
     }
 
@@ -57,6 +58,7 @@ public class BaseActivity extends AppCompatActivity{
     @Override
     public void setContentView(View view) {
         super.setContentView(view);
+        //在加载布局的时候就自动进行初始化操作
         init();
     }
     /**
@@ -66,14 +68,21 @@ public class BaseActivity extends AppCompatActivity{
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
         super.setContentView(view, params);
+        //在加载布局的时候就自动进行初始化操作
         init();
     }
 
+    /**
+     * 当前Activity获取焦点开始与用户进行交互时调用
+     */
     @Override
     protected void onResume() {
         super.onResume();
     }
 
+    /**
+     * 当前Activity被其他Activity覆盖或锁屏时调用
+     */
     @Override
     protected void onPause() {
         super.onPause();
@@ -88,18 +97,19 @@ public class BaseActivity extends AppCompatActivity{
     }
 
     /**
-     * 通过传入的类进行跳转
+     * 通过传入的类进行跳转，没有处理finish
      * @param clazz
      */
     protected void startActivity(Class<?> clazz){
         startActivity(new Intent(getActivity(),clazz));
     }
     /**
-     * 通过传入的类进行跳转页面,且关闭现在的Activity
+     * 通过传入的类进行跳转页面,并处理finish
      * @param clazz
      */
     protected void startActivityAfterFinishThis(Class<?> clazz){
         startActivity(new Intent(getActivity(),clazz));
+        //关闭现在的Activity
         finish();
     }
 

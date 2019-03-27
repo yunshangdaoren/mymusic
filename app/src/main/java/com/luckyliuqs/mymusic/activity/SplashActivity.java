@@ -9,6 +9,12 @@ import com.luckyliuqs.mymusic.MainActivity;
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.PackageUtil;
 
+/**
+ * 闪屏页，应用程序打开后进入，展示指定时间后选择是否进入引导页、登录注册页或者首页
+ *       进入引导页：程序在首次安装或更新安装后，版本号更新，然后进入，且只会显示一次
+ *       进入登录注册页：用户没有登录的情况下
+ *       进入首页：用户已经登录过
+ */
 public class SplashActivity extends BaseCommonActivity {
     private static final String TAG = "TAG";
     //延迟时间
@@ -56,6 +62,7 @@ public class SplashActivity extends BaseCommonActivity {
      * @return boolean
      */
     private boolean isShowGuide(){
+        //得到储存的版本信息对应的boolean值，如果没有则默认返回true，表示新版本
         return sp.getBoolean(String.valueOf(PackageUtil.getVersionCode(getApplicationContext())),true);
     }
 

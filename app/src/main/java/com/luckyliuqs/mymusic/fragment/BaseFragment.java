@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.activity.BaseActivity;
 
+/**
+ * Fragment基类
+ */
 public abstract class BaseFragment extends Fragment{
     /**
      * 初始化控件
@@ -38,11 +41,21 @@ public abstract class BaseFragment extends Fragment{
     public void initListener(){
     }
 
+    /**
+     * 当Fragment正在运行时调用
+     */
     @Override
     public void onResume() {
         super.onResume();
     }
 
+    /**
+     * Fragment加载布局时调用
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,10 +68,15 @@ public abstract class BaseFragment extends Fragment{
      * @param inflater
      * @param container
      * @param savedInstanceState
-     * @return
+     * @return View
      */
     protected abstract View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
 
+    /**
+     * 进行所有的初始化操作，同时调用View初始化完成的方法
+     * @param view
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         initViews();
@@ -78,13 +96,16 @@ public abstract class BaseFragment extends Fragment{
         return getView().findViewById(id);
     }
 
+    /**
+     *Fragment被移除时调用
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
     }
 
     /**
-     * 带ID信息的Activity之间跳转
+     * 带ID参数信息的Activity之间跳转
      * @param clazz
      * @param id
      */
