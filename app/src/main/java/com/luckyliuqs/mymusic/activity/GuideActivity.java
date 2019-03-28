@@ -87,7 +87,7 @@ public class GuideActivity extends BaseCommonActivity {
         startActivityAfterFinishThis(LoginActivity.class);
     }
 
-    @OnClick(R.id.bt_tourist_experience)
+    @OnClick(R.id.bt_tourist_login)
     public void tourustExperienceBtn(){
         setGuideNotShow();
         //跳转到首页，并将引导页面finish

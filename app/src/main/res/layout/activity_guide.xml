@@ -50,8 +50,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
             <Button
-                android:text="游客体验"
-                android:id="@+id/bt_tourist_experience"
+                android:text="游客登录"
+                android:id="@+id/bt_tourist_login"
                 android:layout_width="@dimen/button_width"
                 android:layout_height="@dimen/button_height"
                 android:background="@drawable/selector_button"

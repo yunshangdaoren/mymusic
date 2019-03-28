@@ -1,14 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.LoginActivity">
+    <!-- 登录界面上半部分布局 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <!-- 顶部logo的背景图 -->
+        <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:scaleType="centerCrop"
+           android:src="@drawable/login_bg"/>
+        <!-- logo -->
+       <ImageView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerInParent="true"
+           android:src="@drawable/login_logo"/>
+    </RelativeLayout>
+    <!-- 登录界面下半部分布局 -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/button_margin_left"
+        android:layout_marginRight="@dimen/button_margin_left">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="这是登录页面"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <!-- 登录按钮 -->
+            <Button
+                android:id="@+id/bt_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_button"
+                android:text="手机号登录"
+                android:textColor="@drawable/selector_text"/>
+            <!-- 注册按钮 -->
+            <Button
+                android:id="@+id/bt_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/button_margin_top"
+                android:background="@drawable/selector_button"
+                android:text="注册"
+                android:textColor="@drawable/selector_text"/>
+            <!-- 游客登录 -->
+            <TextView
+                android:id="@+id/tv_toursit_login"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/button_margin_top"
+                android:text="游客登录"
+                android:textColor="@color/text_grey"/>
+        </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/button_margin_left"
+            android:orientation="horizontal">
+            <!-- 微信图标 -->
+            <ImageView
+                android:id="@+id/iv_login_wechat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/selector_login_wechat"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <!-- QQ图标 -->
+            <ImageView
+                android:id="@+id/iv_login_qq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/selector_login_qq"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <!-- 微博图标 -->
+            <ImageView
+                android:id="@+id/iv_login_weibo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/selector_login_weibo"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+            <!-- 网易图标 -->
+            <ImageView
+                android:id="@+id/iv_login_netease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:src="@drawable/selector_login_netease"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
