@@ -1,7 +1,6 @@
 package com.luckyliuqs.mymusic.activity;
 
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
@@ -13,7 +12,6 @@ import com.luckyliuqs.mymusic.adapter.GuideAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import me.relex.circleindicator.CircleIndicator;
 
@@ -78,7 +76,7 @@ public class GuideActivity extends BaseCommonActivity {
     }
 
     /**
-     *
+     * 点击登录或注册按钮，跳转到登录注册页面
      */
     @OnClick(R.id.bt_login_or_register)
     public void loginOrRegisterBtn(){
@@ -86,7 +84,9 @@ public class GuideActivity extends BaseCommonActivity {
         //跳转到登录注册页面，并将引导页面finish
         startActivityAfterFinishThis(LoginActivity.class);
     }
-
+    /**
+     * 点击游客体验按钮，跳转到首页页面
+     */
     @OnClick(R.id.bt_tourist_login)
     public void tourustExperienceBtn(){
         setGuideNotShow();

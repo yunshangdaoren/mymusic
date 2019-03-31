@@ -9,6 +9,7 @@
     <string name="login">登 陆</string>
     <string name="phone_register">手机号注册</string>
     <string name="enter_phone_number">请输入手机号</string>
+    <string name="setting_password">设置登陆密码，不少于6位</string>
 
     <string name="hint_phone">请输入手机号</string>
     <string name="hint_error_phone">手机号格式错误</string>
