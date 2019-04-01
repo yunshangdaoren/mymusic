@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+
 /**
  * SharedPreferences工具类，储存配置信息
  */
@@ -12,9 +13,18 @@ public class SharedPreferencesUtil {
     //储存用户信息的key
     private static final String USER_TOKEN = "USER_TOKEN";
     private static final String USER_IM_TOKEN = "USER_IM_TOKEN";
+    private static final String USER_ID = "USER_ID";
     //储存FIRST信息的key，判断是否进行登录操作
     private static final String FIRST = "FIRST";
-
+    private static final String KEY_LYRIC_LOCK = "KEY_LYRIC_LOCK";
+    private static final String KEY_LYRIC_Y = "KEY_LYRIC_Y";
+    private static final String KEY_LYRIC_FONT_SIZE = "KEY_LYRIC_FONT_SIZE";
+    private static final String KEY_LYRIC_TEXT_COLOR = "KEY_LYRIC_TEXT_COLOR";
+    private static final String KEY_SHOW_LYRIC = "KEY_SHOW_LYRIC";
+    private static final String KEY_LOCAL_MUSIC_SORT_KEY = "KEY_LOCAL_MUSIC_SORT_KEY";
+    private static final String CURRENT_PLAY_SONG_ID = "CURRENT_PLAY_SONG_ID";
+    private static final String LAST_PLAY_SONG_PROGRESS = "LAST_PLAY_SONG_PROGRESS";
+    private static final String DEFAULT_LOCAL_MUSIC_SORT_KEY = "id";
 
     private final Context context;
     private static SharedPreferences mSharedPreferences;
@@ -163,7 +173,13 @@ public class SharedPreferencesUtil {
         return getBoolean(FIRST,true);
     }
 
+    public String getUserId() {
+        return getString(USER_ID);
+    }
 
+    public void setUserId(String userId) {
+        putString(USER_ID,userId);
+    }
 
 
 }

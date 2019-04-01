@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_margin="@dimen/activity_margin">
-            
+
             <EditText
                 android:id="@+id/et_nickname"
                 style="@style/EditText"
@@ -51,7 +51,7 @@
                 android:layout_marginTop="40dp"
                 android:background="@drawable/selector_button_reverse"
                 android:text="@string/register"
-                android:textColor="@drawable/selector_text_reverse"/>
+                android:textColor="@drawable/selector_text_reverse" />
 
         </LinearLayout>
 

@@ -1,10 +1,14 @@
 package com.luckyliuqs.mymusic.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.luckyliuqs.mymusic.MainActivity;
 import com.luckyliuqs.mymusic.R;
+import com.luckyliuqs.mymusic.domain.event.LoginSuccessEvent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.OnClick;
 
@@ -22,7 +26,20 @@ public class LoginActivity extends BaseCommonActivity {
     @Override
     protected void initDatas() {
         super.initDatas();
+        //监听到注册成功消息
+        EventBus.getDefault().register(this);
     }
+
+    /**
+     * 监听注册成功的消息方法
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loginSuccess(LoginSuccessEvent event){
+        //关闭当前登录界面
+        finish();
+    }
+
 
     /**
      * 登录按钮点击事件
@@ -54,5 +71,13 @@ public class LoginActivity extends BaseCommonActivity {
     @OnClick(R.id.iv_login_qq)
     public void iv_login_qq(){
         startActivity(MainActivity.class);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        //解除
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
     }
 }

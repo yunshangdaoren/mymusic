@@ -25,12 +25,12 @@ android {
 
             //local
             //buildConfigField 'String', 'ENDPOINT', '"http://192.168.100.106:3000/v1/"'
-            buildConfigField 'String', 'ENDPOINT', '"http://10.0.2.2:3000/v1/"'
-            buildConfigField 'String', 'RESOURCE_PREFIX', '"http://dev-courses-misuc.ixuea.com/%s"'
-
-            //dev
-            //buildConfigField 'String', 'ENDPOINT', '"http://api-dev-courses-misuc.ixuea.com/v1/"'
+            //buildConfigField 'String', 'ENDPOINT', '"http://10.0.2.2:3000/v1/"'
             //buildConfigField 'String', 'RESOURCE_PREFIX', '"http://dev-courses-misuc.ixuea.com/%s"'
+
+            //   dev
+            buildConfigField 'String', 'ENDPOINT', '"http://api-dev-courses-misuc.ixuea.com/v1/"'
+            buildConfigField 'String', 'RESOURCE_PREFIX', '"http://dev-courses-misuc.ixuea.com/%s"'
 
             //qa
             //buildConfigField 'String', 'ENDPOINT', '"http://api-qa-courses-misuc.ixuea.com/v1/"'
@@ -75,4 +75,29 @@ dependencies {
 
     //  viewPager indicator,https://github.com/ongakuer/CircleIndicator
     compile 'me.relex:circleindicator:1.2.2@aar'
+
+    //    okhttp
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
+    //    okhttp，chrome sniffer packet 抓包
+    compile 'com.facebook.stetho:stetho:1.5.0'
+    compile 'com.facebook.stetho:stetho-okhttp3:1.5.0'
+
+    //    retrofit
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    //    gson
+    compile 'com.google.code.gson:gson:2.8.2'
+
+    //    rxjava
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    //    okhttp,sniffer packet
+    debugCompile 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.1.0'
+
+    //    event bus
+    compile 'org.greenrobot:eventbus:3.1.1'
 }

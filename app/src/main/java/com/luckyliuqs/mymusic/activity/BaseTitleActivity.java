@@ -36,7 +36,7 @@ public class BaseTitleActivity extends BaseCommonActivity{
     }
 
     /**
-     * 将返回菜单设置显示
+     * 开启返回功能
      */
     protected void enableBackMenu(){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
