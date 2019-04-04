@@ -119,5 +119,8 @@ public class Api {
         return service.logout(id);
     }
 
+    public Observable<DetailResponse<User>> userDetail(String id) {
+        return service.userDetail(id);
+    }
 
 }

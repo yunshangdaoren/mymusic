@@ -20,28 +20,41 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LoginActivity"
+        <activity
+            android:name=".MainActivity"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.GuideActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.LoginPhoneActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/phone_login"/>
-        <activity android:name=".activity.RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/phone_register"/>
+        <activity
+            android:name=".activity.LoginPhoneActivity"
+            android:label="@string/phone_login"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RegisterActivity"
+            android:label="@string/phone_register"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.UserDetailActivity"
+            android:label="@string/user_detail"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.SettingActivity"
+            android:label="@string/settings"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

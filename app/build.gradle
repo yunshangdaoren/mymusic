@@ -45,9 +45,12 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
+            buildConfigField 'String', 'ENDPOINT', '"http://api-dev-courses-misuc.ixuea.com/v1/"'
+            buildConfigField 'String', 'RESOURCE_PREFIX', '"http://dev-courses-misuc.ixuea.com/%s"'
+
             //prod
-            buildConfigField 'String', 'ENDPOINT', '"http://api-courses-misuc.ixuea.com/v1/"'
-            buildConfigField 'String', 'RESOURCE_PREFIX', '"http://res-courses-misuc.ixuea.com/%s"'
+//            buildConfigField 'String', 'ENDPOINT', '"http://api-courses-misuc.ixuea.com/v1/"'
+//            buildConfigField 'String', 'RESOURCE_PREFIX', '"http://res-courses-misuc.ixuea.com/%s"'
         }
     }
 }

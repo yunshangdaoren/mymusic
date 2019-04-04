@@ -20,6 +20,7 @@ public interface Service {
     @POST("sessions.json")
     Observable<DetailResponse<Session>> login(@Body User user);
 
+
     /**
      * 退出
      * @param id
@@ -35,6 +36,7 @@ public interface Service {
      */
     @POST("users.json")
     Observable<DetailResponse<Session>> register(@Body User user);
+
 
     /**
      * 获取用户详情

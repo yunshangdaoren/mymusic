@@ -181,5 +181,10 @@ public class SharedPreferencesUtil {
         putString(USER_ID,userId);
     }
 
+    public void logout(){
+        putString(USER_TOKEN,"");
+        putString(USER_IM_TOKEN,"");
+        putString(USER_ID,"");
+    }
 
 }

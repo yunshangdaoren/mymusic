@@ -36,6 +36,58 @@
         <item name="android:layout_marginTop">@dimen/button_margin_top</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-
     </style>
+
+    <!-- 侧滑的设置界面Item样式 -->
+    <style name="ItemContainer">
+        <item name="android:clickable">true</item>
+        <item name="android:paddingLeft">@dimen/activity_margin</item>
+        <item name="android:paddingRight">@dimen/activity_margin</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/item_height</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+    <!-- Item图标样式 -->
+    <style name="ItemIcon">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <!-- Item文字样式 -->
+    <style name="ItemText">
+        <item name="android:layout_marginLeft">@dimen/item_icon_padding</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ItemTextHint">
+        <item name="android:textColor">@color/text_grey</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+    <style name="ItemContainerLarge">
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!--暂时一样，所以直接继承-->
+    <style name="ItemIconLarge" parent="ItemIcon">
+    </style>
+
+    <style name="ItemTextLarge">
+        <item name="android:layout_marginLeft">@dimen/item_icon_padding</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textSize">@dimen/text_large</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>
