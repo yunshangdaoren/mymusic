@@ -11,6 +11,7 @@ import com.luckyliuqs.mymusic.domain.response.DetailResponse;
 import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 import com.luckyliuqs.mymusic.interceptor.HttpLoggingInterceptor;
 
@@ -119,8 +120,26 @@ public class Api {
         return service.logout(id);
     }
 
+    /**
+     * 通过用户ID获取用户详情
+     * @param id
+     * @return
+     */
     public Observable<DetailResponse<User>> userDetail(String id) {
         return service.userDetail(id);
     }
+
+    /**
+     * 通过用户昵称获取用户详情
+     * @param nickName
+     * @return
+     */
+    public Observable<DetailResponse<User>> userDetailByNickName(String nickName){
+        HashMap<String, String> data = new HashMap<>();
+        data.put(Consts.NICKNAME, nickName);
+        return service.userDetailByNickName(data);
+    }
+
+
 
 }

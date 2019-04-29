@@ -28,15 +28,18 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity extends BaseTitleActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private DrawerLayout drawerLayout;
-    //头像
+    //用户头像
     private ImageView iv_avatar;
+    //用户昵称
     private TextView tv_nickname;
+    //用户个人描述
     private TextView tv_description;
     private ViewPager viewPager;
     private HomeAdapter homeAdapter;
@@ -44,6 +47,10 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
     private ImageView iv_music;
     private ImageView iv_recommend;
     private ImageView iv_video;
+
+//    //侧滑菜单页面顶部的用户信息
+//    @BindView(R.id.user_info)
+//    LinearLayout ll_userInfo;
 
     //包含设置及图标的LinearLayout
     private LinearLayout ll_settings;
@@ -101,11 +108,6 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
         showUserInfo();
     }
 
-    private void showData(User data) {
-        //将显示用户信息放到单独的类中，是为了重用，因为在用户详情界面会用到
-        UserUtil.showUser(getActivity(),data,iv_avatar,tv_nickname,tv_description);
-    }
-
     @Override
     protected void initListener() {
         super.initListener();
@@ -121,13 +123,13 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
     }
 
     /**
-     * 点击用户头像
+     * 点击侧滑菜单页面顶部的用户信息监听事件
      */
-    @OnClick(R.id.iv_avatar)
-    public void avatorClick(){
+    @OnClick(R.id.user_info)
+    public void user_info(){
         if(!sp.isLoginInfoEmpty()){
             //如果用户已经登录了，则跳转到用户详情界面
-            startActivityExtraString(UserDetailActivity.class,sp.getUserId());
+            startActivityExtraId(UserDetailActivity.class,sp.getUserId());
         }else{
             //用户还没登录，则跳转到登录界面
             startActivity(LoginActivity.class);
@@ -148,9 +150,8 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
                 viewPager.setCurrentItem(2,true);
                 break;
             case R.id.ll_settings:    //点击侧滑菜单栏的设置，跳转到设置界面
-
                 startActivity(SettingActivity.class);
-                closeDrawer();
+                //closeDrawer();
                 break;
         }
     }
@@ -160,7 +161,7 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
     }
 
     /**
-     * ViewPager的Fragment页面翻动的监听事件
+     * 首页的ViewPager的Fragment页面翻动的监听事件
      * @param position
      */
     @Override
@@ -208,15 +209,20 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new HttpListener<DetailResponse<User>>(getActivity()) {
                         @Override
-                        public void onSucceeded(DetailResponse<User> data) {
-                            super.onSucceeded(data);
-                            showData(data.getData());
+                        public void onSucceeded(DetailResponse<User> user) {
+                            super.onSucceeded(user);
+                            showData(user.getData());
                         }
                     });
 
         } else {
             UserUtil.showNotLoginUser(getActivity(), iv_avatar, tv_nickname, tv_description);
         }
+    }
+
+    private void showData(User user) {
+        //将显示用户信息放到单独的类中，是为了重用，因为在用户详情界面会用到
+        UserUtil.showUser(getActivity(), user, iv_avatar, tv_nickname, tv_description);
     }
 
     @Override

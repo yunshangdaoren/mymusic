@@ -24,9 +24,9 @@ public class ImageUtil {
     public static void show(Activity activity, ImageView view, String name) {
         if (StringUtils.isBlank(name)) {
             //如果name为空,则默认显示指定图片
-            //view.setImageResource(R.drawable.cd_bg);
+            view.setImageResource(R.drawable.cd_bg);
         } else {
-            ////如果name为空,则从网上获取图片将其展示到ImageView控件上
+            ////如果name不为空,则从网上获取图片将其展示到ImageView控件上
             RequestOptions options = getCommentRequestOptions();
             Glide.with(activity).load(getImageURI(name)).apply(options).into(view);
         }

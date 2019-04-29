@@ -25,7 +25,8 @@
         android:orientation="vertical">
 
         <!-- 用户信息 -->
-        <include layout="@layout/user_info"/>
+        <include layout="@layout/user_info"
+            android:id="@+id/user_info"/>
 
         <!-- 滚动Item -->
         <ScrollView

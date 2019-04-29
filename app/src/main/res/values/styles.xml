@@ -90,4 +90,12 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <!--tabLayout样式-->
+    <style name="TabLayout">
+        <!--<item name="tabSelectedTextColor">@color/white</item>-->
+        <!--<item name="tabTextColor">@color/text_white</item>-->
+        <!--<item name="tabMode">fixed</item>-->
+        <!--<item name="tabIndicatorColor">@color/white</item>-->
+    </style>
+
 </resources>

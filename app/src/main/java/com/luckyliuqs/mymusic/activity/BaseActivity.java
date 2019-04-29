@@ -124,6 +124,13 @@ public class BaseActivity extends AppCompatActivity{
         startActivity(intent);
     }
 
+    protected void startActivityExtraId(Class<?> clazz, String id){
+        Intent intent = new Intent(getActivity(), clazz);
+        intent.putExtra(Consts.ID, id);
+        startActivity(intent);
+    }
+
+
     public void showLoading(){
         showLoading(getResources().getString(R.string.loading));
     }
