@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import com.luckyliuqs.mymusic.fragment.GuideFragment;
 
 /**
- * 引导页适配器类
+ * 引导页面Adapter类
  */
 public class GuideAdapter extends BaseFragmentAdapter<Integer>{
     public GuideAdapter(Context context, FragmentManager fm) {

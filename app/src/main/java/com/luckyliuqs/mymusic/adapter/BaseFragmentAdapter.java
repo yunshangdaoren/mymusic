@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * FragmentPager适配器基类
+ * Fragment Adapter基类
  */
 public abstract class BaseFragmentAdapter<T> extends FragmentPagerAdapter {
     /**

@@ -70,7 +70,7 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
         EventBus.getDefault().register(this);
 
         iv_avatar = findViewById(R.id.iv_avatar);
-        tv_nickname = findViewById(R.id.tv_nickname);
+        tv_nickname = (TextView)findViewById(R.id.tv_nickname);
         tv_description = findViewById(R.id.tv_description);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

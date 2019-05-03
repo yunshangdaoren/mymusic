@@ -5,9 +5,13 @@ import com.luckyliuqs.mymusic.AppContext;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.LogUtil;
 import com.luckyliuqs.mymusic.Util.SharedPreferencesUtil;
+import com.luckyliuqs.mymusic.domain.Advertisement;
 import com.luckyliuqs.mymusic.domain.Session;
+import com.luckyliuqs.mymusic.domain.Song;
+import com.luckyliuqs.mymusic.domain.SongList;
 import com.luckyliuqs.mymusic.domain.User;
 import com.luckyliuqs.mymusic.domain.response.DetailResponse;
+import com.luckyliuqs.mymusic.domain.response.ListResponse;
 import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import java.io.IOException;
@@ -86,6 +90,10 @@ public class Api {
         service = retrofit.create(Service.class);
     }
 
+    /**
+     * 获取API唯一实例
+     * @return
+     */
     public static Api getInstance() {
         if (instance == null) {
             instance = new Api();
@@ -140,6 +148,27 @@ public class Api {
         return service.userDetailByNickName(data);
     }
 
+    /**
+     * @return 歌单
+     */
+    public Observable<ListResponse<SongList>> songList(){
+        HashMap<String, String> query = new HashMap<>();
+        return service.songList(query);
+    }
+
+    /**
+     * @return 单曲列表
+     */
+    public Observable<ListResponse<Song>> songs(){
+        return service.songs();
+    }
+
+    /**
+     * @return 广告列表
+     */
+    public Observable<ListResponse<Advertisement>> advertisements(){
+        return service.advertisements();
+    }
 
 
 }

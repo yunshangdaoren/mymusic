@@ -2,10 +2,15 @@ package com.luckyliuqs.mymusic.api;
 
 import android.icu.lang.UScript;
 
+import com.luckyliuqs.mymusic.domain.Advertisement;
 import com.luckyliuqs.mymusic.domain.Session;
+import com.luckyliuqs.mymusic.domain.Song;
+import com.luckyliuqs.mymusic.domain.SongList;
 import com.luckyliuqs.mymusic.domain.User;
 import com.luckyliuqs.mymusic.domain.response.DetailResponse;
+import com.luckyliuqs.mymusic.domain.response.ListResponse;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -44,9 +49,8 @@ public interface Service {
 
 
     /**
-     * 通过用户ID获取用户详情
      * @param id
-     * @return
+     * @return 通过用户ID获取用户详情
      */
     @GET("users/{id}.json")
     Observable<DetailResponse<User>> userDetail(@Path("id") String id);
@@ -58,4 +62,27 @@ public interface Service {
      */
     @GET("users/-1.json")
     Observable<DetailResponse<User>> userDetailByNickName(@QueryMap Map<String, String> data);
+
+    /**
+     * @param data
+     * @return 返回歌单列表
+     */
+    @GET("sheets.json")
+    Observable<ListResponse<SongList>> songList(@QueryMap Map<String, String> data);
+
+    /**
+     * @return 返回单曲列表
+     */
+    @GET("songs.jason")
+    Observable<ListResponse<Song>> songs();
+
+    /**
+     * @return 返回广告列表
+     */
+    @GET("advertisements.json")
+    Observable<ListResponse<Advertisement>> advertisements();
+
+
+
+
 }

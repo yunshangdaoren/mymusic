@@ -1,17 +1,17 @@
 package com.luckyliuqs.mymusic.domain.response;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ListResponse<T> extends BaseResponse{
-    private List<T> data;
+    private ArrayList<T> data;
 
     private Meta meta;
 
-    public List<T> getData() {
+    public ArrayList<T> getData() {
         return data;
     }
 
-    public ListResponse setData(List<T> data) {
+    public ListResponse setData(ArrayList<T> data) {
         this.data = data;
         return this;
     }

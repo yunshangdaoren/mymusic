@@ -87,10 +87,10 @@ public abstract class BaseFragment extends Fragment{
     }
 
     /**
-     * 返回指定id的控件
+     * 封装findViewById，继承BaseFragment的子类直接调用此方法即可，前面不用再使用view.findViewById
      * @param id
      * @param <T>
-     * @return T
+     * @return 指定ID的控件
      */
     public final <T extends View> T findViewById(int id){
         return getView().findViewById(id);

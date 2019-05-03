@@ -9,6 +9,9 @@ import com.luckyliuqs.mymusic.fragment.AboutUserFragment;
 import com.luckyliuqs.mymusic.fragment.FeedFragment;
 import com.luckyliuqs.mymusic.fragment.UserDetailMusicFragment;
 
+/**
+ * 用户详情页面Adapter类
+ */
 public class UserDetailAdapter extends BaseFragmentAdapter<Integer>{
     private static String[] titleNames = {"音乐", "动态", "关于我"};
     private String userId;

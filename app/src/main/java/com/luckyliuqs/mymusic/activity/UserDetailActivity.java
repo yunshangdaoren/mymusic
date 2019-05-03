@@ -5,11 +5,13 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -23,6 +25,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.Consts;
+import com.luckyliuqs.mymusic.Util.ImageUtil;
 import com.luckyliuqs.mymusic.Util.StringUtil;
 import com.luckyliuqs.mymusic.adapter.UserDetailAdapter;
 import com.luckyliuqs.mymusic.api.Api;
@@ -63,7 +66,7 @@ public class UserDetailActivity extends BaseTitleActivity {
     @BindView(R.id.vp)
     ViewPager vp;
     @BindView(R.id.iv_avatar)
-    ImageView iv_vaatar;
+    ImageView iv_avatar;
     @BindView(R.id.tv_nickname)
     TextView tv_nickName;
     @BindView(R.id.tv_info)
@@ -144,39 +147,43 @@ public class UserDetailActivity extends BaseTitleActivity {
     }
 
     public void next(User user){
-        this.user = user;
+        this.user=user;
         setUpUI(user.getId());
-
+        //ImageUtil.showCircle(getActivity(), iv_avatar, user.getAvatar());
         RequestOptions options = new RequestOptions();
         options.circleCrop();
-        RequestBuilder<Bitmap> bitmapRequestBuilder = Glide.with(this)
-                                                                .asBitmap()
-                                                                .apply(options)
-                                                                .load(user.getAvatar());
-        bitmapRequestBuilder.into(new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                iv_vaatar.setImageBitmap(resource);
 
-                Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
-                    @Override
-                    public void onGenerated(@NonNull Palette palette) {
-                         Palette.Swatch swatch = palette.getVibrantSwatch();
-                         if (swatch != null){
-                             int rgb = swatch.getRgb();
-                             abl.setBackgroundColor(rgb);
-                             //设置状态栏
-                             if(android.os.Build.VERSION.SDK_INT >= 21){
-                                 Window window = getWindow();
-                                 window.setStatusBarColor(rgb);
-                                 window.setNavigationBarColor(rgb);
-                             }
-                         }
-                    }
-                });
-
-            }
-        });
+        if(user.getAvatar() == null){
+            //如果用户头像信息为null
+            ImageUtil.showCircle(getActivity(), iv_avatar, R.drawable.default_avatar);
+        }else{
+            //如果用户头像信息不为null
+            RequestBuilder<Bitmap> bitmapRequestBuilder = Glide.with(this).asBitmap().apply(options).load(user.getAvatar());
+            bitmapRequestBuilder.into(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull final Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    Log.i("URL", "=========== recource is not null");
+                    iv_avatar.setImageBitmap(resource);
+                    Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
+                        @Override
+                        public void onGenerated(@NonNull Palette palette) {
+                            Palette.Swatch swatch = palette.getVibrantSwatch();
+                            if (swatch != null) {
+                                int rgb = swatch.getRgb();
+                                //toolbar.setBackgroundColor(rgb);
+                                abl.setBackgroundColor(rgb);
+                                //设置状态栏
+                                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                                    Window window = getWindow();
+                                    window.setStatusBarColor(rgb);
+                                    window.setNavigationBarColor(rgb);
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+        }
 
         tv_nickName.setText(user.getNickname());
         tv_info.setText(getResources().getString(R.string.user_detail_count_info, user.getFollowings_count(), user.getFollowers_count()));
@@ -184,6 +191,9 @@ public class UserDetailActivity extends BaseTitleActivity {
         showFollowStatus();
     }
 
+    /**
+     * 显示用户关注状态按钮
+     */
     private void showFollowStatus(){
         if (user.getId().equals(sp.getUserId())){
             //表示是用户自己，则隐藏关注按钮和发送消息按钮
@@ -204,6 +214,10 @@ public class UserDetailActivity extends BaseTitleActivity {
         }
     }
 
+    /**
+     * 加载ViewPager和MagicIndicator
+     * @param id
+     */
     private void setUpUI(String id){
         adapter = new UserDetailAdapter(getActivity(), getSupportFragmentManager());
         adapter.setUserId(id);
@@ -226,12 +240,19 @@ public class UserDetailActivity extends BaseTitleActivity {
             @Override
             public IPagerTitleView getTitleView(Context context, final int index) {
                 ColorTransitionPagerTitleView colorTransitionPagerTitleView = new ColorTransitionPagerTitleView(context);
+
+                //默认的颜色
                 colorTransitionPagerTitleView.setNormalColor(getResources().getColor(R.color.text_white));
+
+                //设置选中后的颜色
                 colorTransitionPagerTitleView.setSelectedColor(Color.WHITE);
+                //设置标题
                 colorTransitionPagerTitleView.setText(adapter.getPageTitle(index));
+                //设置点击监听事件
                 colorTransitionPagerTitleView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        //设置ViewPager当前的Fragment
                         vp.setCurrentItem(index);
                     }
                 });
@@ -246,9 +267,11 @@ public class UserDetailActivity extends BaseTitleActivity {
                 return indicator;
             }
         });
+
         commonNavigator.setAdjustMode(true);
         tabs.setNavigator(commonNavigator);
 
+        //将TabLayout与ViewPager绑定
         ViewPagerHelper.bind(tabs, vp);
     }
 
