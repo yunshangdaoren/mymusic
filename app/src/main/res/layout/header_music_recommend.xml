@@ -8,7 +8,7 @@
 
     <!-- 轮播图下面的红色背景 -->
     <View
-        android:layout_width="match_parent"Ian
+        android:layout_width="match_parent"
         android:layout_height="@dimen/header_banner_bg_height"
         android:background="@color/colorPrimary"/>
 

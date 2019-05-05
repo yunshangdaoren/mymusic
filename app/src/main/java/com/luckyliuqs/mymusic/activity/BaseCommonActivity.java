@@ -22,4 +22,6 @@ public class BaseCommonActivity extends BaseActivity{
         sp = SharedPreferencesUtil.getInstance(getApplicationContext());
 
     }
+
+
 }

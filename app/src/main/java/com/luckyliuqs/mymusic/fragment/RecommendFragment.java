@@ -16,6 +16,7 @@ import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.DataUtil;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
 import com.luckyliuqs.mymusic.activity.BaseWebViewActivity;
+import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
 import com.luckyliuqs.mymusic.adapter.BaseRecyclerViewAdapter;
 import com.luckyliuqs.mymusic.adapter.RecommendAdapter;
 import com.luckyliuqs.mymusic.api.Api;
@@ -23,6 +24,7 @@ import com.luckyliuqs.mymusic.domain.Advertisement;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
 import com.luckyliuqs.mymusic.domain.response.ListResponse;
+import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
 import com.luckyliuqs.mymusic.reactivex.HttpListener;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
@@ -94,14 +96,12 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
             public void onItemClick(BaseRecyclerViewAdapter.ViewHoler holder, int position) {
                 Object data = adapter.getData(position);
                 if (data instanceof Song){
-                    //歌曲
-                    ArrayList<Song> list = new ArrayList<>();
-
+                    //单曲点击事件
+                    startActivity(MusicPlayerActivity.class);
                 }else if(data instanceof SongList){
-                    //歌单
-
+                    //歌单点击事件
                 }else if(data instanceof Advertisement){
-                    //广告
+                    //广告点击事件
 
                 }
             }

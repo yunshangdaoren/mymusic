@@ -187,4 +187,42 @@ public class SharedPreferencesUtil {
         putString(USER_ID,"");
     }
 
+    /**
+     * 设置最后一次音乐播放进度值
+     * @param progress
+     */
+    public void setLastSongProgress(int progress){
+        putInt(LAST_PLAY_SONG_PROGRESS, progress);
+    }
+
+    /**
+     * 储存int类型数据
+     * @param key
+     * @param value
+     */
+    public void putInt(String key, int value){
+        mEditor.putInt(key, value);
+        mEditor.apply();
+    }
+
+    /**
+     * 得到最后一次音乐播放进度值
+     * @return
+     */
+    public int getLastSongProgress(){
+        return getInt(LAST_PLAY_SONG_PROGRESS, 0);
+    }
+
+    /**
+     * 获取指定key对应的int类型数据，并设置默认返回值
+     * @param key
+     * @param defaultValue
+     * @return
+     */
+    public int getInt(String key, int defaultValue){
+        return mSharedPreferences.getInt(key, defaultValue);
+    }
+
+
+
 }

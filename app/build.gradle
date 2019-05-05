@@ -79,7 +79,10 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.3.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
 
-    //  viewPager indicator,https://github.com/ongakuer/CircleIndicator
+    //    image process
+    implementation 'jp.wasabeef:glide-transformations:3.3.0'
+
+    //    viewPager indicator,https://github.com/ongakuer/CircleIndicator
     implementation 'me.relex:circleindicator:1.2.2@aar'
 
     //    okhttp
@@ -118,6 +121,7 @@ dependencies {
 
     //   LRecycler View header
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+    implementation 'org.jetbrains:annotations-java5:15.0'
 
 
 }

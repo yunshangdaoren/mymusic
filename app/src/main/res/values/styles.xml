@@ -16,9 +16,13 @@
 
     <!--toolbar样式-->
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
+    <!--toolbar样式-->
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
-
+    <!--toolbar样式-->
+    <style name="theme_toolbar_white" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+    
     <!--版权样式-->
     <style name="CopyrightText">
         <item name="android:textColor">@color/text_white</item>
@@ -97,5 +101,15 @@
         <!--<item name="tabMode">fixed</item>-->
         <!--<item name="tabIndicatorColor">@color/white</item>-->
     </style>
+
+    <!-- 音乐播放页面的SeekBar -->
+    <style name="MusicSeekbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxHeight">@dimen/music_seek_bar_height</item>
+        <item name="android:minHeight">@dimen/music_seek_bar_height</item>
+    </style>
+
+
 
 </resources>

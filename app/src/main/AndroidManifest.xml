@@ -21,6 +21,13 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service
+            android:name=".service.MusicPlayerService"
+            android:enabled="false"
+            android:exported="true">
+        </service>
+
         <activity
             android:name=".activity.SplashActivity"
             android:screenOrientation="portrait"
@@ -57,9 +64,14 @@
             android:name=".activity.SettingActivity"
             android:label="@string/settings"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.BaseWebViewActivity"
+        <activity
+            android:name=".activity.BaseWebViewActivity"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.MusicPlayerActivity"
+            android:label=""
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
