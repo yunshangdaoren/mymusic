@@ -21,7 +21,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * 自定义View:黑胶唱片CD页面hei
+ * 自定义View:黑胶唱片CD页面
  */
 public class RecordView extends View {
     /**

@@ -68,7 +68,7 @@
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:gravity="center_vertical"
-                        android:orientation="vertical">
+                        android:orientation="horizontal">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -79,12 +79,13 @@
                             android:id="@+id/sb_volume"
                             android:layout_width="0dp"
                             android:layout_weight="1"
-                            style="@style/MusicSeekbar"/>
+                            style="@style/MusicSeekBar"/>
 
                     </LinearLayout>
 
                     <!-- 歌词 -->
-                    <com.luckyliuqs.mymusic.view.ListLyricView
+                    <com.luckyliuqs.mymusic.view.LyricView
+                        android:id="@+id/lv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
                 </LinearLayout>
@@ -93,11 +94,12 @@
                 <RelativeLayout
                     android:id="@+id/rl_player_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:visibility="visible">
 
                     <com.luckyliuqs.mymusic.view.RecordView
-                        android:id="@+id/rv"
-                        android:transitionName="bannber"
+                        android:id="@+id/recordView"
+                        android:transitionName="banner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
 
@@ -187,7 +189,7 @@
                     android:max="100"
                     android:maxHeight="@dimen/music_seek_bar_height"
                     android:minHeight="@dimen/music_seek_bar_height"
-                    android:progress="50"
+                    android:progress="0"
                     android:progressDrawable="@drawable/shape_music_seek_bar"/>
 
                 <!-- 播放结束时间 -->

@@ -1,6 +1,7 @@
 package com.luckyliuqs.mymusic.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -27,22 +29,30 @@ import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.AlbumDrawableUtil;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
 import com.luckyliuqs.mymusic.Util.TimeUtil;
+import com.luckyliuqs.mymusic.domain.Lyric;
 import com.luckyliuqs.mymusic.domain.Song;
+import com.luckyliuqs.mymusic.listener.OnLyricClickListener;
 import com.luckyliuqs.mymusic.listener.OnMusicPlayerListener;
 import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
+import com.luckyliuqs.mymusic.parser.LyricsParser;
+import com.luckyliuqs.mymusic.parser.domain.ConvertedLyric;
+import com.luckyliuqs.mymusic.parser.domain.Line;
 import com.luckyliuqs.mymusic.service.MusicPlayerService;
 import com.luckyliuqs.mymusic.view.ListLyricView;
+import com.luckyliuqs.mymusic.view.LyricView;
 import com.luckyliuqs.mymusic.view.RecordThumbView;
 import com.luckyliuqs.mymusic.view.RecordView;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 
 /**
  * 音乐播放页面Activity类
  */
-public class MusicPlayerActivity extends BaseTitleActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, OnMusicPlayerListener {
+public class MusicPlayerActivity extends BaseTitleActivity implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, OnMusicPlayerListener, OnLyricClickListener {
     //播放页面背景
     private ImageView iv_album_bg;
     //收藏
@@ -80,13 +90,20 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
     private LinearLayout lyric_container;
     //黑胶唱片页面
     RelativeLayout rl_player_container;
-    //歌词
-    private ListLyricView lv;
+    //歌词列表View
+    private LyricView lv;
 
     //音乐播放管理类
     private MusicPlayerManager musicPlayerManager;
     //音量管理类
     private AudioManager audioManager;
+
+    private ArrayList<Line> currentLyricLines;
+
+    private LyricsParser parser;
+
+    private int playIndex = 1;
+    private String playUrl = "http://120.77.201.46/mymusic/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +129,12 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
 
         enableBackMenu();
 
+        //歌词页面
+        lyric_container = findViewById(R.id.lyric_container);
+        //歌词列表View
+        lv = findViewById(R.id.lv);
+        rl_player_container = findViewById(R.id.rl_player_container);
+
         iv_album_bg = findViewById(R.id.iv_album_bg);
         iv_like = findViewById(R.id.iv_like);
         iv_download = findViewById(R.id.iv_download);
@@ -128,7 +151,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
         sb_volume = findViewById(R.id.sb_volume);
 
         rt = findViewById(R.id.rt);
-        rv = findViewById(R.id.rv);
+        rv = findViewById(R.id.recordView);
 
     }
 
@@ -143,10 +166,41 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
         audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
         setVolume();
 
-        //musicPlayerManager.play("http://dev-courses-misuc.ixuea.com/assets/s1.mp3", new Song());
+        if (!musicPlayerManager.isPlaying()){
+            musicPlayerManager.play("http://dev-courses-misuc.ixuea.com/assets/s1.mp3", new Song());
+            //http://localhost:8080/1.mp3
+//            musicPlayerManager.play(playUrl+playIndex+".mp3", new Song());
+//            if (playIndex > 7){
+//                playIndex = 0;
+//            }else{
+//                playIndex ++;
+//            }
+        }
+
+
+        Lyric lyric = new Lyric();
+        lyric.setStyle(10);
+        lyric.setContent("karaoke := CreateKaraokeObject;\nkaraoke.rows := 2;\nkaraoke.TimeAfterAnimate := 2000;\nkaraoke.TimeBeforeAnimate := 4000;\nkaraoke.clear;\nkaraoke.add('00:20.699', '00:27.055', '[●●●●●●]', '7356',RGB(255,0,0));\n\nkaraoke.add('00:27.487', '00:32.068', '一时失志不免怨叹', '347,373,1077,320,344,386,638,1096');\nkaraoke.add('00:33.221', '00:38.068', '一时落魄不免胆寒', '282,362,1118,296,317,395,718,1359');\nkaraoke.add('00:38.914', '00:42.164', '那通失去希望', '290,373,348,403,689,1147');\nkaraoke.add('00:42.485', '00:44.530', '每日醉茫茫', '298,346,366,352,683');\nkaraoke.add('00:45.273', '00:49.029', '无魂有体亲像稻草人', '317,364,380,351,326,351,356,389,922');\nkaraoke.add('00:50.281', '00:55.585', '人生可比是海上的波浪', '628,1081,376,326,406,371,375,1045,378,318');\nkaraoke.add('00:56.007', '01:00.934', '有时起有时落', '303,362,1416,658,750,1438');\nkaraoke.add('01:02.020', '01:04.581', '好运歹运', '360,1081,360,760');\nkaraoke.add('01:05.283', '01:09.453', '总嘛要照起来行', '303,338,354,373,710,706,1386');\nkaraoke.add('01:10.979', '01:13.029', '三分天注定', '304,365,353,338,690');\nkaraoke.add('01:13.790', '01:15.950', '七分靠打拼', '356,337,338,421,708');\nkaraoke.add('01:16.339', '01:20.870', '爱拼才会赢', '325,1407,709,660,1430');\nkaraoke.add('01:33.068', '01:37.580', '一时失志不免怨叹', '307,384,1021,363,357,374,677,1029');\nkaraoke.add('01:38.660', '01:43.656', '一时落魄不免胆寒', '381,411,1067,344,375,381,648,1389');\nkaraoke.add('01:44.473', '01:47.471', '那通失去希望', '315,365,340,369,684,925');\nkaraoke.add('01:48.000', '01:50.128', '每日醉茫茫', '338,361,370,370,689');\nkaraoke.add('01:50.862', '01:54.593', '无魂有体亲像稻草人', '330,359,368,376,325,334,352,389,898');\nkaraoke.add('01:55.830', '02:01.185', '人生可比是海上的波浪', '654,1056,416,318,385,416,373,1032,342,363');\nkaraoke.add('02:01.604', '02:06.716', '有时起有时落', '303,330,1432,649,704,1694');\nkaraoke.add('02:07.624', '02:10.165', '好运歹运', '329,1090,369,753');\nkaraoke.add('02:10.829', '02:15.121', '总嘛要照起来行', '313,355,362,389,705,683,1485');\nkaraoke.add('02:16.609', '02:18.621', '三分天注定', '296,363,306,389,658');\nkaraoke.add('02:19.426', '02:21.428', '七分靠打拼', '330,359,336,389,588');\nkaraoke.add('02:21.957', '02:26.457', '爱拼才会赢', '315,1364,664,767,1390');\nkaraoke.add('02:50.072', '02:55.341', '人生可比是海上的波浪', '656,1086,349,326,359,356,364,1095,338,340');\nkaraoke.add('02:55.774', '03:01.248', '有时起有时落', '312,357,1400,670,729,2006');\nkaraoke.add('03:01.787', '03:04.369', '好运歹运', '341,1084,376,781');\nkaraoke.add('03:05.041', '03:09.865', '总嘛要起工来行', '305,332,331,406,751,615,2084');\nkaraoke.add('03:10.754', '03:12.813', '三分天注定', '309,359,361,366,664');\nkaraoke.add('03:13.571', '03:15.596', '七分靠打拼', '320,362,349,352,642');\nkaraoke.add('03:16.106', '03:20.688', '爱拼才会赢', '304,1421,661,706,1490');\n");
+
+        setLyric(lyric);
+
+//        Lyric lyric = new Lyric();
+//        lyric.setStyle(0);
+//        lyric.setContent("[ti:爱的代价]\n[ar:李宗盛]\n[al:滚石香港黄金十年 李宗盛精选]\n[ly:李宗盛]\n[mu:李宗盛]\n[ma:]\n[pu:]\n[by:ttpod]\n[total:272073]\n[offset:0]\n[00:00.300]爱的代价 - 李宗盛\n[00:01.979]作词：李宗盛\n[00:03.312]作曲：李宗盛\n[00:06.429]\n[00:16.282]还记得年少时的梦吗\n[00:20.575]像朵永远不调零的花\n[00:24.115]陪我经过那风吹雨打\n[00:27.921]看世事无常\n[00:29.653]看沧桑变化\n[00:32.576]那些为爱所付出的代价\n[00:36.279]是永远都难忘的啊\n[00:40.485]所有真心的痴心的话\n[00:43.779]永在我心中虽然已没有他\n[00:50.073]走吧 走吧\n[00:54.868]人总要学着自己长大\n[00:58.829]走吧 走吧\n[01:02.616]人生难免经历苦痛挣扎\n[01:06.316]走吧 走吧\n[01:10.795]为自己的心找一个家\n[01:14.399]也曾伤心流泪\n[01:16.742]也曾黯然心碎\n[01:18.845]这是爱的代价\n[01:21.579]\n[01:40.358]也许我偶尔还是会想他\n[01:44.553]偶尔难免会惦记着他\n[01:48.378]就当他是个老朋友啊\n[01:51.891]也让我心疼也让我牵挂\n[01:56.617]只是我心中不再有火花\n[02:00.507]让往事都随风去吧\n[02:04.660]所有真心的痴心的话\n[02:07.625]仍在我心中\n[02:09.563]虽然已没有他\n[02:14.454]走吧 走吧\n[02:18.580]人总要学着自己长大\n[02:24.499]走吧 走吧\n[02:26.586]人生难免经历苦痛挣扎\n[02:30.293]走吧 走吧\n[02:34.828]为自己的心找一个家\n[02:38.482]也曾伤心流泪\n[02:40.767]也曾黯然心碎\n[02:42.742]这是爱的代价\n[02:45.509]\n[03:22.502]走吧 走吧\n[03:26.581]人总要学着自己长大\n[03:32.414]走吧 走吧\n[03:34.496]人生难免经历苦痛挣扎\n[03:40.425]走吧 走吧\n[03:42.616]为自己的心找一个家\n[03:46.398]也曾伤心流泪\n[03:48.852]也曾黯然心碎\n[03:50.645]这是爱的代价\n");
+//        setLyric(lyric);
 
     }
 
+    private void setLyric(Lyric lyric){
+        //创建歌词解析类
+        parser = LyricsParser.parse(lyric.getStyle(), lyric.getContent());
+        //解析歌词
+        parser.parse();
+        if (parser.getConvertedLyric() != null){
+            //如果解析的歌词不为null,则为LyricView歌词界面设置解析后的歌词数据
+            lv.setData(parser.getConvertedLyric());
+        }
+    }
     /**
      * 获取手机音频音量值，用于设置音量进度条
      */
@@ -169,6 +223,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
         iv_loop_model.setOnClickListener(this);
         iv_previous.setOnClickListener(this);
         iv_next.setOnClickListener(this);
+
+        lv.setOnClickListener(this);
+        rv.setOnClickListener(this);
+
+        lv.setOnLyricClickListener(this);
+
+
         //音乐播放进度条监听事件
         sb_progress.setOnSeekBarChangeListener(this);
         //音量进度条监听事件
@@ -216,24 +277,73 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
             case R.id.iv_play_control:
                 playOrPause();
                 break;
+            case R.id.lv:
+                showRecordView();
+                break;
+            case R.id.recordView:
+                showLyricView();
+                break;
+            case R.id.iv_next:
+                Toast.makeText(this, "下一首", Toast.LENGTH_SHORT).show();
+//               // musicPlayerManager.destroy();
+//                musicPlayerManager.play(playUrl+playIndex+".mp3", new Song());
+//                if (playIndex > 7){
+//                    playIndex = 0;
+//                }else{
+//                    playIndex ++;
+//                }
+
+            case R.id.iv_previous:
+                Toast.makeText(this, "上一首", Toast.LENGTH_SHORT).show();
+               // musicPlayerManager.destroy();
+//                musicPlayerManager.play(playUrl+playIndex+".mp3", new Song());
+//                if (playIndex < 0){
+//                    playIndex = 0;
+//                }else{
+//                    playIndex --;
+//                }
+
+
         }
     }
 
     private void playOrPause(){
         if (musicPlayerManager.isPlaying()){
+            Toast.makeText(this, "暂停", Toast.LENGTH_SHORT).show();
             pause();
         }else{
+            Toast.makeText(this, "播放", Toast.LENGTH_SHORT).show();
             play();
         }
     }
 
+    /**
+     * 从歌词页面切换到黑胶唱片页面
+     */
+    private void showRecordView(){
+        lyric_container.setVisibility(View.GONE);
+        rl_player_container.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 从黑胶唱片页面切换到歌词页面
+     */
+    private void showLyricView(){
+        lyric_container.setVisibility(View.VISIBLE);
+        rl_player_container.setVisibility(View.GONE);
+    }
+
     private void play(){
         musicPlayerManager.resume();
+        //musicPlayerManager.play("http://dev-courses-misuc.ixuea.com/assets/s1.mp3", new Song());
     }
 
     private void pause(){
         musicPlayerManager.pause();
     }
+
+
+
 
     /**
      * 用于监听进度条进度值改变，并实时处理当前进度条对应的事件
@@ -248,6 +358,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
                 //如果拖动的是音量进度条
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
             }else{
+                Toast.makeText(this, "拖动进度为："+progress, Toast.LENGTH_SHORT).show();;
                 //拖动的是音乐播放进度条
                 musicPlayerManager.seekTo(progress);
                 if (!musicPlayerManager.isPlaying()){
@@ -268,6 +379,17 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
 
     }
 
+//    private void selectLyric(){
+//        if (currentLyricLines != null && currentLyricLines.size() > 0){
+//
+//        }
+//    }
+//
+//    private void startSelectLyricActivity(){
+//        //Intent intent = new Intent(this, SelectLy)
+//    }
+
+
     /**
      * 音乐播放状态监听器回调方法:进度通知
      * @param progress
@@ -277,6 +399,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
     public void onProgress(long progress, long total) {
         tv_start_time.setText(TimeUtil.formatMSTime((int) progress));
         sb_progress.setProgress((int)progress);
+        lv.show(progress);
     }
 
     /**
@@ -366,7 +489,12 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
 
     }
 
-
+    /**
+     * 音量按键监听
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         boolean result = super.onKeyDown(keyCode, event);
@@ -375,6 +503,20 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
         }
         return result;
     }
+
+    /**
+     * 播放文字监听事件：滚动到指定行歌词进行播放
+     * @param time
+     */
+    @Override
+    public void onLyricClick(long time) {
+        musicPlayerManager.seekTo((int) time);
+        if (!musicPlayerManager.isPlaying()){
+            musicPlayerManager.resume();
+        }
+    }
+
+
 }
 
 

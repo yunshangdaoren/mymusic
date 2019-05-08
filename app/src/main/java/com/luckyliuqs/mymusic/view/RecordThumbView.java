@@ -28,11 +28,11 @@ public class RecordThumbView extends View implements ValueAnimator.AnimatorUpdat
     /**
      * 包裹黑胶唱片CD的白圈背景到页面顶部的比例
      */
-    public static final float CD_BG_TOP_SCALE = 19F;
+    public static final float CD_BG_TOP_SCALE = 21F;
     /**
      * 指针头部的那条线的高度
      */
-    private static final int CD_THUMB_LINE_HEIGHT = 1;
+    private static final int CD_THUMB_LINE_HEIGHT = 2;
     /**
      * 指针在停止的时候，旋转的角度
      */
@@ -52,7 +52,9 @@ public class RecordThumbView extends View implements ValueAnimator.AnimatorUpdat
     /**
      * 指针宽度和屏幕1080宽度的比值
      */
-    private static final float THUMB_WIDTH_SCALE = 2.7F;
+    private static final float THUMB_WIDTH_SCALE = 2F;
+
+    private static final float THUMB_HEIGHT_SCALE = 16F;
     /**
      * 绘制时使用的画笔
      */
@@ -76,11 +78,11 @@ public class RecordThumbView extends View implements ValueAnimator.AnimatorUpdat
     /**
      * 指针的高度，px形式
      */
-    private static final int THUMB_HEIGHT = 138;
+    private static final int THUMB_HEIGHT = 200;
     /**
      * 指针的宽度，px形式
      */
-    private static final int THUMB_WIDTH = 92;
+    private static final int THUMB_WIDTH = 230;
     /**
      * 绘制指针的坐标
      */

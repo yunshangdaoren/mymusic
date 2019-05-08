@@ -205,6 +205,8 @@ public class MusicPlayerManagerImpl implements MusicPlayerManager{
             mediaPlayer.start();
 
             handler.obtainMessage(MSG_PLAYING).sendToTarget();
+
+            startPublishProgressService();
         } catch (IOException e) {
             e.printStackTrace();
         }

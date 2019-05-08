@@ -103,7 +103,7 @@
     </style>
 
     <!-- 音乐播放页面的SeekBar -->
-    <style name="MusicSeekbar">
+    <style name="MusicSeekBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:maxHeight">@dimen/music_seek_bar_height</item>

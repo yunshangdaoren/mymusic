@@ -66,7 +66,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
 
     //    palette
-    compile "com.android.support:palette-v7:$rootProject.androidSupportVersion"
+    implementation "com.android.support:palette-v7:$rootProject.androidSupportVersion"
 
     //    butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
@@ -104,8 +104,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     //    okhttp,sniffer packet
-    debugCompile 'com.readystatesoftware.chuck:library:1.1.0'
-    releaseCompile 'com.readystatesoftware.chuck:library-no-op:1.1.0'
+    debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
+    releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 
     //    event bus
     implementation 'org.greenrobot:eventbus:3.1.1'
