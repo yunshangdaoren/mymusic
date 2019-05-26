@@ -1,7 +1,9 @@
 package com.luckyliuqs.mymusic.adapter;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,12 +17,13 @@ import java.util.List;
  * @param <D>
  * @param <VH>
  */
-public abstract class BaseRecyclerViewAdapter<D, VH extends BaseRecyclerViewAdapter.ViewHoler> extends RecyclerView.Adapter<VH> {
+public abstract class BaseRecyclerViewAdapter<D, VH extends BaseRecyclerViewAdapter.ViewHolder> extends RecyclerView.Adapter<VH> {
     protected final Context context;
     private final LayoutInflater inflater;
     private List<D> datas = new ArrayList<D>();
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
+
 
     public BaseRecyclerViewAdapter(Context context){
         this.context = context;
@@ -144,22 +147,23 @@ public abstract class BaseRecyclerViewAdapter<D, VH extends BaseRecyclerViewAdap
 
     //item点击事件接口类
     public interface OnItemClickListener{
-        void onItemClick(BaseRecyclerViewAdapter.ViewHoler holder, int position);
+        void onItemClick(BaseRecyclerViewAdapter.ViewHolder holder, int position);
     }
 
     //item长按点击事件接口类
     public interface OnItemLongClickListener{
-        boolean onItemLongClick(BaseRecyclerViewAdapter.ViewHoler holder, int position);
+        boolean onItemLongClick(BaseRecyclerViewAdapter.ViewHolder holder, int position);
     }
 
 
-    public abstract class ViewHoler extends RecyclerView.ViewHolder{
+    public abstract class ViewHolder extends RecyclerView.ViewHolder{
 
-        public ViewHoler(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
         }
 
-        public final <T extends View> T findViewById(int id){
+        @Nullable
+        public final <T extends View> T findViewById(@IdRes int id){
             return itemView.findViewById(id);
         }
     }

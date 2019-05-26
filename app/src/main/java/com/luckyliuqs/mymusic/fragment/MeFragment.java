@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.luckyliuqs.mymusic.R;
 
 /**
- * 我的音乐Fragment页面
+ * 我的音乐主页
  */
 public class MeFragment extends BaseCommonFragment{
 

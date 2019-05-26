@@ -51,6 +51,9 @@ import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
+/**
+ * 用户详情主页Activity
+ */
 public class UserDetailActivity extends BaseTitleActivity {
     //用户昵称
     private String nickName;

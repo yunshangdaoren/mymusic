@@ -10,6 +10,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.OnClick;
 
+/**
+ * 设置主页
+ */
 public class SettingActivity extends BaseTitleActivity {
 
     @Override

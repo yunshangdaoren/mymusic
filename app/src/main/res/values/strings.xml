@@ -53,7 +53,7 @@
     <string name="go_my_music">回到我的音乐</string>
     <string name="find_music_count">找到（%1$d）首音乐</string>
     <string name="select_song_sort">选择歌曲排序</string>
-    <string name="next_play">下一首播放</string>
+    <string name="next_play">设为下一首播放</string>
     <string name="collection_to_list">收藏到歌单</string>
     <string name="download">下载</string>
     <string name="download_manager">下载管理</string>

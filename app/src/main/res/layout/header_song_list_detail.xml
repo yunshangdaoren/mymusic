@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#9C27B0"
+    android:id="@+id/header_song_list_container">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_margin"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/button_padding"
+            android:layout_marginTop="@dimen/button_padding"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 歌单封面 -->
+            <android.support.v7.widget.CardView
+                android:layout_width="@dimen/song_detail_icon_width"
+                android:layout_height="@dimen/song_detail_icon_width"
+                android:layout_gravity="center"
+                android:foreground="?android:attr/selectableItemBackground"
+                app:cardCornerRadius="@dimen/radius"
+                app:cardElevation="@dimen/elevation">
+
+                <ImageView
+                    android:id="@+id/iv_song_list_icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+            </android.support.v7.widget.CardView>
+
+            <!-- 歌单名称及歌单创建者 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="@dimen/button_padding"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_song_list_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="歌单名称"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tv_song_list_nickname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="歌单创建者"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 功能模块 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 歌单评论模块 -->
+            <LinearLayout
+                android:id="@+id/ll_song_list_comment_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comment_count"/>
+
+                <TextView
+                    android:id="@+id/tv_song_list_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="评论"
+                    android:textColor="@color/music_text"/>
+            </LinearLayout>
+
+            <!-- 歌单分享模块 -->
+            <LinearLayout
+                android:id="@+id/ll_song_list_share_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_download"/>
+
+                <TextView
+                    android:id="@+id/tv_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="分享"
+                    android:textColor="@color/music_text"/>
+            </LinearLayout>
+
+            <!-- 歌单下载模块 -->
+            <LinearLayout
+                android:id="@+id/ll_song_list_download_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_download"/>
+
+                <TextView
+                    android:id="@+id/tv_download"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="下载"
+                    android:textColor="@color/music_text"/>
+            </LinearLayout>
+
+            <!-- 歌单多选模块 -->
+            <LinearLayout
+                android:id="@+id/ll_song_list_multiple_selection_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comment_count"/>
+
+                <TextView
+                    android:id="@+id/tv_"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="多选"
+                    android:textColor="@color/music_text"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_song_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_song_list_play_all_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 播放图标 -->
+            <ImageView
+                android:layout_width="@dimen/item_song_height"
+                android:layout_height="@dimen/item_song_height"
+                android:src="@drawable/ic_music_play_all"/>
+
+            <!-- 播放全部 -->
+            <TextView
+                android:id="@+id/tv_play_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/play_all"
+                android:textColor="@color/text"/>
+
+            <!-- 歌曲数量 -->
+            <TextView
+                android:id="@+id/tv_song_list_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/item_icon_padding"
+                tools:text="@string/music_count"/>
+
+        </LinearLayout>
+
+        <!-- 收藏全部歌曲按钮 -->
+        <Button
+            android:id="@+id/bt_song_list_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/small_button_height"
+            android:background="@null"
+            android:layout_marginRight="@dimen/activity_margin"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -22,7 +22,15 @@ public class SharedPreferencesUtil {
     private static final String KEY_LYRIC_TEXT_COLOR = "KEY_LYRIC_TEXT_COLOR";
     private static final String KEY_SHOW_LYRIC = "KEY_SHOW_LYRIC";
     private static final String KEY_LOCAL_MUSIC_SORT_KEY = "KEY_LOCAL_MUSIC_SORT_KEY";
+
+    /**
+     * 当前播放的歌曲的id
+     */
     private static final String CURRENT_PLAY_SONG_ID = "CURRENT_PLAY_SONG_ID";
+
+    /**
+     * 最后一次音乐播放进度值
+     */
     private static final String LAST_PLAY_SONG_PROGRESS = "LAST_PLAY_SONG_PROGRESS";
     private static final String DEFAULT_LOCAL_MUSIC_SORT_KEY = "id";
 
@@ -62,6 +70,10 @@ public class SharedPreferencesUtil {
      */
     public static SharedPreferencesUtil getCurrentInstance(){
         return mSharedPreferencesUtil;
+    }
+
+    public String get(String key){
+        return mSharedPreferences.getString(key, "");
     }
 
     /**
@@ -188,14 +200,6 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * 设置最后一次音乐播放进度值
-     * @param progress
-     */
-    public void setLastSongProgress(int progress){
-        putInt(LAST_PLAY_SONG_PROGRESS, progress);
-    }
-
-    /**
      * 储存int类型数据
      * @param key
      * @param value
@@ -214,15 +218,30 @@ public class SharedPreferencesUtil {
     }
 
     /**
-     * 获取指定key对应的int类型数据，并设置默认返回值
+     * 设置最后一次音乐播放进度值
+     * @param progress
+     */
+    public void setLastSongProgress(int progress){
+        putInt(LAST_PLAY_SONG_PROGRESS, progress);
+    }
+
+    /**
      * @param key
      * @param defaultValue
-     * @return
+     * @return 获取指定key对应的int类型数据，并设置默认返回值
      */
     public int getInt(String key, int defaultValue){
         return mSharedPreferences.getInt(key, defaultValue);
     }
 
+    /**
+     * @return 最后一次播放歌曲的id
+     */
+    public String getLastPlaySongId(){
+        return get(CURRENT_PLAY_SONG_ID);
+    }
 
-
+    public void setLastPlaySongId(String id){
+        putString(CURRENT_PLAY_SONG_ID, id);
+    }
 }

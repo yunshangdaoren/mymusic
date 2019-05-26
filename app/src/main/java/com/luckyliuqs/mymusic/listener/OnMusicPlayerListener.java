@@ -44,8 +44,9 @@ public interface OnMusicPlayerListener {
     /**
      * 音乐播放发生错误了
      * @param mediaPlayer
-     * @param waht
+     * @param what
      * @param extra
      */
-    void onError(MediaPlayer mediaPlayer, int waht, int extra);
+    void onError(MediaPlayer mediaPlayer, int what, int extra);
+
 }

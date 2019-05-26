@@ -56,7 +56,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$rootProject.androidSupportVersion"
     implementation "com.android.support:design:$rootProject.androidSupportVersion"
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
@@ -64,64 +64,46 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:multidex:1.0.1'
-
     //    palette
     implementation "com.android.support:palette-v7:$rootProject.androidSupportVersion"
-
     //    butterknife
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
     //    apache common lang3
     implementation 'org.apache.commons:commons-lang3:3.0'
-
     //    glide
     implementation 'com.github.bumptech.glide:glide:4.3.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.3.0'
-
     //    image process
     implementation 'jp.wasabeef:glide-transformations:3.3.0'
-
     //    viewPager indicator,https://github.com/ongakuer/CircleIndicator
     implementation 'me.relex:circleindicator:1.2.2@aar'
-
     //    okhttp
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
-
     //    okhttp，chrome sniffer packet 抓包
     implementation 'com.facebook.stetho:stetho:1.5.0'
     implementation 'com.facebook.stetho:stetho-okhttp3:1.5.0'
-
     //    retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-
     //    gson
     implementation 'com.google.code.gson:gson:2.8.2'
-
     //    rxjava
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-
     //    okhttp,sniffer packet
     debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
-
     //    event bus
     implementation 'org.greenrobot:eventbus:3.1.1'
-
     //    MagicIndicator
     implementation 'com.github.hackware1993:MagicIndicator:1.5.0'
-
     //    cardview
     implementation 'com.android.support:cardview-v7:21.0.+'
-
     //    banner
     implementation 'com.youth.banner:banner:1.4.10'
-
     //   LRecycler View header
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
     implementation 'org.jetbrains:annotations-java5:15.0'
-
-
+    implementation files('libs/lite-orm-1.9.2.jar')
 }

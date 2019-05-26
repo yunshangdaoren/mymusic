@@ -16,6 +16,7 @@ import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.DataUtil;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
 import com.luckyliuqs.mymusic.activity.BaseWebViewActivity;
+import com.luckyliuqs.mymusic.activity.SongListDetailActivity;
 import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
 import com.luckyliuqs.mymusic.adapter.BaseRecyclerViewAdapter;
 import com.luckyliuqs.mymusic.adapter.RecommendAdapter;
@@ -24,33 +25,41 @@ import com.luckyliuqs.mymusic.domain.Advertisement;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
 import com.luckyliuqs.mymusic.domain.response.ListResponse;
-import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
+import com.luckyliuqs.mymusic.manager.PlayListManager;
 import com.luckyliuqs.mymusic.reactivex.HttpListener;
+import com.luckyliuqs.mymusic.service.MusicPlayerService;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 推荐Fragment页面
+ * 我的推荐主页：推荐Fragment页面
  */
 public class RecommendFragment extends BaseCommonFragment implements OnBannerListener {
     private LRecyclerView rv;
     private RecommendAdapter adapter;
     private LRecyclerViewAdapter adapterWrapper;
     private GridLayoutManager layoutManager;
+    //广告轮播图
     private Banner banner;
     //每日推荐LinearLayout
     private LinearLayout ll_day_container;
     //每日推荐动态日期描述
     TextView tv_day;
+    //广告轮播图data
     private ArrayList<Advertisement> bannerData;
+    /**
+     * 歌曲播放列表管理器
+     */
+    private PlayListManager playListManager;
 
     public static RecommendFragment newInstance() {
         
@@ -89,20 +98,29 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
     @Override
     protected void initDatas() {
         super.initDatas();
+        playListManager = MusicPlayerService.getPlayListManager(getActivity().getApplicationContext());
+
         adapter = new RecommendAdapter(getActivity());
         //子item项点击事件
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(BaseRecyclerViewAdapter.ViewHoler holder, int position) {
+            public void onItemClick(BaseRecyclerViewAdapter.ViewHolder holder, int position) {
+                //获取点击事件数据源
                 Object data = adapter.getData(position);
                 if (data instanceof Song){
-                    //单曲点击事件
+                    //单曲点击事件：将该单曲添加到播放列表中并跳转音乐播放页面
+                    List<Song> list = new ArrayList<>();
+                    list.add((Song) data);
+                    playListManager.setPlayList(list);
+                    //播放该歌曲
+                    playListManager.play((Song) data);
                     startActivity(MusicPlayerActivity.class);
                 }else if(data instanceof SongList){
-                    //歌单点击事件
+                    //歌单点击事件：跳转至点击的歌单详情页面，并传入歌单ID
+                    startActivityExtraId(SongListDetailActivity.class, ((SongList) data).getId());
                 }else if(data instanceof Advertisement){
-                    //广告点击事件
-
+                    //广告点击事件：跳转至点击的广告详情页面
+                    BaseWebViewActivity.start(getMainActivity(), ((Advertisement)data).getTitle(),((Advertisement)data).getUri() );
                 }
             }
         });
@@ -241,7 +259,7 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
     }
 
     /**
-     * 轮播图点击事件
+     * 轮播图点击监听事件
      * @param position
      */
     @Override

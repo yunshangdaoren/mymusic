@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.luckyliuqs.mymusic.R;
 
 /**
- * 视频Fragment页面
+ * 视频主页
  */
 public class VideoFragment extends BaseCommonFragment{
 

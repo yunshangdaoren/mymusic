@@ -1,10 +1,19 @@
 package com.luckyliuqs.mymusic.domain;
 
+import com.litesuits.orm.db.annotation.Ignore;
+import com.litesuits.orm.db.annotation.NotNull;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
+import com.litesuits.orm.db.enums.AssignType;
+
 /**
  * 歌曲实体类
+ * 服务端返回有些字段，可能是嵌套类型（序列化类型）
+ * 在向本地数据库保存数据时，一律展开，好处是，本地很方便的对字段排序，查询
  */
-public class Song{
-    public static final String[] SORTKEYS = new String[]{"id", "title", "album_title"};
+@Table("songs")
+public class Song extends Base{
+    public static final String[] SORT_KEYS = new String[]{"id", "title", "album_title"};
 
     /**
      * 在线音乐
@@ -22,13 +31,15 @@ public class Song{
     public static final int SOURCE_DOWNLOAD = 2;
 
     /**
-     * 主键
+     * 歌曲id,主键使用当前id值
      */
+    @PrimaryKey(AssignType.BY_MYSELF)
     private String id;
 
     /**
      * 歌曲名称
      */
+    @NotNull
     private String title;
 
     /**
@@ -49,6 +60,7 @@ public class Song{
     /**
      * 歌手
      */
+    @Ignore
     private User artist;
 
     /**
@@ -74,6 +86,7 @@ public class Song{
     /**
      * 歌词
      */
+    @Ignore
     private Lyric lyric;
 
     /**
@@ -94,6 +107,7 @@ public class Song{
     /**
      * 专辑
      */
+    @Ignore
     private Album album;
 
     /**

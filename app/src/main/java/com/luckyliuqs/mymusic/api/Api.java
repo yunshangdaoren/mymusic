@@ -164,11 +164,31 @@ public class Api {
     }
 
     /**
+     * @param id
+     * @return 歌曲详情
+     */
+    public Observable<DetailResponse<Song>> songsDetail(String id){
+        return service.songsDetail(id);
+    }
+
+    /**
+     * @param id
+     * @return 歌单详情
+     */
+    public Observable<DetailResponse<SongList>> songListDetail(String id){
+        return service.songListDetail(id);
+    }
+
+    /**
      * @return 广告列表
      */
     public Observable<ListResponse<Advertisement>> advertisements(){
         return service.advertisements();
     }
+
+
+
+
 
 
 }

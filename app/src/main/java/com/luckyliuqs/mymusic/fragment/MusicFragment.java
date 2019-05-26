@@ -23,7 +23,7 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import java.util.ArrayList;
 
 /**
- * 推荐Fragment页面
+ * 音乐Fragment页面
  */
 public class MusicFragment extends BaseCommonFragment{
     //指示器MagicIndicator

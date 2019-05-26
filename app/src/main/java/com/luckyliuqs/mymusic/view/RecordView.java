@@ -27,7 +27,7 @@ public class RecordView extends View {
     /**
      * 黑胶唱片CD宽高比例
      */
-    private static final float CD_SCALE = 1.367F;
+    private static final float CD_SCALE = 1.333F;
     /**
      * 歌曲封面比例
      */
@@ -75,7 +75,7 @@ public class RecordView extends View {
     /**
      * 歌曲封面矩阵
      */
-    private Matrix albumMatrinx = new Matrix();
+    private Matrix albumMatrix = new Matrix();
     /**
      * 旋转的角度
      */
@@ -210,11 +210,11 @@ public class RecordView extends View {
         cdMatrix.preTranslate(cdPoint.x, cdPoint.y);
         canvas.drawBitmap(cd, cdMatrix, paint);
 
-        //绘制歌曲封面
-        if (album != null){
-            albumMatrinx.setRotate(cdRotation, cdRotationPoint.x, cdRotationPoint.y);
-            albumMatrinx.preTranslate(albumPoint.x, albumPoint.y);
-            canvas.drawBitmap(album, albumMatrinx, paint);
+        //绘制封面
+        if (album != null) {
+            albumMatrix.setRotate(cdRotation, cdRotationPoint.x, cdRotationPoint.y);
+            albumMatrix.preTranslate(albumPoint.x, albumPoint.y);
+            canvas.drawBitmap(album, albumMatrix, paint);
         }
 
         canvas.restore();
@@ -224,7 +224,7 @@ public class RecordView extends View {
      * 封面开始旋转
      */
     public void startAlbumRotate(){
-        cancleTask();
+        cancelTask();
         timerTask = new TimerTask() {
             @Override
             public void run() {
@@ -244,10 +244,10 @@ public class RecordView extends View {
      * 封面停止旋转
      */
     public void stopAlbumRotate(){
-        cancleTask();
+        cancelTask();
     }
 
-    private void cancleTask(){
+    private void cancelTask(){
         if (timerTask != null){
             timerTask.cancel();
             timerTask = null;

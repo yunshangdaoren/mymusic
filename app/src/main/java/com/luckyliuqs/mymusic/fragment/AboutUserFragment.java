@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 
 import com.luckyliuqs.mymusic.R;
 
+/**
+ * 用户资料主页：关于我Fragment页面
+ */
 public class AboutUserFragment extends BaseCommonFragment{
 
     public static AboutUserFragment newInstance(){

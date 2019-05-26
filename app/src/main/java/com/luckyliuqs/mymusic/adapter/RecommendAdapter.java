@@ -106,10 +106,10 @@ public class RecommendAdapter extends BaseRecyclerViewAdapter<Object, RecommendA
         return 3;
     }
 
-    /**
+    /**d
      * abstract ViewHolder基类
      */
-    abstract class BaseViewHolder extends BaseRecyclerViewAdapter.ViewHoler{
+    abstract class BaseViewHolder extends BaseRecyclerViewAdapter.ViewHolder{
 
         public BaseViewHolder(@NonNull View itemView) {
             super(itemView);

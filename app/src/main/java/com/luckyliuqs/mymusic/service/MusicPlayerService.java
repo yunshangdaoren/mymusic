@@ -8,13 +8,16 @@ import android.os.IBinder;
 
 import com.luckyliuqs.mymusic.Util.ServiceUtil;
 import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
+import com.luckyliuqs.mymusic.manager.PlayListManager;
 import com.luckyliuqs.mymusic.manager.impl.MusicPlayerManagerImpl;
+import com.luckyliuqs.mymusic.manager.impl.PlayListManagerImpl;
 
 /**
  * 音乐播放Service类
  */
 public class MusicPlayerService extends Service {
     private static MusicPlayerManager manager;
+    private static PlayListManager playListManager;
 
     /**
      * 提供一个静态方法获获取MusicPlayerManager实例对象
@@ -31,6 +34,19 @@ public class MusicPlayerService extends Service {
             MusicPlayerService.manager = MusicPlayerManagerImpl.getInstance(context);
         }
         return manager;
+    }
+
+    /**
+     * @param context
+     * @return 返回一个PlayListManager实例对象
+     */
+    public static PlayListManager getPlayListManager(Context context){
+        startService(context);
+        if (MusicPlayerService.playListManager == null){
+            //初始化歌曲播放列表管理器
+            MusicPlayerService.playListManager = PlayListManagerImpl.getInstance(context);
+        }
+        return playListManager;
     }
 
     /**
