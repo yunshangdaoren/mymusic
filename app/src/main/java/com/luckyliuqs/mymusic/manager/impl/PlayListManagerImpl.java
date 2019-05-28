@@ -67,6 +67,9 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
 
     private static final String TAG = "PlayListManagerImpl";
 
+    /**
+     * 设置MediaSessionCompat回调监听动作事件
+     */
     private static final long MEDIA_SESSION_ACTIONS = PlaybackStateCompat.ACTION_PLAY
             | PlaybackStateCompat.ACTION_PAUSE
             | PlaybackStateCompat.ACTION_PLAY_PAUSE
@@ -77,6 +80,10 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
 
 
     private static final int MSG_DATA_READY = 0;
+
+    /**
+     * 默认保存进度值的间隔事件
+     */
     private static final long DEFAULT_SAVE_PROGRESS_TIME = 1000;
 
     private final MusicPlayerManager musicPlayerManager;
@@ -86,6 +93,10 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
     private static PlayListManager playListManager;
     private final Context context;
     private Song currentSong;
+
+    /**
+     * 歌曲播放模式
+     */
     private int model = MODEL_LOOP_LIST;
 
     private List<PlayListListener> playListListenerList = new ArrayList<>();
@@ -107,8 +118,10 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
         sp = SharedPreferencesUtil.getInstance(context);
 
         init();
-        //initMediaSessionCompat();
-        //initNotificationReceiver();
+        //初始化媒体播放控制中心
+        initMediaSessionCompat();
+        //
+        initNotificationReceiver();
 
     }
 
@@ -156,24 +169,27 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
         currentSong = songList.get(0);
     }
 
-//    private void initMediaSessionCompat(){
-//        mediaSessionCompat = new MediaSessionCompat(context, TAG);
-//        //设置哪些事件回调
-//        //FLAG_HANDLES_MEDIA_BUTTONS：媒体控制按钮
-//        //FLAG_HANDLES_TRANSPORT_CONTROLS：传输控制命令，耳机，蓝牙等控制
-//        mediaSessionCompat.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
-//
-//        //设置那些按钮可用
-//        stateBuilder = new PlaybackStateCompat.Builder().setActions(MEDIA_SESSION_ACTIONS);
-//        mediaSessionCompat.setPlaybackState(stateBuilder.build());
-//
-//        //设置回调
-//        mediaSessionCompat.setCallback(new MediaSessionCallback());
-//
-//        //激活控制器
-//        mediaSessionCompat.setActive(true);
-//
-//    }
+    /**
+     * 初始化媒体播放控制中心
+     */
+    private void initMediaSessionCompat(){
+        mediaSessionCompat = new MediaSessionCompat(context, TAG);
+        //设置哪些事件回调
+        //FLAG_HANDLES_MEDIA_BUTTONS：媒体控制按钮
+        //FLAG_HANDLES_TRANSPORT_CONTROLS：传输控制命令，耳机，蓝牙等控制
+        mediaSessionCompat.setFlags(MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS | MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS);
+
+        //设置那些按钮可用
+        stateBuilder = new PlaybackStateCompat.Builder().setActions(MEDIA_SESSION_ACTIONS);
+        mediaSessionCompat.setPlaybackState(stateBuilder.build());
+
+        //设置回调
+        mediaSessionCompat.setCallback(new MediaSessionCallback());
+
+        //激活控制器
+        mediaSessionCompat.setActive(true);
+
+    }
 
 //    private void initNotificationReceiver(){
 //        notificationMusicReceiver = new BroadcastReceiver() {
@@ -458,50 +474,53 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
                 });
 
         //更新Android系统媒体控制中心的信息
-        //updateAndroidMediaInfo();
+        updateAndroidMediaInfo();
 
 
     }
 
-//    private void updateAndroidMediaInfo(){
-//        RequestOptions options = new RequestOptions();
-//        options.centerCrop();
-//        Glide.with(context).asBitmap().load(ImageUtil.getImageURI(currentSong.getBanner())).apply(options).into(new SimpleTarget<Bitmap>() {
-//            @Override
-//            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-//                PlayListManagerImpl.this.albumBitmap = resource;
-//                updateMediaInfo();
-//            }
-//        });
-//    }
+    /**
+     * 更新Android系统媒体控制中心的信息
+     */
+    private void updateAndroidMediaInfo(){
+        RequestOptions options = new RequestOptions();
+        options.centerCrop();
+        Glide.with(context).asBitmap().load(ImageUtil.getImageURI(currentSong.getBanner())).apply(options).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                PlayListManagerImpl.this.albumBitmap = resource;
+                updateMediaInfo();
+            }
+        });
+    }
 
-//    private void updateMediaInfo() {
-//        MediaMetadataCompat.Builder metaData = new MediaMetadataCompat.Builder()
-//                //歌曲名称
-//                .putString(MediaMetadataCompat.METADATA_KEY_TITLE,currentSong.getTitle())
-//
-//                //歌手
-//                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.getArtist_name())
-//
-//                //专辑名
-//                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.getTitle())
-//
-//                //专辑歌手
-//                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.getAlbum_title())
-//
-//                //当前歌曲时长
-//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.getDuration())
-//
-//                //当前歌曲的封面
-//                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumBitmap);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            //当前列表总共有多少首音乐
-//            metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, getPlayList().size());
-//        }
-//
-//        mediaSessionCompat.setMetadata(metaData.build());
-//    }
+    private void updateMediaInfo() {
+        MediaMetadataCompat.Builder metaData = new MediaMetadataCompat.Builder()
+                //歌曲名称
+                .putString(MediaMetadataCompat.METADATA_KEY_TITLE,currentSong.getTitle())
+
+                //歌手
+                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, currentSong.getArtist_name())
+
+                //专辑名
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, currentSong.getTitle())
+
+                //专辑歌手
+                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, currentSong.getAlbum_title())
+
+                //当前歌曲时长
+                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, currentSong.getDuration())
+
+                //当前歌曲的封面
+                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, albumBitmap);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //当前列表总共有多少首音乐
+            metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, getPlayList().size());
+        }
+
+        mediaSessionCompat.setMetadata(metaData.build());
+    }
 
 
     @Override
@@ -519,18 +538,21 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
     @Override
     public void onPaused(Song data) {
         //设置状态，当前播放位置，播放速度
-//        if (currentSong != null){
-//            stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, getPlayList().indexOf(currentSong), 1.0f);
-//            mediaSessionCompat.setPlaybackState(stateBuilder.build());
-//
-//
-//        }
+        if (currentSong != null){
+            stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, getPlayList().indexOf(currentSong), 1.0f);
+            mediaSessionCompat.setPlaybackState(stateBuilder.build());
+
+
+        }
     }
 
     @Override
     public void onPlaying(Song data) {
-//        stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, getPlayList().indexOf(currentSong), 1.0f);
-//        mediaSessionCompat.setPlaybackState(stateBuilder.build());
+        stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, getPlayList().indexOf(currentSong), 1.0f);
+        mediaSessionCompat.setPlaybackState(stateBuilder.build());
+
+
+
     }
 
     /**
@@ -574,34 +596,48 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
         }
     };
 
-
+    /**
+     * 回调
+     */
     public class MediaSessionCallback extends MediaSessionCompat.Callback{
         public MediaSessionCallback(){
 
         }
 
+        /**
+         * 播放
+         */
         @Override
         public void onPlay() {
             super.onPlay();
             PlayListManagerImpl.this.resume();
         }
 
+        /**
+         * 暂停
+         */
         @Override
         public void onPause() {
             super.onPause();
             PlayListManagerImpl.this.pause();
         }
 
+        /**
+         * 上一首
+         */
         @Override
         public void onSkipToPrevious() {
             super.onSkipToPrevious();
-            PlayListManagerImpl.this.previous();
+            play(PlayListManagerImpl.this.previous());
         }
 
+        /**
+         * 下一首
+         */
         @Override
         public void onSkipToNext() {
             super.onSkipToNext();
-            PlayListManagerImpl.this.next();
+            play(PlayListManagerImpl.this.next());
         }
 
     }

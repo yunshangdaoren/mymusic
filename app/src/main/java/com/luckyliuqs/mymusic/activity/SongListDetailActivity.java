@@ -47,7 +47,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * 歌单详情主页Activity
  */
-public class SongListDetailActivity extends BaseTitleActivity implements View.OnClickListener, SongAdapter.OnSongListener {
+public class SongListDetailActivity extends BaseMusicPlayerActivity implements View.OnClickListener, SongAdapter.OnSongListener {
     private LRecyclerView rv;
 
     /**
@@ -330,10 +330,13 @@ public class SongListDetailActivity extends BaseTitleActivity implements View.On
 
                 break;
             default:
+                //调用父类方法
+                super.onClick(v);
                 break;
         }
     }
 
+    //SongAdapter.onSongListener
     @Override
     public void onCollectionClick(Song song) {
 
@@ -348,4 +351,6 @@ public class SongListDetailActivity extends BaseTitleActivity implements View.On
     public void onDeleteClick(Song song) {
 
     }
+    //SongAdapter.onSongListener
+
 }

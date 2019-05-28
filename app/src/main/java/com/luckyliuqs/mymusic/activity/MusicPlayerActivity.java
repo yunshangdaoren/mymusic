@@ -3,6 +3,7 @@ package com.luckyliuqs.mymusic.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -433,6 +434,8 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
         //设置歌曲播放列表数据
         playListDialogFragment.setData(playListManager.getPlayList());
 
+        //playListDialogFragment.getWindow().findViewById(R.id.tests).setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         //歌曲播放列表歌曲点击播放事件
         playListDialogFragment.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -464,6 +467,7 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
             }
         });
 
+        //show
         playListDialogFragment.show(getSupportFragmentManager(), "dialog");
     }
 

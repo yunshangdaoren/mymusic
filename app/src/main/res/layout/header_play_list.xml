@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_song_height"
-        android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 

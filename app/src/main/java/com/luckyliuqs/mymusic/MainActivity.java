@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.luckyliuqs.mymusic.Util.UserUtil;
+import com.luckyliuqs.mymusic.activity.BaseMusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.BaseTitleActivity;
 import com.luckyliuqs.mymusic.activity.LoginActivity;
 import com.luckyliuqs.mymusic.activity.SettingActivity;
@@ -33,7 +34,7 @@ import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class MainActivity extends BaseTitleActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseMusicPlayerActivity implements View.OnClickListener, ViewPager.OnPageChangeListener {
     private DrawerLayout drawerLayout;
     //用户头像
     private ImageView iv_avatar;
@@ -139,19 +140,23 @@ public class MainActivity extends BaseTitleActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.iv_music:
+            case R.id.iv_music:        //我的音乐页面
                 //跳转到我的音乐页面：第一个参数表示页面下标；第二个参数表示是否可以左右滚动
                 viewPager.setCurrentItem(0,true);
                 break;
-            case R.id.iv_recommend:
+            case R.id.iv_recommend:   //推荐页面
                 viewPager.setCurrentItem(1,true);
                 break;
-            case R.id.iv_video:
+            case R.id.iv_video:       //视频页面
                 viewPager.setCurrentItem(2,true);
                 break;
             case R.id.ll_settings:    //点击侧滑菜单栏的设置，跳转到设置界面
                 startActivity(SettingActivity.class);
                 //closeDrawer();
+                break;
+            default:
+                //如果当前界面可以处理，就调用父类的方法
+                super.onClick(v);
                 break;
         }
     }
