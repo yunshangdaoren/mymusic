@@ -14,6 +14,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.DataUtil;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
+import com.luckyliuqs.mymusic.Util.NotificationUtil;
 import com.luckyliuqs.mymusic.Util.OrmUtil;
 import com.luckyliuqs.mymusic.Util.SharedPreferencesUtil;
 import com.luckyliuqs.mymusic.api.Api;
@@ -107,6 +108,10 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
     private MediaSessionCompat mediaSessionCompat;
     private PlaybackStateCompat.Builder stateBuilder;
     public Bitmap albumBitmap;
+
+    /**
+     * 创建通知栏音乐播放器广播接收器
+     */
     private BroadcastReceiver notificationMusicReceiver;
 
 
@@ -120,7 +125,7 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
         init();
         //初始化媒体播放控制中心
         initMediaSessionCompat();
-        //
+        //初始化通知栏音乐播放器广播接收器
         initNotificationReceiver();
 
     }
@@ -191,33 +196,40 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
 
     }
 
-//    private void initNotificationReceiver(){
-//        notificationMusicReceiver = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                if (Consts.ACTION_LIKE.equals(intent.getAction())){
-//
-//                }else if (Consts.ACTION_PREVIOUS.equals(intent.getAction())){
-//                    play(previous());
-//                }else if (Consts.ACTION_PLAY.equals(intent.getAction())){
-//                    playOrPause();
-//                }else if (Consts.ACTION_NEXT.equals(intent.getAction())){
-//                    play(next());
-//                }else if (Consts.ACTION_LYRIC.equals(intent.getAction())){
-//                    showOrHideGlobalLyric();
-//                }
-//            }
-//        };
-//
-//        IntentFilter intentFilter = new IntentFilter();
-//        intentFilter.addAction(Consts.ACTION_LIKE);
-//        intentFilter.addAction(Consts.ACTION_PREVIOUS);
-//        intentFilter.addAction(Consts.ACTION_PLAY);
-//        intentFilter.addAction(Consts.ACTION_NEXT);
-//        intentFilter.addAction(Consts.ACTION_LYRIC);
-//
-//        context.registerReceiver(notificationMusicReceiver, intentFilter);
-//    }
+    /**
+     * 初始化通知栏音乐播放器广播接收器
+     */
+    private void initNotificationReceiver(){
+        notificationMusicReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Consts.ACTION_LIKE.equals(intent.getAction())){
+                    //收藏
+                }else if (Consts.ACTION_PREVIOUS.equals(intent.getAction())){
+                    //上一首
+                    play(previous());
+                }else if (Consts.ACTION_PLAY.equals(intent.getAction())){
+                    //暂停或播放
+                    playOrPause();
+                }else if (Consts.ACTION_NEXT.equals(intent.getAction())){
+                    //下一首
+                    play(next());
+                }else if (Consts.ACTION_LYRIC.equals(intent.getAction())){
+                    //显示或隐藏桌面歌词
+                    showOrHideGlobalLyric();
+                }
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Consts.ACTION_LIKE);
+        intentFilter.addAction(Consts.ACTION_PREVIOUS);
+        intentFilter.addAction(Consts.ACTION_PLAY);
+        intentFilter.addAction(Consts.ACTION_NEXT);
+        intentFilter.addAction(Consts.ACTION_LYRIC);
+
+        context.registerReceiver(notificationMusicReceiver, intentFilter);
+    }
 
 
     private void playOrPause(){
@@ -541,7 +553,7 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
         if (currentSong != null){
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, getPlayList().indexOf(currentSong), 1.0f);
             mediaSessionCompat.setPlaybackState(stateBuilder.build());
-
+            NotificationUtil.showMusicNotification(context, currentSong, false);
 
         }
     }
@@ -550,7 +562,7 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
     public void onPlaying(Song data) {
         stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, getPlayList().indexOf(currentSong), 1.0f);
         mediaSessionCompat.setPlaybackState(stateBuilder.build());
-
+        NotificationUtil.showMusicNotification(context, currentSong, true);
 
 
     }

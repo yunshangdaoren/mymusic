@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/play_controller_margin">
+
+    <!-- 歌曲封面 -->
+    <ImageView
+        android:id="@+id/iv_banner_notification_music_play_large"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/button_padding"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- 歌曲名称 -->
+            <TextView
+                android:id="@+id/tv_title_notification_music_play_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="这是歌曲名称"
+                android:textColor="@color/text"/>
+
+            <!-- 歌手-专辑 -->
+            <TextView
+                android:id="@+id/tv_artist_album_notification_music_play_large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="这是歌手-专辑"
+                android:textColor="@color/text_grey"
+                android:textSize="10sp"
+                android:layout_marginTop="@dimen/item_icon_padding" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 收藏 -->
+            <ImageView
+                android:id="@+id/iv_like_notification_music_play_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_liked_selected"/>
+
+            <!-- 上一首 -->
+            <ImageView
+                android:id="@+id/iv_previous_notification_music_play_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="@dimen/play_controller_margin"
+                android:src="@drawable/ic_music_notification_previous"/>
+
+            <!-- 播放或暂停 -->
+            <ImageView
+                android:id="@+id/iv_play_notification_music_play_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="@dimen/play_controller_margin"
+                android:src="@drawable/ic_music_notification_play"/>
+
+            <!-- 下一首 -->
+            <ImageView
+                android:id="@+id/iv_next_notification_music_play_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingRight="@dimen/play_controller_margin"
+                android:src="@drawable/ic_music_notification_next"/>
+
+            <!-- 桌面歌词 -->
+            <ImageView
+                android:id="@+id/iv_screen_lyric_notification_music_play_large"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_music_notification_lyric"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

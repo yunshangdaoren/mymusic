@@ -69,4 +69,16 @@ public class MusicPlayerService extends Service {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
+    @Override
+    public void onDestroy() {
+        if (manager != null){
+            manager.destroy();
+        }
+
+        if (playListManager != null){
+            playListManager.destroy();
+        }
+
+        super.onDestroy();
+    }
 }

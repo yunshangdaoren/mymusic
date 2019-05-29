@@ -1,5 +1,6 @@
 package com.luckyliuqs.mymusic;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -10,10 +11,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.UserUtil;
 import com.luckyliuqs.mymusic.activity.BaseMusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.BaseTitleActivity;
 import com.luckyliuqs.mymusic.activity.LoginActivity;
+import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.SettingActivity;
 import com.luckyliuqs.mymusic.activity.UserDetailActivity;
 import com.luckyliuqs.mymusic.adapter.HomeAdapter;
@@ -137,6 +140,27 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
         }
     }
 
+    /**
+     * 处理Intent
+     * @param intent
+     */
+    private void processIntent(Intent intent){
+        if (Consts.ACTION_MESSAGE.equals(intent.getAction())){
+            //要跳转到聊天页面
+
+        }else{
+            //跳转到音乐播放页面
+            startActivity(MusicPlayerActivity.class);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        showUserInfo();
+        processIntent(intent);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()){
@@ -203,7 +227,7 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
     }
 
     /**
-     * 用于显示用户信息：分为登录状态和未登录状态两种形式显示
+     * 用于主界面显示用户信息：分为登录状态和未登录状态两种形式显示
      */
     private void showUserInfo() {
         //用户信息这部分，进来是看不到的，所以可以延后初始化

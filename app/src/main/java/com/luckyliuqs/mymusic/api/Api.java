@@ -43,12 +43,16 @@ public class Api {
         builder.writeTimeout(Consts.TIME_OUT, TimeUnit.SECONDS);//写操作 超时时间
         builder.readTimeout(Consts.TIME_OUT, TimeUnit.SECONDS);//读操作超时时间
 
-        if (LogUtil.isDebug) {
-            builder.addInterceptor(new HttpLoggingInterceptor());
-            builder.addNetworkInterceptor(new StethoInterceptor());
-        }
+//        if (LogUtil.isDebug) {
+              //添加日志拦截器
+//            builder.addInterceptor(new HttpLoggingInterceptor());
+              //添加网络拦截器
+//            builder.addNetworkInterceptor(new StethoInterceptor())
+              //添加通知栏抓包拦截器
+//            builder.addInterceptor(new ChuckInterceptor(AppContext.getContext()));
+//        }
 
-        builder.addInterceptor(new ChuckInterceptor(AppContext.getContext()));
+
 
         //用对网络请求缓存，详细的查看《详解OKHttp》课程
         //builder.addInterceptor(FORCE_CACHE_NETWORK_DATA_INTERCEPTOR);
