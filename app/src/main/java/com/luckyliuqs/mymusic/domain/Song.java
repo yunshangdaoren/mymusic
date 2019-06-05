@@ -1,5 +1,7 @@
 package com.luckyliuqs.mymusic.domain;
 
+import android.graphics.Bitmap;
+
 import com.litesuits.orm.db.annotation.Ignore;
 import com.litesuits.orm.db.annotation.NotNull;
 import com.litesuits.orm.db.annotation.PrimaryKey;
@@ -400,6 +402,7 @@ public class Song extends Base{
         this.album_id = album.getId();
         this.album_title = album.getTitle();
         this.album_banner = album.getBanner();
+
         //this.album_artist_id=album.getArtist().getId();
         //this.album_artist_name=album.getArtist().getNickname();
         //this.album_released_at=album.getReleased_at();

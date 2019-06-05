@@ -125,10 +125,6 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     private LRecyclerViewAdapter adapterWrapper;
     private SongAdapter adapter;
 
-    private PlayListManager playListManager;
-    private MusicPlayerManager musicPlayerManager;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -151,8 +147,7 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     @Override
     protected void initDatas() {
         super.initDatas();
-        playListManager = MusicPlayerService.getPlayListManager(getApplicationContext());
-        musicPlayerManager = MusicPlayerService.getMusicPlayerManager(getApplicationContext());
+
 
         //获取传入的歌单ID
         id = getIntent().getStringExtra(Consts.ID);

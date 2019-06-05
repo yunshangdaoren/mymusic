@@ -298,7 +298,8 @@ public class ScanLocalMusicActivity extends BaseTitleActivity implements View.On
                         song.setArtist_name(artist);
                         song.setAlbum_id(String.valueOf(albumId));
                         song.setAlbum_title(album);
-                        song.setAlbum_banner(MusicUtil.getAlbumBanner(getActivity(), String.valueOf(albumId)));
+                        song.setAlbum_banner(MusicUtil.getAlbumBanners(getActivity(), String.valueOf(albumId)));
+                        song.setBanner(MusicUtil.getAlbumBanners(getActivity(), String.valueOf(albumId)));
                         song.setDuration(duration);
                         song.setUri(path);
                         song.setSource(Song.SOURCE_LOCAL);

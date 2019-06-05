@@ -19,6 +19,9 @@ import com.luckyliuqs.mymusic.adapter.SongAdapter;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.event.ScanMusicCompleteEvent;
 import com.luckyliuqs.mymusic.fragment.MusicSortDialogFragment;
+import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
+import com.luckyliuqs.mymusic.manager.PlayListManager;
+import com.luckyliuqs.mymusic.service.MusicPlayerService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,7 +32,7 @@ import java.util.List;
 /**
  * 本地音乐Activity
  */
-public class LocalMusicActivity extends BaseMusicPlayerActivity {
+public class LocalMusicActivity extends BaseMusicPlayerActivity implements View.OnClickListener, SongAdapter.OnSongListener {
     private static final String TAG = "TAG";
 
     private LRecyclerView lRecyclerView;
@@ -87,6 +90,9 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity {
             }
         });
 
+        //设置歌曲监听事件
+        songAdapter.setOnSongListener(this);
+
         lRecyclerViewAdapter = new LRecyclerViewAdapter(songAdapter);
         lRecyclerViewAdapter.addHeaderView(createHeaderView());
 
@@ -102,6 +108,7 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity {
     private void play(int position){
         if (songAdapter.getDatas().size() > 0){
             Song song = songAdapter.getData(position);
+           // playListManager.pause();
             //设置歌曲播放列表
             playListManager.setPlayList(songAdapter.getDatas());
             //播放指定歌曲
@@ -191,7 +198,8 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity {
                 play(0);
                 break;
             default:
-                super.onClick(view);   //调用super的onCLick方法
+                //调用父类方法
+                super.onClick(view);
                 break;
         }
     }
@@ -242,6 +250,21 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity {
     protected void onDestroy() {
         EventBus.getDefault().unregister(this);
         super.onDestroy();
+    }
+
+    @Override
+    public void onCollectionClick(Song song) {
+
+    }
+
+    @Override
+    public void onDownloadClick(Song song) {
+
+    }
+
+    @Override
+    public void onDeleteClick(Song song) {
+
     }
 }
 

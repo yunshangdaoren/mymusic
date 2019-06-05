@@ -240,7 +240,6 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
                                                                    super.onSucceeded(data);
                                                                    arrayList.addAll(data.getData());
                                                                    adapter.setData(arrayList);
-
                                                                }
                                                 }
                                         );
