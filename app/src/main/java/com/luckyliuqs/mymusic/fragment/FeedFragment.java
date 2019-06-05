@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import com.luckyliuqs.mymusic.R;
 
 /**
- * 朋友动态Fragment页面
+ * 发现主页：朋友动态Fragment页面
  */
 public class FeedFragment extends BaseCommonFragment{
 

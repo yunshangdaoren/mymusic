@@ -14,12 +14,11 @@ import android.widget.TextView;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.UserUtil;
 import com.luckyliuqs.mymusic.activity.BaseMusicPlayerActivity;
-import com.luckyliuqs.mymusic.activity.BaseTitleActivity;
 import com.luckyliuqs.mymusic.activity.LoginActivity;
 import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.SettingActivity;
 import com.luckyliuqs.mymusic.activity.UserDetailActivity;
-import com.luckyliuqs.mymusic.adapter.HomeAdapter;
+import com.luckyliuqs.mymusic.adapter.MainActivityAdapter;
 import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.User;
 import com.luckyliuqs.mymusic.domain.event.LogoutSuccessEvent;
@@ -32,7 +31,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -46,7 +44,7 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
     //用户个人描述
     private TextView tv_description;
     private ViewPager viewPager;
-    private HomeAdapter homeAdapter;
+    private MainActivityAdapter mainActivityAdapter;
 
     private ImageView iv_music;
     private ImageView iv_recommend;
@@ -100,13 +98,19 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
         super.initDatas();
 
         //创建首页适配器对象
-        homeAdapter = new HomeAdapter(getActivity(),getSupportFragmentManager());
-        viewPager.setAdapter(homeAdapter);
+        mainActivityAdapter = new MainActivityAdapter(getActivity(),getSupportFragmentManager());
+        viewPager.setAdapter(mainActivityAdapter);
+
         ArrayList<Integer> datas = new ArrayList<>();
         datas.add(0);
         datas.add(1);
         datas.add(2);
-        homeAdapter.setDatas(datas);
+        mainActivityAdapter.setDatas(datas);
+
+        //设置当前ViewPager处于哪个页面,默认显示第一个页面
+        //viewPager.setCurrentItem(2);
+        //onPageSelected(2);
+        //设置当前ViewPager处于哪个页面
 
         //显示用户信息
         showUserInfo();

@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.luckyliuqs.mymusic.R;
-import com.luckyliuqs.mymusic.adapter.MusicUIAdapter;
+import com.luckyliuqs.mymusic.adapter.FindFragmentAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -23,22 +23,22 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ColorT
 import java.util.ArrayList;
 
 /**
- * 音乐Fragment页面
+ * 发现Fragment页面
  */
-public class MusicFragment extends BaseCommonFragment{
+public class FindFragment extends BaseCommonFragment{
     //指示器MagicIndicator
     private MagicIndicator tabs;
     //ViewPager
     private ViewPager vp;
 
     //Adapter
-    private MusicUIAdapter adapter;
+    private FindFragmentAdapter adapter;
 
-    public static MusicFragment newInstance() {
+    public static FindFragment newInstance() {
         
         Bundle args = new Bundle();
 
-        MusicFragment fragment = new MusicFragment();
+        FindFragment fragment = new FindFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,7 +54,7 @@ public class MusicFragment extends BaseCommonFragment{
     protected void initDatas() {
         super.initDatas();
         //这里要使用childFragmentManager
-        adapter = new MusicUIAdapter(getActivity(), getChildFragmentManager());
+        adapter = new FindFragmentAdapter(getActivity(), getChildFragmentManager());
         vp.setAdapter(adapter);
 
         final ArrayList<Integer> datas = new ArrayList<>();
@@ -113,7 +113,7 @@ public class MusicFragment extends BaseCommonFragment{
 
     @Override
     protected View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_music,null);
+        return inflater.inflate(R.layout.fragment_find,null);
     }
 }
 

@@ -35,5 +35,21 @@ public class ServiceUtil {
         return isRunning;
     }
 
+    public static boolean isBackgroundRunning(Context context){
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> appProcessInfos = activityManager.getRunningAppProcesses();
+
+        for (ActivityManager.RunningAppProcessInfo appProcessInfo : appProcessInfos){
+            if (appProcessInfo.processName.equals(context.getPackageName())){
+                if (appProcessInfo.importance != ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        }
+
+        return false;
+    }
 
 }

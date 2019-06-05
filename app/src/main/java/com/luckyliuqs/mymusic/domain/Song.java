@@ -13,6 +13,9 @@ import com.litesuits.orm.db.enums.AssignType;
  */
 @Table("songs")
 public class Song extends Base{
+    /**
+     * 歌曲排序标志：根据ID、歌曲名或专辑名
+     */
     public static final String[] SORT_KEYS = new String[]{"id", "title", "album_title"};
 
     /**

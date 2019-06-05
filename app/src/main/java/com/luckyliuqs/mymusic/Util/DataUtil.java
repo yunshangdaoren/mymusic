@@ -12,7 +12,7 @@ public class DataUtil {
      * @param songs
      * @return
      */
-    public static ArrayList<Song> fill(ArrayList<Song> songs){
+    public static List<Song> fill(List<Song> songs){
         for (Song s:songs) {
             //填充专辑和歌曲信息
             s.fill();

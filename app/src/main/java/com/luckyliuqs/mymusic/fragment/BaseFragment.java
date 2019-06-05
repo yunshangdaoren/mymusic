@@ -64,15 +64,6 @@ public abstract class BaseFragment extends Fragment{
     }
 
     /**
-     * 返回要显示的View
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return View
-     */
-    protected abstract View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
-
-    /**
      * 进行所有的初始化操作，同时调用View初始化完成的方法
      * @param view
      * @param savedInstanceState
@@ -85,6 +76,16 @@ public abstract class BaseFragment extends Fragment{
         initListener();
         super.onViewCreated(view, savedInstanceState);
     }
+
+    /**
+     * 返回要显示的View
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return View
+     */
+    protected abstract View getLayoutView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState);
+
 
     /**
      * 封装findViewById，继承BaseFragment的子类直接调用此方法即可，前面不用再使用view.findViewById

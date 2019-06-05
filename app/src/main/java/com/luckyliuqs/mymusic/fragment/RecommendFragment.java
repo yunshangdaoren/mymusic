@@ -3,6 +3,7 @@ package com.luckyliuqs.mymusic.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 我的推荐主页：推荐Fragment页面
+ * 发现主页：推荐Fragment页面
  */
 public class RecommendFragment extends BaseCommonFragment implements OnBannerListener {
     private LRecyclerView rv;
@@ -55,7 +56,7 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
     //每日推荐动态日期描述
     TextView tv_day;
     //广告轮播图data
-    private ArrayList<Advertisement> bannerData;
+    private List<Advertisement> bannerData;
     /**
      * 歌曲播放列表管理器
      */
@@ -195,7 +196,7 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
      * 填充图片并展示轮播图Bannber
      * @param data
      */
-    public void showBanner(ArrayList<Advertisement> data){
+    public void showBanner(List<Advertisement> data){
         //设置图片集合
         this.bannerData = data;
         banner.setImages(data);
@@ -211,7 +212,7 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
         final Observable<ListResponse<Song>> songs = Api.getInstance().songs();
         final Observable<ListResponse<Advertisement>> advertisements = Api.getInstance().advertisements();
 
-        final ArrayList<Object> arrayList = new ArrayList<Object>();
+        final List<Object> arrayList = new ArrayList<Object>();
         arrayList.add("推荐歌单");
 
         songList.subscribeOn(Schedulers.io())
@@ -250,7 +251,6 @@ public class RecommendFragment extends BaseCommonFragment implements OnBannerLis
                     }
                 }
         );
-
     }
 
     @Override

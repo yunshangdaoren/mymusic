@@ -21,6 +21,10 @@ public class SharedPreferencesUtil {
     private static final String KEY_LYRIC_FONT_SIZE = "KEY_LYRIC_FONT_SIZE";
     private static final String KEY_LYRIC_TEXT_COLOR = "KEY_LYRIC_TEXT_COLOR";
     private static final String KEY_SHOW_LYRIC = "KEY_SHOW_LYRIC";
+
+    /**
+     * 本地音乐排序key
+     */
     private static final String KEY_LOCAL_MUSIC_SORT_KEY = "KEY_LOCAL_MUSIC_SORT_KEY";
 
     /**
@@ -241,7 +245,28 @@ public class SharedPreferencesUtil {
         return get(CURRENT_PLAY_SONG_ID);
     }
 
+    /**
+     * 设置最后一次播放歌曲的id
+     * @param id
+     */
     public void setLastPlaySongId(String id){
         putString(CURRENT_PLAY_SONG_ID, id);
     }
+
+    /**
+     * 返回本地歌曲排序规则，默认根据歌曲id排序
+     * @return
+     */
+    public int getLocalMusciSortKey(){
+        return getInt(KEY_LOCAL_MUSIC_SORT_KEY, 0);
+    }
+
+    /**
+     * 设置返回本地歌曲排序规则
+     * @param sortIndex
+     */
+    public void setKeyLocalMusicSortKey(int sortIndex){
+        putInt(KEY_LOCAL_MUSIC_SORT_KEY, sortIndex);
+    }
+
 }

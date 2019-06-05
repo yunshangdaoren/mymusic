@@ -43,14 +43,14 @@ public class Api {
         builder.writeTimeout(Consts.TIME_OUT, TimeUnit.SECONDS);//写操作 超时时间
         builder.readTimeout(Consts.TIME_OUT, TimeUnit.SECONDS);//读操作超时时间
 
-//        if (LogUtil.isDebug) {
-              //添加日志拦截器
-//            builder.addInterceptor(new HttpLoggingInterceptor());
-              //添加网络拦截器
-//            builder.addNetworkInterceptor(new StethoInterceptor())
-              //添加通知栏抓包拦截器
-//            builder.addInterceptor(new ChuckInterceptor(AppContext.getContext()));
-//        }
+        if (LogUtil.isDebug) {
+            //添加日志拦截器
+            builder.addInterceptor(new HttpLoggingInterceptor());
+            //添加网络拦截器
+            builder.addNetworkInterceptor(new StethoInterceptor());
+            //添加通知栏抓包拦截器
+            builder.addInterceptor(new ChuckInterceptor(AppContext.getContext()));
+        }
 
 
 
@@ -181,6 +181,47 @@ public class Api {
      */
     public Observable<DetailResponse<SongList>> songListDetail(String id){
         return service.songListDetail(id);
+    }
+
+    /**
+     * @return 返回用户自己创建的歌单列表
+     */
+    public Observable<ListResponse<SongList>> songListsMyCreate(){
+        return service.songListsMyCreate();
+    }
+
+    /**
+     * @return 返回用户收藏的歌单
+     */
+    public Observable<ListResponse<SongList>> songListsMyCollection(){
+        return service.songListsMyCollection();
+    }
+
+    /**
+     * 创建歌单
+     * @param songList
+     * @return
+     */
+    public Observable<DetailResponse<SongList>> createSongList(SongList songList){
+        return service.createSongList(songList);
+    }
+
+    /**
+     * 传入歌单ID，收藏该歌单
+     * @param songListId
+     * @return
+     */
+    public Observable<DetailResponse<SongList>> collectionSongList(String songListId){
+        return service.collectionSongList(songListId);
+    }
+
+    /**
+     * 传入歌单ID，取消收藏该歌单
+     * @param songListId
+     * @return
+     */
+    public Observable<DetailResponse<SongList>> cancelCollectionSongList(String songListId){
+        return service.cancelCollectionSongList(songListId);
     }
 
     /**

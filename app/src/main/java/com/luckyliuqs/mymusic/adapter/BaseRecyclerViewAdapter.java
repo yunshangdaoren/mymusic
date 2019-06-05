@@ -147,6 +147,11 @@ public abstract class BaseRecyclerViewAdapter<D, VH extends BaseRecyclerViewAdap
 
     //item点击事件接口类
     public interface OnItemClickListener{
+        /**
+         * item点击事件
+         * @param holder
+         * @param position
+         */
         void onItemClick(BaseRecyclerViewAdapter.ViewHolder holder, int position);
     }
 

@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * 歌单实体类
  */
-public class SongList {
+public class SongList extends Base{
     /**
      * 歌单ID
      */

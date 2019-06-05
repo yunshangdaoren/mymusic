@@ -26,11 +26,13 @@ import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.DataUtil;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
+import com.luckyliuqs.mymusic.Util.ToastUtil;
 import com.luckyliuqs.mymusic.adapter.BaseRecyclerViewAdapter;
 import com.luckyliuqs.mymusic.adapter.SongAdapter;
 import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
+import com.luckyliuqs.mymusic.domain.event.SongListCollectionStatusChangedEvent;
 import com.luckyliuqs.mymusic.domain.response.DetailResponse;
 import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
 import com.luckyliuqs.mymusic.manager.PlayListManager;
@@ -38,6 +40,7 @@ import com.luckyliuqs.mymusic.reactivex.HttpListener;
 import com.luckyliuqs.mymusic.service.MusicPlayerService;
 
 import org.apache.commons.lang3.StringUtils;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -154,7 +157,7 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
         //获取传入的歌单ID
         id = getIntent().getStringExtra(Consts.ID);
 
-        adapter = new SongAdapter(getActivity(), R.layout.item_song_list_detail, getSupportFragmentManager(), playListManager);
+        adapter = new SongAdapter(getActivity(), R.layout.item_song_detail, getSupportFragmentManager(), playListManager);
         //歌单内歌曲点击事件
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -320,20 +323,66 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.ll_song_list_play_all_container:   //播放全部
+            case R.id.ll_song_list_play_all_container:   //播放歌单内全部歌曲
                 play(0);
                 break;
-            case R.id.ll_song_list_comment_container:    //评论
+            case R.id.ll_song_list_comment_container:    //歌单的评论
 
                 break;
-            case R.id.bt_song_list_collection:           //收藏
-
+            case R.id.bt_song_list_collection:           //收藏歌单
+                collectionSongList();
                 break;
             default:
                 //调用父类方法
                 super.onClick(v);
                 break;
         }
+    }
+
+    /**
+     * 收藏歌单
+     */
+    private void collectionSongList(){
+        if (data.isCollection()){
+            //如果该歌单已经被收藏了，则调用取消收藏该歌单接口
+            Api.getInstance().cancelCollectionSongList(data.getCollection_id())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
+                        @Override
+                        public void onSucceeded(DetailResponse<SongList> data) {
+                            super.onSucceeded(data);
+                            ToastUtil.showSortToast(getActivity(), getString(R.string.cancel_song_list_collection_success));
+                            fetchData();
+                            //发布歌单收藏状态信息
+                            publishSongListCollectionStatusChanged();
+                        }
+                    });
+
+        }else{
+            //如果该歌单没有被收藏，则传入歌单id，调用收藏该歌单接口
+            Api.getInstance().collectionSongList(id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
+                        @Override
+                        public void onSucceeded(DetailResponse<SongList> data) {
+                            super.onSucceeded(data);
+                            ToastUtil.showSortToast(getActivity(), getString(R.string.song_list_collection_success));
+                            fetchData();
+                            //发布歌单收藏状态信息
+                            publishSongListCollectionStatusChanged();
+                        }
+                    });
+
+        }
+    }
+
+    /**
+     * 发布歌单收藏状态信息
+     */
+    private void publishSongListCollectionStatusChanged(){
+        EventBus.getDefault().post(new SongListCollectionStatusChangedEvent());
     }
 
     //SongAdapter.onSongListener

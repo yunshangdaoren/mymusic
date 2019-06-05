@@ -13,6 +13,8 @@ import java.util.Map;
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -68,6 +70,50 @@ public interface Service {
     Observable<ListResponse<SongList>> songList(@QueryMap Map<String, String> data);
 
     /**
+     * @param id
+     * @return 返回歌单详情
+     */
+    @GET("sheets/{id}.json")
+    Observable<DetailResponse<SongList>> songListDetail(@Path("id") String id);
+
+    /**
+     * @return 返回用户自己创建的歌单列表
+     */
+    @GET("sheets/create.json")
+    Observable<ListResponse<SongList>> songListsMyCreate();
+
+    /**
+     * @return 返回用户收藏的歌单
+     */
+    @GET("sheets/collect.json")
+    Observable<ListResponse<SongList>> songListsMyCollection();
+
+    /**
+     * 创建歌单
+     * @param songList
+     * @return
+     */
+    @POST("sheets.json")
+    Observable<DetailResponse<SongList>> createSongList(@Body SongList songList);
+
+    /**
+     * 传入歌单ID，收藏该歌单
+     * @param songListId
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("collections.json")
+    Observable<DetailResponse<SongList>> collectionSongList(@Field("sheet_id") String songListId);
+
+    /**
+     * 传入歌单ID，取消收藏该歌单
+     * @param songListId
+     * @return
+     */
+    @DELETE("collections/{id}.json")
+    Observable<DetailResponse<SongList>> cancelCollectionSongList(@Path("id") String songListId);
+
+    /**
      * @return 返回单曲列表
      */
     @GET("songs.jason")
@@ -86,12 +132,7 @@ public interface Service {
     @GET("advertisements.json")
     Observable<ListResponse<Advertisement>> advertisements();
 
-    /**
-     * @param id
-     * @return 返回歌单详情
-     */
-    @GET("sheets/{id}.json")
-    Observable<DetailResponse<SongList>> songListDetail(@Path("id") String id);
+
 
 
 }

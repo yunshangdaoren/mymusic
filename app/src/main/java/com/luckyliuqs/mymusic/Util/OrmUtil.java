@@ -20,7 +20,7 @@ public class OrmUtil {
 
     public OrmUtil(Context context){
         //创建LiteOrm
-        orm = LiteOrm.newSingleInstance(context, "my-music.db");
+        orm = LiteOrm.newSingleInstance(context, "my_music.db");
     }
 
     public static OrmUtil getInstance(Context context){

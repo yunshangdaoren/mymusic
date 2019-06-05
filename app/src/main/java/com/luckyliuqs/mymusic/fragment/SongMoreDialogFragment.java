@@ -90,7 +90,7 @@ public class SongMoreDialogFragment extends BottomSheetDialogFragment implements
         SongMoreDialogFragment songMoreDialogFragment = new SongMoreDialogFragment();
         songMoreDialogFragment.setSong(song);
         songMoreDialogFragment.setShowDelete(isShowDelete);
-        songMoreDialogFragment.show(fragmentManager, "SortDialogFragment");
+        songMoreDialogFragment.show(fragmentManager, "SongMoreDialogFragment");
     }
 
     private void setShowDelete(boolean isShowDelete){
