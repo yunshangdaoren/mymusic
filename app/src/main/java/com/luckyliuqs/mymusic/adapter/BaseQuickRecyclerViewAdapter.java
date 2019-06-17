@@ -33,7 +33,7 @@ public abstract class BaseQuickRecyclerViewAdapter<D> extends BaseRecyclerViewAd
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         return new BaseQuickRecyclerViewAdapter.ViewHolder(getInflater().inflate(layoutId, viewGroup, false));
     }
 
@@ -110,7 +110,7 @@ public abstract class BaseQuickRecyclerViewAdapter<D> extends BaseRecyclerViewAd
         }
 
         /**
-         * set visibility by Resource id
+         * set visibility for Resource id
          * @param id
          * @param visibility
          * @return

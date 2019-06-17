@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/button_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- 用户头像 -->
+        <ImageView
+            android:id="@+id/iv_item_feed_avatar"
+            android:layout_width="@dimen/item_comment_avatar_width"
+            android:layout_height="@dimen/item_comment_avatar_width"
+            android:src="@drawable/default_avatar"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/item_icon_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- 用户昵称 -->
+                <TextView
+                    android:id="@+id/tv_item_feed_nickaname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="上官秋鱼"
+                    android:textColor="@color/text"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
+
+            <!-- 动态创建时间 -->
+            <TextView
+                android:id="@+id/tv_item_feed_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="昨天21:29"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_small"
+                android:layout_marginTop="3dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="@dimen/button_padding"
+        android:orientation="vertical">
+
+        <!-- 动态内容 -->
+        <android.support.text.emoji.widget.EmojiTextView
+            android:id="@+id/tv_item_feed_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="@dimen/line_space_multi"
+            tools:text="在理想的道路上永怀初心、决心、耐心、定能到你想去的地方。"
+            android:textColor="@color/text"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_item_feed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_padding"
+            android:visibility="gone">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/button_padding"
+            android:orientation="horizontal">
+
+             <!-- 分享 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- 分享图标 -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comment_like"/>
+
+                <!-- 分享数量 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="299"
+                    android:layout_marginLeft="@dimen/item_icon_padding"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_small"/>
+
+            </LinearLayout>
+
+            <!-- 评论 -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- 评论图标 -->
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comment_like"/>
+
+                <!-- 评论数量 -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="299"
+                    android:layout_marginLeft="@dimen/item_icon_padding"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_small"/>
+
+            </LinearLayout>
+
+            <!-- 点赞 -->
+            <LinearLayout
+                android:id="@+id/ll_item_feed_like_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <!-- 点赞图标 -->
+                <ImageView
+                    android:id="@+id/iv_item_feed_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_comment_like"/>
+
+                <!-- 点赞数量 -->
+                <TextView
+                    android:id="@+id/tv_item_feed_like_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="299"
+                    android:layout_marginLeft="@dimen/item_icon_padding"
+                    android:textColor="@color/text_grey"
+                    android:textSize="@dimen/text_small"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

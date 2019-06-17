@@ -27,10 +27,13 @@ public class UserDetailAdapter extends BaseFragmentAdapter<Integer>{
     @Override
     public Fragment getItem(int position) {
         if (position == 0){
+            //音乐
             return UserDetailMusicFragment.newInstance();
         }else if (position == 1){
+            //动态
             return FeedFragment.newInstance();
         }else{
+            //关于我
             return AboutUserFragment.newInstance();
         }
     }

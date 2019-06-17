@@ -92,7 +92,7 @@ public class MeFragmentAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder viewHolder;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.item_me_song_list_list, parent, false);
+            convertView = inflater.inflate(R.layout.item_me_song_list, parent, false);
             viewHolder = new ChildViewHolder(convertView);
             convertView.setTag(viewHolder);
         } else {

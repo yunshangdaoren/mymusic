@@ -2,10 +2,14 @@ package com.luckyliuqs.mymusic;
 
 import android.app.Application;
 import android.content.Context;
+import android.support.text.emoji.EmojiCompat;
+import android.support.text.emoji.bundled.BundledEmojiCompatConfig;
 
 import com.luckyliuqs.mymusic.Util.SharedPreferencesUtil;
 
-
+/**
+ * App Context
+ */
 public class AppContext extends Application {
     private static final String TAG = "AppContext";
     private static Context context;
@@ -22,10 +26,10 @@ public class AppContext extends Application {
 
         this.context = getApplicationContext();
 
-//        //初始化emoji
-//        EmojiCompat.Config config = new BundledEmojiCompatConfig(this);
-//        EmojiCompat.init(config);
-//
+        //初始化emoji
+        EmojiCompat.Config config = new BundledEmojiCompatConfig(this);
+        EmojiCompat.init(config);
+
 //        //Share SDK
 //        MobSDK.init(this);
 //

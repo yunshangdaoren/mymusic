@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:layout_marginLeft="20dp"
+    android:layout_marginTop="12dp">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="@dimen/item_music_list_height"
+        android:layout_height="@dimen/item_music_list_height"
+        android:layout_gravity="center"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardCornerRadius="@dimen/radius"
+        app:cardElevation="@dimen/elevation">
+
+        <ImageView
+            android:id="@+id/iv_topic_icon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/button_padding">
+
+        <TextView
+            android:id="@+id/tv_topic_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="#理想生活，别光想#"
+            android:textColor="@color/text"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_topic_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1703人参与"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:layout_marginTop="3dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

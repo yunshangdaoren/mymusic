@@ -34,7 +34,7 @@ public class MusicUtil {
             );
             if (cursor.getCount() > 0 && cursor.getColumnCount() > 0){
                 cursor.moveToNext();
-                //Log.i("MusicUtil", "banner:"+cursor.getString(0));
+                Log.i("MusicUtil", "banner:"+cursor.getString(0));
                 return cursor.getString(0);
             }
         }catch (Exception e){

@@ -6,9 +6,11 @@ import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.LogUtil;
 import com.luckyliuqs.mymusic.Util.SharedPreferencesUtil;
 import com.luckyliuqs.mymusic.domain.Advertisement;
+import com.luckyliuqs.mymusic.domain.Comment;
 import com.luckyliuqs.mymusic.domain.Session;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
+import com.luckyliuqs.mymusic.domain.Topic;
 import com.luckyliuqs.mymusic.domain.User;
 import com.luckyliuqs.mymusic.domain.response.DetailResponse;
 import com.luckyliuqs.mymusic.domain.response.ListResponse;
@@ -16,8 +18,11 @@ import com.readystatesoftware.chuck.ChuckInterceptor;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import com.luckyliuqs.mymusic.interceptor.HttpLoggingInterceptor;
+
+import org.apache.commons.lang3.StringUtils;
 
 import io.reactivex.Observable;
 import okhttp3.Interceptor;
@@ -133,18 +138,16 @@ public class Api {
     }
 
     /**
-     * 通过用户ID获取用户详情
      * @param id
-     * @return
+     * @return 通过用户ID获取用户详情
      */
     public Observable<DetailResponse<User>> userDetail(String id) {
         return service.userDetail(id);
     }
 
     /**
-     * 通过用户昵称获取用户详情
      * @param nickName
-     * @return
+     * @return 通过用户昵称获取用户详情
      */
     public Observable<DetailResponse<User>> userDetailByNickName(String nickName){
         HashMap<String, String> data = new HashMap<>();
@@ -173,6 +176,26 @@ public class Api {
      */
     public Observable<DetailResponse<Song>> songsDetail(String id){
         return service.songsDetail(id);
+    }
+
+    /**
+     * 添加指定歌曲到指定歌单中
+     * @param songId
+     * @param songListId
+     * @return
+     */
+    public Observable<DetailResponse<SongList>> addSongInSongList(String songId, String songListId){
+        return service.addSongInSongList(songId, songListId);
+    }
+
+    /**
+     * 从指定歌单中删除指定歌曲
+     * @param songId
+     * @param songListId
+     * @return
+     */
+    public Observable<DetailResponse<SongList>> deleteSongInSongList(String songId, String songListId){
+        return service.deleteSongInSongList(songId, songListId);
     }
 
     /**
@@ -231,9 +254,94 @@ public class Api {
         return service.advertisements();
     }
 
+    /**
+     * @param data
+     * @return 评论列表
+     */
+    public Observable<ListResponse<Comment>> comments(Map<String, String> data){
+        return service.comments(data);
+    }
 
+    /**
+     * 创建评论
+     * @param comment
+     * @return
+     */
+    public Observable<DetailResponse<Comment>> createComment(Comment comment){
+        return service.createComment(comment);
+    }
 
+    /**
+     * @param title
+     * @return 话题列表
+     */
+    public Observable<ListResponse<Topic>> topics(String title){
+        HashMap<String, String> data = new HashMap<>();
+        if (StringUtils.isNotEmpty(title)){
+            data.put(Consts.FILTER, title);
+        }
 
+        return service.topics(data);
+    }
+
+    /**
+     * @param id
+     * @return 话题详情
+     */
+    public Observable<DetailResponse<Topic>> topicsDetail(String id){
+        HashMap<String, String> data = new HashMap<>();
+        return service.topicDetail(id, data);
+    }
+
+    /**
+     * 评论点赞
+     * @param comment_id
+     * @return
+     */
+    public Observable<DetailResponse<Comment>> like(String comment_id){
+        return service.like(comment_id);
+    }
+
+    /**
+     * 取消评论点赞
+     * @param id
+     * @return
+     */
+    public Observable<DetailResponse<Comment>> unlike(String id){
+        return service.unlike(id);
+    }
+
+    /**
+     * @param id
+     * @param nickname
+     * @return 好友列表数据：用户关注的人
+     */
+    public Observable<ListResponse<User>> myFriends(String id, String nickname){
+        HashMap<String, String> data = new HashMap<>();
+
+        //根据nickname查找
+        if (StringUtils.isNotEmpty(nickname)){
+            data.put(Consts.FILTER, nickname);
+        }
+
+        return service.following(id, data);
+    }
+
+    /**
+     * @param id
+     * @param nickname
+     * @return 粉丝列表数据：关注用户的人
+     */
+    public Observable<ListResponse<User>> myFans(String id, String nickname){
+        HashMap<String, String> data = new HashMap<>();
+
+        //根据nickname查找
+        if (StringUtils.isNotEmpty(nickname)){
+            data.put(Consts.FILTER, nickname);
+        }
+
+        return service.following(id, data);
+    }
 
 
 }

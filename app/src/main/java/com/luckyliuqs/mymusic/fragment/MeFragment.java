@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.ToastUtil;
+import com.luckyliuqs.mymusic.activity.DownloadManagerActivity;
 import com.luckyliuqs.mymusic.activity.LocalMusicActivity;
+import com.luckyliuqs.mymusic.activity.RecentPlayActivity;
 import com.luckyliuqs.mymusic.activity.SongListDetailActivity;
+import com.luckyliuqs.mymusic.adapter.DownloadManagerAdapter;
 import com.luckyliuqs.mymusic.adapter.MeFragmentAdapter;
 import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.MeFragmentUI;
@@ -48,6 +51,16 @@ public class MeFragment extends BaseCommonFragment implements MeFragmentAdapter.
      * 本地音乐
      */
     private LinearLayout ll_local_music;
+
+    /**
+     * 最近播放
+     */
+    private LinearLayout ll_me_recent_play;
+
+    /**
+     * 下载管理
+     */
+    private LinearLayout ll_me_download_manager;
 
     /**
      * 音乐数量
@@ -84,6 +97,8 @@ public class MeFragment extends BaseCommonFragment implements MeFragmentAdapter.
         elv.addHeaderView(headerView);
 
         ll_local_music = findViewById(R.id.ll_local_music);
+        ll_me_recent_play = findViewById(R.id.ll_me_recent_play);
+        ll_me_download_manager = findViewById(R.id.ll_me_download_manager);
         tv_music_count = findViewById(R.id.tv_music_count);
         tv_download_count = findViewById(R.id.tv_download);
 
@@ -152,6 +167,12 @@ public class MeFragment extends BaseCommonFragment implements MeFragmentAdapter.
         //本地音乐点击事件
         ll_local_music.setOnClickListener(this);
 
+        //最近播放点击事件
+        ll_me_recent_play.setOnClickListener(this);
+
+        //下载管理点击事件
+        ll_me_download_manager.setOnClickListener(this);
+
         elv.setOnGroupClickListener(this);
 
         //歌单列表下,子歌单点击事件
@@ -171,8 +192,13 @@ public class MeFragment extends BaseCommonFragment implements MeFragmentAdapter.
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.ll_local_music:    //本地音乐
-                ToastUtil.showSortToast(getActivity(), "跳转到本地音乐");
                 startActivity(LocalMusicActivity.class);
+                break;
+            case R.id.ll_me_recent_play:    //最近播放
+                startActivity(RecentPlayActivity.class);
+                break;
+            case R.id.ll_me_download_manager:    //下载管理
+                startActivity(DownloadManagerActivity.class);
                 break;
 
         }
@@ -186,13 +212,11 @@ public class MeFragment extends BaseCommonFragment implements MeFragmentAdapter.
 
     @Override
     public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-        ToastUtil.showSortToast(getActivity(), "父item点击了");
         return false;
     }
 
     @Override
     public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
-        ToastUtil.showSortToast(getActivity(), "子item点击了");
         //子歌单
         SongList songList = meFragmentAdapter.getChildData(groupPosition, childPosition);
         startActivityExtraId(SongListDetailActivity.class, songList.getId());

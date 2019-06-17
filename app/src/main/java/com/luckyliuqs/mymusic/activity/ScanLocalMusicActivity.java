@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.MusicUtil;
+import com.luckyliuqs.mymusic.domain.Album;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.event.ScanMusicCompleteEvent;
 
@@ -281,7 +282,7 @@ public class ScanLocalMusicActivity extends BaseTitleActivity implements View.On
                         //歌手
                         String artist = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ARTIST));
                         //专辑
-                        String album = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM));
+                        String albumTitle = cursor.getString(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM));
                         //专辑ID
                         long albumId = cursor.getLong(cursor.getColumnIndex(MediaStore.Audio.AudioColumns.ALBUM_ID));
                         //播放时长
@@ -296,13 +297,14 @@ public class ScanLocalMusicActivity extends BaseTitleActivity implements View.On
                         song.setId(String.valueOf(id));
                         song.setTitle(title);
                         song.setArtist_name(artist);
-                        song.setAlbum_id(String.valueOf(albumId));
-                        song.setAlbum_title(album);
-                        song.setAlbum_banner(MusicUtil.getAlbumBanners(getActivity(), String.valueOf(albumId)));
-                        song.setBanner(MusicUtil.getAlbumBanners(getActivity(), String.valueOf(albumId)));
+                        song.setBanner("");
                         song.setDuration(duration);
                         song.setUri(path);
                         song.setSource(Song.SOURCE_LOCAL);
+                        song.setAlbum_id(String.valueOf(albumId));
+                        song.setAlbum_title(albumTitle);
+                        song.setAlbum_banner(MusicUtil.getAlbumBanners(getActivity(), String.valueOf(albumId)));
+                        song.setBanner(MusicUtil.getAlbumBanners(getActivity(), String.valueOf(albumId)));
 
                         songList.add(song);
 

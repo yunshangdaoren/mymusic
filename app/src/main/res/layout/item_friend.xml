@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical"
+    android:padding="@dimen/button_padding">
+
+    <!-- 用户头像 -->
+    <ImageView
+        android:id="@+id/iv_friend_avatar"
+        android:layout_width="@dimen/item_friend_avatar_width"
+        android:layout_height="@dimen/item_friend_avatar_width" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/item_icon_padding"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 用户昵称 -->
+            <TextView
+                android:id="@+id/tv_friend_nickname"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="努力向上的向日葵"
+                android:textSize="18sp"
+                android:textColor="@color/text"/>
+
+        </LinearLayout>
+
+        <!-- 用户签名 -->
+        <TextView
+            android:id="@+id/tv_friend_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="不曾刻骨铭心，为何念念不忘。"
+            android:textColor="@color/text_grey"
+            android:textSize="15sp"
+            android:layout_marginTop="@dimen/button_padding"/>
+
+    </LinearLayout>
+
+</LinearLayout>

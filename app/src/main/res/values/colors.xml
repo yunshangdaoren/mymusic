@@ -43,5 +43,13 @@
     <!--歌词拖拽状态，线颜色-->
     <color name="lyric_drag_line_color">#eee</color>
 
+    <!-- 评论页面评论内容颜色 -->
+    <color name="content_comment">#1D1D1D</color>
+    <!-- 评论页面用户昵称颜色 -->
+    <color name="nickname_comment">#535353</color>
+    <!-- 评论页面评论时间颜色 -->
+    <color name="time_comment">#8F8F8F</color>
+    <!-- 评论页面点赞颜色 -->
+    <color name="like_comment">#8F8F8F</color>
 
 </resources>

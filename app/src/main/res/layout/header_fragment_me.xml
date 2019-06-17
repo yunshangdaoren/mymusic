@@ -28,7 +28,7 @@
     <include layout="@layout/divider_small"/>
 
     <LinearLayout
-        android:id="@+id/ll_recent_play"
+        android:id="@+id/ll_me_recent_play"
         style="@style/ItemEntryContainer"
         android:orientation="horizontal">
 
@@ -49,6 +49,7 @@
     <include layout="@layout/divider_small"/>
 
     <LinearLayout
+        android:id="@+id/ll_me_download_manager"
         style="@style/ItemEntryContainer"
         android:orientation="horizontal">
 

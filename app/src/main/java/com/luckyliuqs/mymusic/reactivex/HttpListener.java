@@ -6,6 +6,10 @@ import com.luckyliuqs.mymusic.Util.ToastUtil;
 import com.luckyliuqs.mymusic.activity.BaseActivity;
 import com.luckyliuqs.mymusic.domain.response.BaseResponse;
 
+/**
+ * Http Listener
+ * @param <T>
+ */
 public class HttpListener<T extends BaseResponse> extends AbsObserver<T> {
 
     private final BaseActivity activity;

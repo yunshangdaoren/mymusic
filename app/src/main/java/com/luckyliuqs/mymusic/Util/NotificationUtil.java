@@ -41,7 +41,6 @@ public class NotificationUtil {
      * @param isPlaying
      */
     public static void showMusicNotification(final Context context, final Song song, final boolean isPlaying){
-        Log.i("NotificationUtil", "显示通知栏！");
         RequestOptions options = new RequestOptions();
         options.centerCrop();
         if (song.getSource() == Song.SOURCE_ONLINE){
@@ -115,7 +114,7 @@ public class NotificationUtil {
             });
         }else{
             //如果为本地歌曲
-            Glide.with(context).asBitmap().load(song.getBanner()).apply(options).into(new SimpleTarget<Bitmap>() {
+            Glide.with(context).asBitmap().load(song.getAlbum_banner()).apply(options).into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                     //这个布局的根View的尺寸不能引用dimen文件，故写死

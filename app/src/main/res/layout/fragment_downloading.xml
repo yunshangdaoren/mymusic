@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- 显示全部开始下载或全部暂停下载 -->
+        <LinearLayout
+            android:id="@+id/ll_downloading_pause_or_resume_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/item_song_height"
+            android:gravity="center">
+
+            <!-- -->
+            <ImageView
+                android:id="@+id/iv_downloading_pause_or_resume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_music_settings"/>
+
+            <!-- -->
+            <TextView
+                android:id="@+id/tv_downloading_pause_or_resume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/all_download"/>
+
+        </LinearLayout>
+
+        <!-- 删除所有正在下载的歌曲 -->
+        <LinearLayout
+            android:id="@+id/ll_downloading_delete_all"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="@dimen/item_song_height"
+            android:gravity="center">
+
+            <!-- -->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_music_delete"/>
+
+            <!-- -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_all"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/divider_small"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_downloading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

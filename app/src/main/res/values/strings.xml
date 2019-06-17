@@ -81,16 +81,23 @@
     <string name="download_add_complete">下载任务添加成功!</string>
     <string name="wait_download">等待下载</string>
     <string name="all_download">全部开始</string>
+    <string name="all_resume">全部开始</string>
     <string name="all_pause">全部暂停</string>
-    <string name="hint_comment">千言万语，汇成一句评论</string>
+    <string name="hint_comment1">千言万语，汇成一句评论</string>
+    <string name="hint_comment2">听说爱评论的人粉丝多</string>
+    <string name="hint_comment3">说点什么吧，也许Ta都听得到</string>
     <string name="comment_list">评论列表</string>
+    <string name="comment_replay">我轻轻的点开视频app 看了看堆在一旁的作业 真想扇自己一巴掌 看什么电视剧 太耽误我玩网易了</string>
+    <string name="comment_example">出租车师傅：姑娘别唱了，美食街到了 阿绫：天依你想吃什么，我请客 天依：阿绫阿绫，我想吃 小笼包 叉烧包 奶黄芝麻豆沙包 大肉包 菜包 灌汤包 北京烤鸭 麻婆豆腐 蒜泥白肉 担担面 酸辣粉 炸酱面 兰州拉面 鄱阳湖闸蟹 海南文昌鸡 烤乳猪 东坡肉 拔丝土豆 云吞面 麻辣烫 羊肉串 蟹壳黄 烧卖糯米鸡.....</string>
+    <string name="wonderful_comment">精彩评论</string>
     <string name="friend_list">好友列表</string>
     <string name="topic_list">话题列表</string>
-    <string name="enter_comment_content">请输入评论内容</string>
+    <string name="enter_comment_content">亲，你还没有请输入评论内容哦！</string>
     <string name="enter_content">请输入内容.</string>
     <string name="reply_comment">回复%1$s:</string>
     <string name="reply_comment_show">\@%1$s:%2$s</string>
     <string name="enter_nickname">请输入用户昵称</string>
+    <string name="enter_topic_title">请输入话题</string>
     <string name="nickname_space">昵称不能包含空格</string>
     <string name="join_count">%1$d人参与</string>
     <string name="user_detail">用户详情</string>
@@ -108,4 +115,6 @@
     <string name="user_detail_count_info">关注 %1$d | 粉丝 %2$d</string>
     <string name="message_count_99">99+</string>
     <string name="list_detail">歌单详情</string>
+    <string name="delete_all">全部删除</string>
+    <string name="recent_play">最近播放</string>
 </resources>

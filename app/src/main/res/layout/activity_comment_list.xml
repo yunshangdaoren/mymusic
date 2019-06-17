@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/tool_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <!-- 评论列表内容 -->
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/lrv_comment_list_"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </com.github.jdsjlzx.recyclerview.LRecyclerView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@color/white"
+            android:padding="@dimen/button_padding">
+
+            <!-- 评论输入框 -->
+            <android.support.text.emoji.widget.EmojiAppCompatEditText
+                android:id="@+id/et_comment_list_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text"
+                android:hint="@string/hint_comment2"/>
+
+            <!-- 发送评论按钮 -->
+            <Button
+                android:id="@+id/bt_comment_list_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

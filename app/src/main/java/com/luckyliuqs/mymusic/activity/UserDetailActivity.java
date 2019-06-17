@@ -55,10 +55,16 @@ import io.reactivex.schedulers.Schedulers;
  * 用户详情主页Activity
  */
 public class UserDetailActivity extends BaseTitleActivity {
-    //用户昵称
+    /**
+     * 用户昵称
+     */
     private String nickName;
-    //用户ID
+
+    /**
+     * 用户ID
+     */
     private String id;
+
     private UserDetailAdapter adapter;
     private User user;
 
@@ -67,7 +73,7 @@ public class UserDetailActivity extends BaseTitleActivity {
     @BindView(R.id.tabs)
     MagicIndicator tabs;
     @BindView(R.id.vp)
-    ViewPager vp;
+    ViewPager viewPager;
     @BindView(R.id.iv_avatar)
     ImageView iv_avatar;
     @BindView(R.id.tv_nickname)
@@ -91,7 +97,7 @@ public class UserDetailActivity extends BaseTitleActivity {
         enableBackMenu();
 
         //设置ViewPager缓存3个页面
-        vp.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(3);
         //setUpUI("0");
     }
 
@@ -107,7 +113,7 @@ public class UserDetailActivity extends BaseTitleActivity {
             //如果ID不为空，就通过ID查询
             fetchDataById(id);
         }else if(StringUtils.isNotEmpty(nickName)){
-            //通过昵称查询，主要用在@昵称中
+            //如果昵称不为空,通过昵称查询，主要用在@昵称中
             fetchDataByNickName(nickName);
         }else{
             //参数有误，直接finish（）
@@ -224,7 +230,7 @@ public class UserDetailActivity extends BaseTitleActivity {
     private void setUpUI(String id){
         adapter = new UserDetailAdapter(getActivity(), getSupportFragmentManager());
         adapter.setUserId(id);
-        vp.setAdapter(adapter);
+        viewPager.setAdapter(adapter);
 
         final ArrayList<Integer> datas = new ArrayList<Integer>();
         datas.add(0);
@@ -232,7 +238,7 @@ public class UserDetailActivity extends BaseTitleActivity {
         datas.add(2);
         adapter.setDatas(datas);
 
-        //将Tablayout和ViewPager关联起来
+        //将TabLayout和ViewPager关联起来
         CommonNavigator commonNavigator = new CommonNavigator(getActivity());
         commonNavigator.setAdapter(new CommonNavigatorAdapter() {
             @Override
@@ -256,7 +262,7 @@ public class UserDetailActivity extends BaseTitleActivity {
                     @Override
                     public void onClick(View view) {
                         //设置ViewPager当前的Fragment
-                        vp.setCurrentItem(index);
+                        viewPager.setCurrentItem(index);
                     }
                 });
                 return colorTransitionPagerTitleView;
@@ -275,7 +281,7 @@ public class UserDetailActivity extends BaseTitleActivity {
         tabs.setNavigator(commonNavigator);
 
         //将TabLayout与ViewPager绑定
-        ViewPagerHelper.bind(tabs, vp);
+        ViewPagerHelper.bind(tabs, viewPager);
     }
 
     @OnClick(R.id.bt_follow)

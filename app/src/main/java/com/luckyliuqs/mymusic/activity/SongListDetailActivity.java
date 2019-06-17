@@ -1,5 +1,6 @@
 package com.luckyliuqs.mymusic.activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -26,6 +28,7 @@ import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.DataUtil;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
+import com.luckyliuqs.mymusic.Util.StorageUtil;
 import com.luckyliuqs.mymusic.Util.ToastUtil;
 import com.luckyliuqs.mymusic.adapter.BaseRecyclerViewAdapter;
 import com.luckyliuqs.mymusic.adapter.SongAdapter;
@@ -34,6 +37,8 @@ import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
 import com.luckyliuqs.mymusic.domain.event.SongListCollectionStatusChangedEvent;
 import com.luckyliuqs.mymusic.domain.response.DetailResponse;
+import com.luckyliuqs.mymusic.domain.response.ListResponse;
+import com.luckyliuqs.mymusic.fragment.SelectSongListDialogFragment;
 import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
 import com.luckyliuqs.mymusic.manager.PlayListManager;
 import com.luckyliuqs.mymusic.reactivex.HttpListener;
@@ -44,6 +49,10 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
+import cn.woblog.android.downloader.DownloadService;
+import cn.woblog.android.downloader.callback.DownloadManager;
+import cn.woblog.android.downloader.domain.DownloadInfo;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -115,7 +124,7 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     /**
      * 歌单ID
      */
-    private String id;
+    private String songListId;
 
     /**
      * 歌单
@@ -123,7 +132,12 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     private SongList data;
 
     private LRecyclerViewAdapter adapterWrapper;
-    private SongAdapter adapter;
+    private SongAdapter songAdapter;
+
+    /**
+     * 下载manager
+     */
+    private DownloadManager downloadManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,14 +161,13 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     @Override
     protected void initDatas() {
         super.initDatas();
-
-
         //获取传入的歌单ID
-        id = getIntent().getStringExtra(Consts.ID);
+        songListId = getIntent().getStringExtra(Consts.ID);
+        downloadManager = DownloadService.getDownloadManager(getApplicationContext());
 
-        adapter = new SongAdapter(getActivity(), R.layout.item_song_detail, getSupportFragmentManager(), playListManager);
+        songAdapter = new SongAdapter(getActivity(), R.layout.item_song_detail, getSupportFragmentManager(), playListManager, downloadManager);
         //歌单内歌曲点击事件
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+        songAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseRecyclerViewAdapter.ViewHolder holder, int position) {
                 //点击歌单内某个歌曲后开始播放该歌曲
@@ -162,9 +175,9 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
             }
         });
 
-        adapter.setOnSongListener(this);
+        songAdapter.setOnSongListener(this);
 
-        adapterWrapper = new LRecyclerViewAdapter(adapter);
+        adapterWrapper = new LRecyclerViewAdapter(songAdapter);
         adapterWrapper.addHeaderView(createHeaderView());
 
         rv.setAdapter(adapterWrapper);
@@ -198,7 +211,7 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     }
 
     private void fetchData() {
-        Api.getInstance().songListDetail(id)
+        Api.getInstance().songListDetail(songListId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
@@ -277,9 +290,9 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
         songs.addAll(DataUtil.fill(data.getSongs()));
 
         boolean isMySheet = data.getUser().getId().equals(sp.getUserId());
-        adapter.setIsMySheet(isMySheet);
+        songAdapter.setIsMySheet(isMySheet);
         //设置歌曲data
-        adapter.setData(songs);
+        songAdapter.setData(songs);
 
         if (isMySheet){
             //如果是用户自己创建的歌单，则隐藏收藏按钮
@@ -293,12 +306,12 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
      * @param position
      */
     private void play(int position){
-        Song song = adapter.getData(position);
+        Song song = songAdapter.getData(position);
         //设置歌曲播放列表信息
-        playListManager.setPlayList(adapter.getDatas());
+        playListManager.setPlayList(songAdapter.getDatas());
         playListManager.play(song);
         //通知事件
-        adapter.notifyDataSetChanged();
+        songAdapter.notifyDataSetChanged();
         //跳转至歌曲播放页面
         startActivity(MusicPlayerActivity.class);
     }
@@ -321,8 +334,13 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
             case R.id.ll_song_list_play_all_container:   //播放歌单内全部歌曲
                 play(0);
                 break;
-            case R.id.ll_song_list_comment_container:    //歌单的评论
-
+            case R.id.ll_song_list_comment_container:    //歌单的评论列表
+                Intent intent = new Intent(this, CommentListActivity.class);
+                //设置传入歌单id参数
+                intent.putExtra(Consts.SONG_LIST_ID, songListId);
+                //设置传入参数类型：歌单
+                intent.putExtra(Consts.STYLE, Consts.STYLE_SONG_LIST);
+                startActivity(intent);
                 break;
             case R.id.bt_song_list_collection:           //收藏歌单
                 collectionSongList();
@@ -356,7 +374,7 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
 
         }else{
             //如果该歌单没有被收藏，则传入歌单id，调用收藏该歌单接口
-            Api.getInstance().collectionSongList(id)
+            Api.getInstance().collectionSongList(songListId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
@@ -381,18 +399,105 @@ public class SongListDetailActivity extends BaseMusicPlayerActivity implements V
     }
 
     //SongAdapter.onSongListener
+    /**
+     * 收藏指定歌曲到指定歌单中
+     * @param song
+     */
     @Override
-    public void onCollectionClick(Song song) {
-
+    public void onCollectionClick(final Song song) {
+        //获取用户自己创建的歌单，然后显示选择歌单的Fragment，选择收藏完成后调用接口完成收藏
+        Observable<ListResponse<SongList>> listResponseObservable = Api.getInstance().songListsMyCreate();
+        listResponseObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpListener<ListResponse<SongList>>((BaseActivity) getActivity()) {
+                    @Override
+                    public void onSucceeded(final ListResponse<SongList> data) {
+                        super.onSucceeded(data);
+                        SelectSongListDialogFragment.show(getSupportFragmentManager(), data.getData(), new SelectSongListDialogFragment.OnSelectSongListListener() {
+                            @Override
+                            public void onSelectSongListClick(SongList songList) {
+                                //收藏指定歌曲大指定歌单中
+                                collectionSong(song, songList);
+                            }
+                        });
+                    }
+                });
     }
 
+    /**
+     * 收藏指定歌曲到指定歌单中
+     * @param song
+     * @param songList
+     */
+    private void collectionSong(Song song, SongList songList){
+        Api.getInstance().addSongInSongList(song.getId(), songList.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
+                    @Override
+                    public void onSucceeded(DetailResponse<SongList> data) {
+                        super.onSucceeded(data);
+                        //收藏成功提示
+                        ToastUtil.showSortToast(getActivity(),getString(R.string.song_like_success));
+                    }
+                });
+    }
+
+    /**
+     * 下载歌曲
+     * @param song
+     */
     @Override
     public void onDownloadClick(Song song) {
+        //将下载歌曲保存到手机外部储存：MyMusic/Music目录中
+        DownloadInfo downloadInfo = downloadManager.getDownloadById(song.getId());
+        if (downloadInfo == null){
+            //如果该歌曲还没添加到下载任务中
+            downloadInfo = new DownloadInfo.Builder().setUrl(ImageUtil.getImageURI(song.getUri()))
+                                    //设置下载歌曲储存目录地址
+                                    .setPath(StorageUtil.getExternalPath(song.getTitle(), StorageUtil.MP3))
+                                    .build();
+            downloadInfo.setId(song.getId());
 
+            //开始下载，这里不需要进度，所以不设置回调
+            downloadManager.download(downloadInfo);
+
+            //保存业务数据
+            //将该歌曲的来源设置位下载的音乐
+            song.setSource(Song.SOURCE_DOWNLOAD);
+            ormUtil.saveSong(song, sp.getUserId());
+
+            //显示提示：下载任务添加成功
+            ToastUtil.showSortToast(getActivity(), getString(R.string.download_add_complete));
+        }else{
+            //如果该歌曲已经添加到下载任务中
+            if (downloadInfo.getStatus() == DownloadInfo.STATUS_COMPLETED){
+                //如果该歌曲已经下载完成了，则显示提示：该歌曲已经下载了!
+                ToastUtil.showSortToast(getActivity(), getString(R.string.already_downloaded));
+            }else{
+                //如果该歌曲正在下载中，则显示提示：已经在下载列表中!
+                ToastUtil.showSortToast(getActivity(), getString(R.string.already_downloading));
+            }
+        }
     }
 
+    /**
+     * 从歌单中删除歌曲
+     * @param song
+     */
     @Override
     public void onDeleteClick(Song song) {
+        Api.getInstance().deleteSongInSongList(song.getId(), songListId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
+                    @Override
+                    public void onSucceeded(DetailResponse<SongList> data) {
+                        super.onSucceeded(data);
+                        //删除成功提示
+                        ToastUtil.showSortToast(getActivity(),getString(R.string.delete_success));
+                    }
+                });
 
     }
     //SongAdapter.onSongListener

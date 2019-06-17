@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/button_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!-- 用户头像 -->
+        <ImageView
+            android:id="@+id/iv_comment_avatar"
+            android:layout_width="@dimen/item_comment_avatar_width"
+            android:layout_height="@dimen/item_comment_avatar_width"
+            android:src="@drawable/default_avatar"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/item_icon_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <!-- 用户昵称 -->
+                <TextView
+                    android:id="@+id/tv_comment_nickname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="神秘嘉宾"
+                    android:textSize="@dimen/nickname_comment"
+                    android:textColor="@color/nickname_comment"/>
+
+                <LinearLayout
+                    android:id="@+id/ll_comment_like_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- 点赞数量 -->
+                    <TextView
+                        android:id="@+id/tv_comment_like_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="12"
+                        android:textColor="@color/like_comment"
+                        android:textSize="@dimen/like_comment"/>
+
+                    <!-- 评论点赞图标 -->
+                    <ImageView
+                        android:id="@+id/iv_comment_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/item_icon_padding"
+                        android:src="@drawable/ic_comment_like"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <!-- 用户评论时间 -->
+            <TextView
+                android:id="@+id/tv_comment_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="昨天21:39"
+                android:textColor="@color/time_comment"
+                android:textSize="@dimen/time_comment"/>
+
+        </LinearLayout>>
+
+    </LinearLayout>
+
+    <!-- 用户评论内容 -->
+    <android.support.text.emoji.widget.EmojiTextView
+        android:id="@+id/tv_comment_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/button_padding"
+        android:layout_marginLeft="40dp"
+        android:textColor="@color/content_comment"
+        android:lineSpacingMultiplier="@dimen/line_space_multi"
+        android:textSize="@dimen/content_comment"
+        android:text="@string/comment_example"/>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cd_comment_replay_container"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/button_padding"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="@dimen/button_padding"
+        android:layout_gravity="center"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:background="@color/white"
+        app:cardCornerRadius="@dimen/radius"
+        app:cardElevation="@dimen/small_divider">
+
+        <!-- 被回复的用户的评论内容-->
+        <android.support.text.emoji.widget.EmojiTextView
+            android:id="@+id/tv_comment_replay_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/button_padding"
+            android:textColor="@color/text_dark"
+            android:lineSpacingMultiplier="@dimen/line_space_multi"
+            android:text="@string/comment_replay"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

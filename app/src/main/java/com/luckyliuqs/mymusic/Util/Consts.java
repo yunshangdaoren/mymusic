@@ -71,7 +71,10 @@ public class Consts {
      */
     public static final String TYPE_MY_LIST_COLLECTION = "10";
 
-    public static final String LIST_ID = "sheet_id";
+    /**
+     * 歌单id
+     */
+    public static final String SONG_LIST_ID = "sheet_id";
 
     /**
      * 评论，排序，最热
@@ -89,9 +92,25 @@ public class Consts {
     public static final String NICKNAME = "nickname";
     public static final String AK = "d87b7e285d123411";
     public static final String AS = "1286ef0d6fe8f555";
+
+    /**
+     * 传入参数类型
+     */
     public static final String STYLE = "style";
-    public static final int STYLE_LIST = 30;
+
+    /**
+     * 歌单类型
+     */
+    public static final int STYLE_SONG_LIST = 30;
+
+    /**
+     * 视频类型
+     */
     public static final String VIDEO_ID = "video_id";
+
+    /**
+     * 话题类型
+     */
     public static final String TOPIC = "topic";
     public static final String OSS_BUCKET_NAME = "dev-courses-misuc";
     public static final int DEFAULT_MESSAGE_COUNT = 10;

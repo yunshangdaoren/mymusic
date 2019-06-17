@@ -75,15 +75,35 @@
             android:name=".activity.SongListDetailActivity"
             android:label="@string/list_detail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.ScanLocalMusicActivity"
+        <activity
+            android:name=".activity.ScanLocalMusicActivity"
             android:label="@string/scan_local_music"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activity.LocalMusicActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.LocalMusicActivity"
             android:label="@string/local_music"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.DownloadManagerActivity"
+            android:label="@string/download_manager"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.RecentPlayActivity"
+            android:label="@string/recent_play"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.CommentListActivity"
+            android:label="@string/comment_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.SelectTopicActivity"
+            android:label="@string/select_topic"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.SelectFriendActivity"
+            android:label="@string/select_friend"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.TopicDetailActivity"
+            android:label="@string/topic_detail"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

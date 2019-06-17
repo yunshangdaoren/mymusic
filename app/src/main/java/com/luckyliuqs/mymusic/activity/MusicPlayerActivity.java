@@ -575,32 +575,34 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
 
     /**
      * 初始化歌曲播放页面信息
-     * @param data
+     * @param song
      */
-    public void setInitData(Song data){
+    public void setInitData(Song song){
         //设置音乐播放进度条最大播放时间进度值
-        sb_progress.setMax((int) data.getDuration());
+        sb_progress.setMax((int) song.getDuration());
         //设置最后一次播放时间进度值
         sb_progress.setProgress(sp.getLastSongProgress());
         //设置音乐播放进度条开始时间
-        tv_start_time.setText(TimeUtil.formatMSTime((int)sp.getLastSongProgress()));
+        tv_start_time.setText(TimeUtil.formatMSTime((int) sp.getLastSongProgress()));
         //设置音乐播放进度条结束时间
-        tv_end_time.setText(TimeUtil.formatMSTime((int)data.getDuration()));
+        tv_end_time.setText(TimeUtil.formatMSTime((int) song.getDuration()));
 
         //设置歌曲播放页面唱片封面信息
-        rv.setAlbumUri(data.getBanner());
+        rv.setAlbumUri(song.getBanner());
         //设置页面标题为歌曲名称
-        getActivity().setTitle(data.getTitle());
+        getActivity().setTitle(song.getTitle());
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(data.getArtist_name());
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle(song.getArtist_name());
 
-        if (StringUtils.isNotBlank(data.getBanner())){
+        //设置音乐播放页面背景
+        if (song.getSource() == Song.SOURCE_ONLINE){
+            //如果是在线音乐，则调用song.getBanner设置播放页面背景
             //40:模糊度；4:图片缩放4倍后再进行模糊
-            final RequestOptions requestOptions = RequestOptions.bitmapTransform(new BlurTransformation(40, 4));
+            final RequestOptions requestOptions = RequestOptions.bitmapTransform(new BlurTransformation(50, 4));
 
             requestOptions.error(R.drawable.default_album);
 
-            Glide.with(getActivity()).asDrawable().load(ImageUtil.getImageURI(data.getBanner())).apply(requestOptions).into(new SimpleTarget<Drawable>() {
+            Glide.with(getActivity()).asDrawable().load(ImageUtil.getImageURI(song.getBanner())).apply(requestOptions).into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                     AlbumDrawableUtil albumDrawableUtil = new AlbumDrawableUtil(iv_album_bg.getDrawable(), resource);
@@ -610,12 +612,13 @@ public class MusicPlayerActivity extends BaseTitleActivity implements View.OnCli
             });
 
         }else{
+            //如果是不是在线音乐，则调用song.getAlbum_banner设置播放页面背景
             //40:模糊度；4:图片缩放4倍后再进行模糊
-            final RequestOptions requestOptions = RequestOptions.bitmapTransform(new BlurTransformation(40, 4));
+            final RequestOptions requestOptions = RequestOptions.bitmapTransform(new BlurTransformation(50, 4));
 
             requestOptions.error(R.drawable.default_album);
 
-            Glide.with(getActivity()).asDrawable().load(data.getBanner()).apply(requestOptions).into(new SimpleTarget<Drawable>() {
+            Glide.with(getActivity()).asDrawable().load(song.getAlbum_banner()).apply(requestOptions).into(new SimpleTarget<Drawable>() {
                 @Override
                 public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
                     AlbumDrawableUtil albumDrawableUtil = new AlbumDrawableUtil(iv_album_bg.getDrawable(), resource);

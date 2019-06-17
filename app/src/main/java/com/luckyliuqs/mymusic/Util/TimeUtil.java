@@ -1,5 +1,8 @@
 package com.luckyliuqs.mymusic.Util;
 
+
+import org.joda.time.DateTime;
+
 /**
  * 时间处理工具类
  */
@@ -46,6 +49,17 @@ public class TimeUtil {
         int second = time % 60;
         minute %= 60;
         return String.format("%02d:%02d", new Object[]{Integer.valueOf(minute), Integer.valueOf(second)});
+    }
+
+    public static String dateTimeFormat(String date){
+        try{
+            DateTime dateTime = new DateTime(date);
+            return dateTime.toString("yyyy-MM-dd HH:mm");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return "";
     }
 
 }

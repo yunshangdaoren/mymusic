@@ -12,6 +12,9 @@ import java.net.SocketTimeoutException;
 
 import retrofit2.HttpException;
 
+/**
+ * 错误提示
+ */
 public class ExceptHandler {
     private Activity activity;
 

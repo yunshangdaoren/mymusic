@@ -10,7 +10,7 @@
         style="@style/ItemEntryContainer">
 
         <TextView
-            android:id="@+id/tv_song"
+            android:id="@+id/tv_song_more_title"
             style="@style/ItemEntryTitle"
             android:text="@string/song_detail"/>
     </LinearLayout>
@@ -19,7 +19,7 @@
 
     <!-- 下一首播放模块 -->
     <LinearLayout
-        android:id="@+id/ll_next_play"
+        android:id="@+id/ll_song_more_next_play"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -36,7 +36,7 @@
 
     <!-- 收藏到歌单模块 -->
     <LinearLayout
-        android:id="@+id/ll_collection"
+        android:id="@+id/ll_song_more_collection"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -53,7 +53,7 @@
 
     <!-- 下载模块 -->
     <LinearLayout
-        android:id="@+id/ll_download"
+        android:id="@+id/ll_song_more_download"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -70,7 +70,7 @@
 
     <!-- 评论模块 -->
     <LinearLayout
-        android:id="@+id/ll_comment"
+        android:id="@+id/ll_song_more_comment"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -79,7 +79,7 @@
             android:src="@drawable/ic_phone"/>
 
         <TextView
-            android:id="@+id/tv_comment_count"
+            android:id="@+id/tv_song_more_comment_count"
             style="@style/ItemEntryTitle"
             android:text="@string/comment_count"/>
     </LinearLayout>
@@ -88,7 +88,7 @@
 
     <!-- 下载模块 -->
     <LinearLayout
-        android:id="@+id/ll_share"
+        android:id="@+id/ll_song_more_share"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -105,7 +105,7 @@
 
     <!-- 歌手模块 -->
     <LinearLayout
-        android:id="@+id/ll_song_artist"
+        android:id="@+id/ll_song_more_artist"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -114,8 +114,9 @@
             android:src="@drawable/ic_phone"/>
 
         <TextView
-            android:id="@+id/tv_artist"
+            android:id="@+id/tv_song_more_artist"
             style="@style/ItemEntryTitle"
+            android:maxLines="1"
             android:text="@string/artist"/>
     </LinearLayout>
 
@@ -123,7 +124,7 @@
 
     <!-- 专辑模块 -->
     <LinearLayout
-        android:id="@+id/ll_song_album"
+        android:id="@+id/ll_song_more_album"
         style="@style/ItemEntryContainer">
 
         <ImageView
@@ -132,7 +133,7 @@
             android:src="@drawable/ic_phone"/>
 
         <TextView
-            android:id="@+id/tv_album"
+            android:id="@+id/tv_song_more_album"
             style="@style/ItemEntryTitle"
             android:text="@string/album"/>
     </LinearLayout>
@@ -142,7 +143,7 @@
     <!-- 删除歌曲模块 -->
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/ll_delete"
+        android:id="@+id/ll_song_more_delete"
         style="@style/ItemEntryContainer">
 
         <ImageView

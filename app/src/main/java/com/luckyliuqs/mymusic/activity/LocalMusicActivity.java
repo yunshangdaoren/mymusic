@@ -14,13 +14,20 @@ import android.widget.TextView;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.luckyliuqs.mymusic.R;
+import com.luckyliuqs.mymusic.Util.ToastUtil;
 import com.luckyliuqs.mymusic.adapter.BaseRecyclerViewAdapter;
 import com.luckyliuqs.mymusic.adapter.SongAdapter;
+import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.Song;
+import com.luckyliuqs.mymusic.domain.SongList;
 import com.luckyliuqs.mymusic.domain.event.ScanMusicCompleteEvent;
+import com.luckyliuqs.mymusic.domain.response.DetailResponse;
+import com.luckyliuqs.mymusic.domain.response.ListResponse;
 import com.luckyliuqs.mymusic.fragment.MusicSortDialogFragment;
+import com.luckyliuqs.mymusic.fragment.SelectSongListDialogFragment;
 import com.luckyliuqs.mymusic.manager.MusicPlayerManager;
 import com.luckyliuqs.mymusic.manager.PlayListManager;
+import com.luckyliuqs.mymusic.reactivex.HttpListener;
 import com.luckyliuqs.mymusic.service.MusicPlayerService;
 
 import org.greenrobot.eventbus.EventBus;
@@ -28,6 +35,12 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
+import cn.woblog.android.downloader.DownloadService;
+import cn.woblog.android.downloader.callback.DownloadManager;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 本地音乐Activity
@@ -51,6 +64,7 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity implements View.
     private SongAdapter songAdapter;
     private LRecyclerViewAdapter lRecyclerViewAdapter;
 
+    private DownloadManager downloadManager;
 
 
     @Override
@@ -81,7 +95,8 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity implements View.
         super.initDatas();
         EventBus.getDefault().register(this);
 
-        songAdapter = new SongAdapter(getActivity(), R.layout.item_song_detail, getSupportFragmentManager(), playListManager);
+        downloadManager = DownloadService.getDownloadManager(getApplicationContext());
+        songAdapter = new SongAdapter(getActivity(), R.layout.item_song_detail, getSupportFragmentManager(), playListManager, downloadManager);
         songAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseRecyclerViewAdapter.ViewHolder holder, int position) {
@@ -252,20 +267,69 @@ public class LocalMusicActivity extends BaseMusicPlayerActivity implements View.
         super.onDestroy();
     }
 
+    //SongAdapter.onSongListener
+    /**
+     * 收藏指定歌曲到指定歌单中
+     * @param song
+     */
     @Override
-    public void onCollectionClick(Song song) {
-
+    public void onCollectionClick(final Song song) {
+        //获取用户自己创建的歌单，然后显示选择歌单的Fragment，选择收藏完成后调用接口完成收藏
+        Observable<ListResponse<SongList>> listResponseObservable = Api.getInstance().songListsMyCreate();
+        listResponseObservable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpListener<ListResponse<SongList>>((BaseActivity) getActivity()) {
+                    @Override
+                    public void onSucceeded(final ListResponse<SongList> data) {
+                        super.onSucceeded(data);
+                        SelectSongListDialogFragment.show(getSupportFragmentManager(), data.getData(), new SelectSongListDialogFragment.OnSelectSongListListener() {
+                            @Override
+                            public void onSelectSongListClick(SongList songList) {
+                                //收藏指定歌曲大指定歌单汇中
+                                collectionSong(song, songList);
+                            }
+                        });
+                    }
+                });
     }
 
+    /**
+     * 收藏指定歌曲到指定歌单中
+     * @param song
+     * @param songList
+     */
+    private void collectionSong(Song song, SongList songList){
+        Api.getInstance().addSongInSongList(song.getId(), songList.getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpListener<DetailResponse<SongList>>(getActivity()) {
+                    @Override
+                    public void onSucceeded(DetailResponse<SongList> data) {
+                        super.onSucceeded(data);
+                        //收藏成功提示
+                        ToastUtil.showSortToast(getActivity(),getString(R.string.song_like_success));
+                    }
+                });
+    }
+
+    /**
+     * 下载歌曲
+     * @param song
+     */
     @Override
     public void onDownloadClick(Song song) {
 
     }
 
+    /**
+     * 从本地歌曲列表中删除指定歌曲
+     * @param song
+     */
     @Override
     public void onDeleteClick(Song song) {
 
     }
+    //SongAdapter.onSongListener
 }
 
 
