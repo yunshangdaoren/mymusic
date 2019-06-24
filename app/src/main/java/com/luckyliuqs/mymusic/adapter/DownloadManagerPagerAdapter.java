@@ -11,10 +11,10 @@ import com.luckyliuqs.mymusic.fragment.DownloadingFragment;
 /**
  * DownloadManager Activity 的Adapter
  */
-public class DownloadManagerAdapter extends BaseFragmentAdapter<Integer>{
+public class DownloadManagerPagerAdapter extends BaseFragmentPagerAdapter<Integer> {
     private static String[] titleNames = {"下载完成", "正在下载"};
 
-    public DownloadManagerAdapter(Context context, FragmentManager fm) {
+    public DownloadManagerPagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 

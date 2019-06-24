@@ -20,8 +20,11 @@ public class FriendAdapter extends BaseQuickRecyclerViewAdapter<User> {
 
     @Override
     protected void bindData(ViewHolder holder, int position, User user) {
-        ImageUtil.showCircle((Activity) context, (ImageView) holder.getView(R.id.iv_avatar), user.getAvatar());
+        //设置用户头像
+        ImageUtil.showCircle((Activity) context, (ImageView) holder.getView(R.id.iv_friend_avatar), user.getAvatar());
+        //设置用户昵称
         holder.setText(R.id.tv_friend_nickname, user.getNickname());
+        //设置用户个性签名
         holder.setText(R.id.tv_friend_info, user.getDescription());
     }
 }

@@ -12,10 +12,10 @@ import com.luckyliuqs.mymusic.fragment.RecommendFragment;
 /**
  * 发现界面Adapter类
  */
-public class FindFragmentAdapter extends BaseFragmentAdapter<Integer>{
+public class FindFragmentPagerAdapter extends BaseFragmentPagerAdapter<Integer> {
     private static String[] titleNames = {"推荐", "朋友", "电台"};
 
-    public FindFragmentAdapter(Context context, FragmentManager fm) {
+    public FindFragmentPagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 

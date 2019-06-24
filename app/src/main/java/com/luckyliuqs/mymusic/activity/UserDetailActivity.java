@@ -3,12 +3,10 @@ package com.luckyliuqs.mymusic.activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.graphics.Palette;
 import android.util.Log;
@@ -26,8 +24,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
-import com.luckyliuqs.mymusic.Util.StringUtil;
-import com.luckyliuqs.mymusic.adapter.UserDetailAdapter;
+import com.luckyliuqs.mymusic.adapter.UserDetailPagerAdapter;
 import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.User;
 import com.luckyliuqs.mymusic.domain.response.DetailResponse;
@@ -65,7 +62,7 @@ public class UserDetailActivity extends BaseTitleActivity {
      */
     private String id;
 
-    private UserDetailAdapter adapter;
+    private UserDetailPagerAdapter adapter;
     private User user;
 
     @BindView(R.id.abl)
@@ -84,6 +81,11 @@ public class UserDetailActivity extends BaseTitleActivity {
     Button bt_follow;
     @BindView(R.id.bt_send_message)
     Button bt_send_message;
+
+    /**
+     * 用户粉丝数
+     */
+    private int followers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +147,7 @@ public class UserDetailActivity extends BaseTitleActivity {
      */
     private void fetchDataByNickName(String nickName) {
         Api.getInstance().userDetailByNickName(nickName)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new HttpListener<DetailResponse<User>>(getActivity()) {
                     @Override
@@ -171,7 +174,7 @@ public class UserDetailActivity extends BaseTitleActivity {
             bitmapRequestBuilder.into(new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(@NonNull final Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                    Log.i("URL", "=========== recource is not null");
+                    //Log.i("URL", "=========== recource is not null");
                     iv_avatar.setImageBitmap(resource);
                     Palette.from(resource).generate(new Palette.PaletteAsyncListener() {
                         @Override
@@ -195,13 +198,16 @@ public class UserDetailActivity extends BaseTitleActivity {
         }
 
         tv_nickName.setText(user.getNickname());
-        tv_info.setText(getResources().getString(R.string.user_detail_count_info, user.getFollowings_count(), user.getFollowers_count()));
+
+        //Log.i("UserDetailActivity", "有、第一次进来用户粉丝:"+user.getFollowers_count());
+        followers = user.getFollowers_count();
+        tv_info.setText(getResources().getString(R.string.user_detail_count_info, user.getFollowings_count(), followers));
 
         showFollowStatus();
     }
 
     /**
-     * 显示用户关注状态按钮
+     * 显示用户关注按钮状态
      */
     private void showFollowStatus(){
         if (user.getId().equals(sp.getUserId())){
@@ -221,6 +227,8 @@ public class UserDetailActivity extends BaseTitleActivity {
                 bt_send_message.setVisibility(View.GONE);
             }
         }
+
+        //tv_info.setText(getResources().getString(R.string.user_detail_count_info, user.getFollowings_count(), user.getFollowers_count()));
     }
 
     /**
@@ -228,7 +236,7 @@ public class UserDetailActivity extends BaseTitleActivity {
      * @param id
      */
     private void setUpUI(String id){
-        adapter = new UserDetailAdapter(getActivity(), getSupportFragmentManager());
+        adapter = new UserDetailPagerAdapter(getActivity(), getSupportFragmentManager());
         adapter.setUserId(id);
         viewPager.setAdapter(adapter);
 
@@ -284,9 +292,56 @@ public class UserDetailActivity extends BaseTitleActivity {
         ViewPagerHelper.bind(tabs, viewPager);
     }
 
+    /**
+     * 关注或取消关注点击事件
+     */
     @OnClick(R.id.bt_follow)
     public void bt_follow(){
+        //final int followes = user.getFollowers_count();
 
+        if (user.isFollowing()){
+            //取消关注用户
+            Api.getInstance().unFollow(user.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new HttpListener<DetailResponse<User>>(getActivity()) {
+                        @Override
+                        public void onSucceeded(DetailResponse<User> data) {
+                            super.onSucceeded(data);
+                            user.setFollowing(0);
+
+                            Log.i("UserDetailActivity", "用户粉丝:"+user.getFollowers_count());
+                            //该用户粉丝数-1
+                            followers--;
+                            tv_info.setText(getResources().getString(R.string.user_detail_count_info, user.getFollowings_count(),followers));
+
+                            //显示用户关注按钮状态，也可以调用服务端，以服务端的数据刷新界面
+                            showFollowStatus();
+                        }
+                    });
+        }else{
+            //关注用户
+            //关注
+            Api.getInstance().follow(user.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new HttpListener<DetailResponse<User>>(getActivity()) {
+                        @Override
+                        public void onSucceeded(DetailResponse<User> data) {
+                            super.onSucceeded(data);
+                            user.setFollowing(1);
+
+                            Log.i("UserDetailActivity", "用户粉丝:"+user.getFollowers_count());
+
+                            //该用户粉丝数+1
+                            followers++;
+                            tv_info.setText(getResources().getString(R.string.user_detail_count_info, user.getFollowings_count(),followers));
+
+                            //显示用户关注按钮状态
+                            showFollowStatus();
+                        }
+                    });
+        }
     }
 
     @OnClick(R.id.bt_send_message)

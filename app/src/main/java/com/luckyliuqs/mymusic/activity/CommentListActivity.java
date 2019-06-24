@@ -48,7 +48,7 @@ import io.reactivex.schedulers.Schedulers;
  * 评论列表Activity页面
  */
 public class CommentListActivity extends BaseTitleActivity implements CommentAdapter.OnCommentAdapter, OnRefreshListener, OnLoadMoreListener, TextWatcher, View.OnClickListener {
-    private static final String TAG = "TAG";
+    private static final String TAG = "CommentListActivityTo";
     private LRecyclerView lRecyclerView;
     private CommentAdapter commentAdapter;
     private LRecyclerViewAdapter lRecyclerViewAdapter;
@@ -351,11 +351,11 @@ public class CommentListActivity extends BaseTitleActivity implements CommentAda
             String string = s.toString();
             String lastChar = string.substring(s.length() - 1);
             if (Consts.MENTION.equals(lastChar)){
-                Log.i(TAG, "afterTextChanged: " + lastChar);
+                Log.i(TAG, "========================afterTextChanged: " + lastChar);
                 //输入了@符号，就跳转到选择用户的好友列表界面
                 startActivity(SelectFriendActivity.class);
             }else if(Consts.HAST_TAG.equals(lastChar)){
-                Log.i(TAG, "afterTextChanged: " + lastChar);
+                Log.i(TAG, "=======================afterTextChanged: " + lastChar);
                 //输入了#符号，就跳转选择话题列表界面
                 startActivity(SelectTopicActivity.class);
             }

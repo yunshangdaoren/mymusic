@@ -1,6 +1,5 @@
 package com.luckyliuqs.mymusic.domain;
 
-import android.media.Image;
 
 import java.util.List;
 

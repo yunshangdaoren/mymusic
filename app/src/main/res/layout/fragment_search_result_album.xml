@@ -3,13 +3,11 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg">
+    android:background="#FF9800">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_select_song_list"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:text="专辑" />
 
 </LinearLayout>

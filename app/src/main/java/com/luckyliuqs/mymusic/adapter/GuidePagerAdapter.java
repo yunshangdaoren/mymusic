@@ -9,8 +9,8 @@ import com.luckyliuqs.mymusic.fragment.GuideFragment;
 /**
  * 引导页面Adapter类
  */
-public class GuideAdapter extends BaseFragmentAdapter<Integer>{
-    public GuideAdapter(Context context, FragmentManager fm) {
+public class GuidePagerAdapter extends BaseFragmentPagerAdapter<Integer> {
+    public GuidePagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 

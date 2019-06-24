@@ -12,7 +12,7 @@ import com.luckyliuqs.mymusic.fragment.UserDetailMusicFragment;
 /**
  * 用户详情主页Adapter类
  */
-public class UserDetailAdapter extends BaseFragmentAdapter<Integer>{
+public class UserDetailPagerAdapter extends BaseFragmentPagerAdapter<Integer> {
     private static String[] titleNames = {"音乐", "动态", "关于我"};
     private String userId;
 
@@ -20,7 +20,7 @@ public class UserDetailAdapter extends BaseFragmentAdapter<Integer>{
         this.userId = userId;
     }
 
-    public UserDetailAdapter(Context context, FragmentManager fm) {
+    public UserDetailPagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 

@@ -128,6 +128,9 @@ dependencies {
     //emoji控件
     implementation "com.android.support:support-emoji-appcompat:$rootProject.androidSupportVersion"
 
+    //flow layout
+    implementation 'com.nex3z:flow-layout:1.2.3'
+
     //download
     implementation project(':downloader')
     implementation 'org.jetbrains:annotations-java5:15.0'

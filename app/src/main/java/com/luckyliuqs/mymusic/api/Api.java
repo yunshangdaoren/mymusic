@@ -7,6 +7,8 @@ import com.luckyliuqs.mymusic.Util.LogUtil;
 import com.luckyliuqs.mymusic.Util.SharedPreferencesUtil;
 import com.luckyliuqs.mymusic.domain.Advertisement;
 import com.luckyliuqs.mymusic.domain.Comment;
+import com.luckyliuqs.mymusic.domain.HotSearch;
+import com.luckyliuqs.mymusic.domain.SearchHistory;
 import com.luckyliuqs.mymusic.domain.Session;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
@@ -340,7 +342,53 @@ public class Api {
             data.put(Consts.FILTER, nickname);
         }
 
-        return service.following(id, data);
+        return service.followers(id, data);
+    }
+
+    /**
+     * @return 热门搜索列表数据
+     */
+    public Observable<ListResponse<HotSearch>> searchHot(){
+        HashMap<String, String> query = new HashMap<>();
+        return service.hotSearch(query);
+    }
+
+    /**
+     * @param title
+     * @return 搜索的歌曲信息
+     */
+    public Observable<ListResponse<Song>> searchSong(String title){
+        HashMap<String, String> query = new HashMap<>();
+        query.put(Consts.TITLE, title);
+        return service.searchSong(query);
+    }
+
+    /**
+     * @param content
+     * @return 搜索提示
+     */
+    public Observable<ListResponse<HotSearch>> prompt(String content){
+        HashMap<String, String> query = new HashMap<>();
+        query.put(Consts.TITLE, content);
+        return service.prompt(query);
+    }
+
+    /**
+     * 关注用户
+     * @param userId
+     * @return
+     */
+    public Observable<DetailResponse<User>> follow(String userId){
+        return service.follow(userId);
+    }
+
+    /**
+     * 取消关注用户
+     * @param userId
+     * @return
+     */
+    public Observable<DetailResponse<User>> unFollow(String userId){
+        return service.unFollow(userId);
     }
 
 

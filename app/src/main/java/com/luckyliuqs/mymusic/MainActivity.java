@@ -6,6 +6,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -16,9 +18,10 @@ import com.luckyliuqs.mymusic.Util.UserUtil;
 import com.luckyliuqs.mymusic.activity.BaseMusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.LoginActivity;
 import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
+import com.luckyliuqs.mymusic.activity.SearchActivity;
 import com.luckyliuqs.mymusic.activity.SettingActivity;
 import com.luckyliuqs.mymusic.activity.UserDetailActivity;
-import com.luckyliuqs.mymusic.adapter.MainActivityAdapter;
+import com.luckyliuqs.mymusic.adapter.MainActivityPagerAdapter;
 import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.User;
 import com.luckyliuqs.mymusic.domain.event.LogoutSuccessEvent;
@@ -44,7 +47,7 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
     //用户个人描述
     private TextView tv_description;
     private ViewPager viewPager;
-    private MainActivityAdapter mainActivityAdapter;
+    private MainActivityPagerAdapter mainActivityAdapter;
 
     private ImageView iv_music;
     private ImageView iv_recommend;
@@ -98,7 +101,7 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
         super.initDatas();
 
         //创建首页适配器对象
-        mainActivityAdapter = new MainActivityAdapter(getActivity(),getSupportFragmentManager());
+        mainActivityAdapter = new MainActivityPagerAdapter(getActivity(),getSupportFragmentManager());
         viewPager.setAdapter(mainActivityAdapter);
 
         ArrayList<Integer> datas = new ArrayList<>();
@@ -256,6 +259,23 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
     private void showData(User user) {
         //将显示用户信息放到单独的类中，是为了重用，因为在用户详情界面会用到
         UserUtil.showUser(getActivity(), user, iv_avatar, tv_nickname, tv_description);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_search){
+            startActivity(SearchActivity.class);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

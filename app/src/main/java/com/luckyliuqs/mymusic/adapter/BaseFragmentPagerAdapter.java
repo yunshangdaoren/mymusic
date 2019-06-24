@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Fragment Adapter基类
  */
-public abstract class BaseFragmentAdapter<T> extends FragmentPagerAdapter {
+public abstract class BaseFragmentPagerAdapter<T> extends FragmentPagerAdapter {
     /**
      * 定义上下文Context对象
      */
@@ -21,7 +21,7 @@ public abstract class BaseFragmentAdapter<T> extends FragmentPagerAdapter {
      */
     protected  final List<T> datas = new ArrayList<T>();
 
-    public BaseFragmentAdapter(Context context, FragmentManager fm){
+    public BaseFragmentPagerAdapter(Context context, FragmentManager fm){
         super(fm);
         this.context = context;
     }

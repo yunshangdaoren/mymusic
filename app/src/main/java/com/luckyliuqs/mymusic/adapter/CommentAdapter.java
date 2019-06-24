@@ -51,9 +51,10 @@ public class CommentAdapter extends BaseRecyclerViewAdapter<Object, CommentAdapt
         if (TYPE_TITLE == viewType){
             //标题
             return new CommentAdapter.TitleViewHolder(getInflater().inflate(R.layout.item_comment_title, viewGroup, false));
+        }else{
+            //评论内容
+            return new CommentAdapter.CommentViewHolder(getInflater().inflate(R.layout.item_comment, viewGroup, false));
         }
-        //评论内容
-        return new CommentAdapter.CommentViewHolder(getInflater().inflate(R.layout.item_comment, viewGroup, false));
     }
 
     @Override
@@ -174,9 +175,18 @@ public class CommentAdapter extends BaseRecyclerViewAdapter<Object, CommentAdapt
         public void bindData(final Object data) {
             super.bindData(data);
             //评论
-            Comment comment = (Comment) data;
+            final Comment comment = (Comment) data;
             //设置用户头像
             ImageUtil.showCircle((Activity) context, iv_comment_avatar, comment.getUser().getAvatar());
+            iv_comment_avatar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //点击用户头像，跳转到用户详情界面
+                    Intent intent = new Intent(context, UserDetailActivity.class);
+                    intent.putExtra(Consts.NICKNAME, comment.getUser().getNickname());
+                    ((BaseActivity) context).startActivity(intent);
+                }
+            });
 
             //评论内容，设置后才可以点击
             tv_comment_content.setMovementMethod(LinkMovementMethod.getInstance());

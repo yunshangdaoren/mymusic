@@ -11,8 +11,8 @@ import com.luckyliuqs.mymusic.fragment.VideoFragment;
 /**
  * 主界面Adapter类
  */
-public class MainActivityAdapter extends BaseFragmentAdapter<Integer>{
-    public MainActivityAdapter(Context context, FragmentManager fm) {
+public class MainActivityPagerAdapter extends BaseFragmentPagerAdapter<Integer> {
+    public MainActivityPagerAdapter(Context context, FragmentManager fm) {
         super(context, fm);
     }
 

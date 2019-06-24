@@ -3,12 +3,11 @@ package com.luckyliuqs.mymusic.activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
 import com.luckyliuqs.mymusic.R;
-import com.luckyliuqs.mymusic.adapter.DownloadManagerAdapter;
+import com.luckyliuqs.mymusic.adapter.DownloadManagerPagerAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -27,7 +26,7 @@ import java.util.ArrayList;
 public class DownloadManagerActivity extends BaseTitleActivity {
     private ViewPager viewPager;
     MagicIndicator tabs;
-    private DownloadManagerAdapter adapater;
+    private DownloadManagerPagerAdapter adapater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,7 @@ public class DownloadManagerActivity extends BaseTitleActivity {
     @Override
     protected void initDatas() {
         super.initDatas();
-        adapater = new DownloadManagerAdapter(getActivity(), getSupportFragmentManager());
+        adapater = new DownloadManagerPagerAdapter(getActivity(), getSupportFragmentManager());
         viewPager.setAdapter(adapater);
         fetchData();
     }

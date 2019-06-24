@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.MyFriendActivity">
+
+    <include layout="@layout/tool_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <!-- Tab Layout-->
+            <net.lucode.hackware.magicindicator.MagicIndicator
+                android:id="@+id/tabs_my_friend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/tab_layout_height"
+                style="@style/TabLayout"
+                android:paddingBottom="@dimen/button_padding">
+
+            </net.lucode.hackware.magicindicator.MagicIndicator>
+        </LinearLayout>
+
+        <!--View Pager -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_my_friend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </android.support.v4.view.ViewPager>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

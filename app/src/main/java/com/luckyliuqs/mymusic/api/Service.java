@@ -2,6 +2,8 @@ package com.luckyliuqs.mymusic.api;
 
 import com.luckyliuqs.mymusic.domain.Advertisement;
 import com.luckyliuqs.mymusic.domain.Comment;
+import com.luckyliuqs.mymusic.domain.HotSearch;
+import com.luckyliuqs.mymusic.domain.SearchHistory;
 import com.luckyliuqs.mymusic.domain.Session;
 import com.luckyliuqs.mymusic.domain.Song;
 import com.luckyliuqs.mymusic.domain.SongList;
@@ -219,7 +221,43 @@ public interface Service {
     @GET("users/{id}/followers.json")
     Observable<ListResponse<User>> followers(@Path("id") String id, @QueryMap Map<String, String> data);
 
+    /**
+     * @param data
+     * @return 热门搜索列表数据
+     */
+    @GET("searches/hots.json")
+    Observable<ListResponse<HotSearch>> hotSearch(@QueryMap Map<String, String> data);
 
+    /**
+     * @param data
+     * @return 搜索的歌曲信息
+     */
+    @GET("searches/songs.json")
+    Observable<ListResponse<Song>> searchSong(@QueryMap Map<String, String> data);
+
+    /**
+     * @param data
+     * @return 搜索提示数据
+     */
+    @GET("searches/prompts.json")
+    Observable<ListResponse<HotSearch>> prompt(@QueryMap Map<String, String> data);
+
+    /**
+     * 关注用户
+     * @param user_id
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("relationships.json")
+    Observable<DetailResponse<User>> follow(@Field("id") String user_id);
+
+    /**
+     * 取消关注用户
+     * @param user_id
+     * @return
+     */
+    @DELETE("relationships/{user_id}.json")
+    Observable<DetailResponse<User>> unFollow(@Path("user_id") String user_id);
 
 
 }

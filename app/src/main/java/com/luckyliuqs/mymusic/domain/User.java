@@ -37,7 +37,7 @@ public class User extends Base{
      */
     private String avatar;
     /**
-     * 用户描述
+     * 用户个性签名描述
      */
     private String description;
     /**

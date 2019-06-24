@@ -6,6 +6,7 @@ import android.content.Context;
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.assit.WhereBuilder;
+import com.luckyliuqs.mymusic.domain.SearchHistory;
 import com.luckyliuqs.mymusic.domain.Song;
 
 import java.util.ArrayList;
@@ -61,6 +62,11 @@ public class OrmUtil {
         return songs;
     }
 
+    /**
+     * @param userId
+     * @param orderBy
+     * @return 查询的本地歌曲
+     */
     public List<Song> queryLocalMusic(String userId, String orderBy){
         ArrayList<Song> songs = orm.query(new QueryBuilder<Song>(Song.class)
                                             .whereEquals("userId", userId)
@@ -82,8 +88,27 @@ public class OrmUtil {
         return orm.queryById(id, Song.class);
     }
 
+    /**
+     * @return 搜索历史数据
+     */
+    public List<SearchHistory> queryAllSearchHistory(){
+        return orm.query(new QueryBuilder<SearchHistory>(SearchHistory.class)
+                            .appendOrderDescBy("create_at"));
+    }
+    /**
+     * 删除搜索历史
+     * @param searchHistory
+     */
+    public void deleteSearchHistory(SearchHistory searchHistory){
+        orm.delete(searchHistory);
+    }
 
-
-
+    /**
+     * 保存搜索历史数据
+     * @param searchHistory
+     */
+    public void createOrUpdate(SearchHistory searchHistory){
+        orm.save(searchHistory);
+    }
 
 }

@@ -280,8 +280,7 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
             //歌曲为本地音乐，则不需要拼接地址
             musicPlayerManager.play(currentSong.getUri(), song);
         }else{
-            //
-
+            //歌曲为在线音乐，需要拼接地址
             musicPlayerManager.play(ImageUtil.getImageURI(currentSong.getUri()), song);
         }
 

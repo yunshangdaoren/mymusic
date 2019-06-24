@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import com.luckyliuqs.mymusic.MainActivity;
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.Util.PackageUtil;
-import com.luckyliuqs.mymusic.adapter.GuideAdapter;
+import com.luckyliuqs.mymusic.adapter.GuidePagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class GuideActivity extends BaseCommonActivity {
     /**
      * 创建GuideAdapter对象
      */
-    private GuideAdapter adapter;
+    private GuidePagerAdapter adapter;
     /**
      * 创建下角标对象
      */
@@ -56,7 +56,7 @@ public class GuideActivity extends BaseCommonActivity {
     protected void initDatas() {
         super.initDatas();
         //传入Context和FragmentManager，实例化GuideAdapter对象
-        adapter = new GuideAdapter(getActivity(), getSupportFragmentManager());
+        adapter = new GuidePagerAdapter(getActivity(), getSupportFragmentManager());
         //为ViewPager添加适配器
         viewPager.setAdapter(adapter);
         //为下角标添加ViewPager

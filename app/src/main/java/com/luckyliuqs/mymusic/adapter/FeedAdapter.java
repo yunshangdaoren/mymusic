@@ -2,6 +2,7 @@ package com.luckyliuqs.mymusic.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
@@ -10,12 +11,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.luckyliuqs.mymusic.R;
+import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.ImageUtil;
 import com.luckyliuqs.mymusic.Util.TagUtil;
 import com.luckyliuqs.mymusic.Util.TimeUtil;
+import com.luckyliuqs.mymusic.activity.BaseActivity;
+import com.luckyliuqs.mymusic.activity.TopicDetailActivity;
+import com.luckyliuqs.mymusic.activity.UserDetailActivity;
 import com.luckyliuqs.mymusic.domain.Feed;
 import com.luckyliuqs.mymusic.listener.OnTagClickListener;
 
+
+/**
+ * 动态页面Adapter
+ */
 public class FeedAdapter extends BaseQuickRecyclerViewAdapter<Feed>{
 
     public FeedAdapter(Context context, int layoutId) {
@@ -64,15 +73,61 @@ public class FeedAdapter extends BaseQuickRecyclerViewAdapter<Feed>{
             GridLayoutManager gridLayoutManager = new GridLayoutManager(context, spanCount);
             recyclerView.setLayoutManager(gridLayoutManager);
 
+            ImageAdapter imageAdapter = new ImageAdapter(context, R.layout.item_image);
+            recyclerView.setAdapter(imageAdapter);
 
+            imageAdapter.setData(feed.getImages());
+        }else{
+            recyclerView.setVisibility(View.GONE);
+            recyclerView.setAdapter(null);
         }
-
-
 
     }
 
+    /**
+     * Tag点击事件，这部分可以用监听器回调到Activity中在处理
+     * @param content
+     */
     private void processTagClick(String content){
-
+        if (content.startsWith(Consts.MENTION)){
+            //进入用户详情页面
+            Intent intent = new Intent(context, UserDetailActivity.class);
+            intent.putExtra(Consts.NICKNAME, TagUtil.removeTag(content));
+            ((BaseActivity) context).startActivity(intent);
+        }else{
+            //跳转到话题详情页面
+            Intent intent = new Intent(context, TopicDetailActivity.class);
+            intent.putExtra(Consts.TITLE, TagUtil.removeTag(content));
+            ((BaseActivity) context).startActivity(intent);
+        }
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

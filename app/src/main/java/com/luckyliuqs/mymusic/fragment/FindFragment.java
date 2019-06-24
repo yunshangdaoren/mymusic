@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.luckyliuqs.mymusic.R;
-import com.luckyliuqs.mymusic.adapter.FindFragmentAdapter;
+import com.luckyliuqs.mymusic.adapter.FindFragmentPagerAdapter;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.ViewPagerHelper;
@@ -32,7 +32,7 @@ public class FindFragment extends BaseCommonFragment{
     private ViewPager vp;
 
     //Adapter
-    private FindFragmentAdapter adapter;
+    private FindFragmentPagerAdapter adapter;
 
     public static FindFragment newInstance() {
         
@@ -54,7 +54,7 @@ public class FindFragment extends BaseCommonFragment{
     protected void initDatas() {
         super.initDatas();
         //这里要使用childFragmentManager
-        adapter = new FindFragmentAdapter(getActivity(), getChildFragmentManager());
+        adapter = new FindFragmentPagerAdapter(getActivity(), getChildFragmentManager());
         vp.setAdapter(adapter);
 
         final ArrayList<Integer> datas = new ArrayList<>();

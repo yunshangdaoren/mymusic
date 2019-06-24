@@ -1,9 +1,6 @@
 package com.luckyliuqs.mymusic.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +14,6 @@ import com.luckyliuqs.mymusic.activity.DownloadManagerActivity;
 import com.luckyliuqs.mymusic.activity.LocalMusicActivity;
 import com.luckyliuqs.mymusic.activity.RecentPlayActivity;
 import com.luckyliuqs.mymusic.activity.SongListDetailActivity;
-import com.luckyliuqs.mymusic.adapter.DownloadManagerAdapter;
 import com.luckyliuqs.mymusic.adapter.MeFragmentAdapter;
 import com.luckyliuqs.mymusic.api.Api;
 import com.luckyliuqs.mymusic.domain.MeFragmentUI;
@@ -32,7 +28,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

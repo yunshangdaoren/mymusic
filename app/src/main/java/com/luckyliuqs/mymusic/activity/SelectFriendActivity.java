@@ -131,6 +131,7 @@ public class SelectFriendActivity extends BaseTitleActivity {
         //是否进入界面就打开搜索栏，false表示默认打开，默认位true
         searchView.setIconified(false);
 
+
         searchView.setQueryHint(getString(R.string.enter_nickname));
         return true;
     }
