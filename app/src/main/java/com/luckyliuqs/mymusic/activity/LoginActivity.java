@@ -1,7 +1,11 @@
 package com.luckyliuqs.mymusic.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 
+import com.luckyliuqs.mymusic.AppContext;
 import com.luckyliuqs.mymusic.MainActivity;
 import com.luckyliuqs.mymusic.R;
 import com.luckyliuqs.mymusic.domain.event.LoginSuccessEvent;
@@ -16,6 +20,18 @@ import butterknife.OnClick;
  * 登录页面
  */
 public class LoginActivity extends BaseCommonActivity {
+
+//    @SuppressLint("HandlerLeak")
+//    private Handler handler = new Handler(){
+//        @SuppressWarnings("unused")
+//        @Override
+//        public void handleMessage(Message msg) {
+//            switch (msg.what){
+//
+//            }
+//        }
+//
+//    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +89,16 @@ public class LoginActivity extends BaseCommonActivity {
         startActivity(MainActivity.class);
     }
 
+    /**
+     * 登录成功
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void loginSuccessEvent(LoginSuccessEvent event) {
+        //连接融云服务器
+        ((AppContext)getApplication()).imConnect();
+        finish();
+    }
 
     @Override
     protected void onDestroy() {

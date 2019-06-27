@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <include layout="@layout/tool_bar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:orientation="vertical">
+
+        <!-- 聊天消息 -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_conversation"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:padding="@dimen/button_padding"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- 发送图片 -->
+            <ImageView
+                android:layout_marginRight="@dimen/button_padding"
+                android:id="@+id/ic_select_image_conversation"
+                android:src="@drawable/ic_select_image"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+            <!-- 聊天内容 -->
+            <android.support.text.emoji.widget.EmojiAppCompatEditText
+                android:textColor="@color/text"
+                android:hint="@string/hint_message"
+                android:id="@+id/et_content_conversation"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
+            <!-- 发送图片 -->
+            <ImageView
+                android:layout_marginLeft="@dimen/button_padding"
+                android:id="@+id/iv_send_conversation"
+                android:src="@drawable/ic_send"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

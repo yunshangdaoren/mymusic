@@ -93,7 +93,7 @@ public class SelectFriendActivity extends BaseTitleActivity {
     }
 
     /**
-     * 为riendAdapter绑定数据
+     * 为friendAdapter绑定数据
      * @param data
      */
     private void next(List<User> data) {

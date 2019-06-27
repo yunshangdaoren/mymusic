@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="@dimen/button_padding">
+
+    <!-- 发送消息用户的头像 -->
+    <ImageView
+        android:id="@+id/iv_avatar_conversation"
+        android:layout_width="@dimen/item_friend_avatar_width"
+        android:layout_height="@dimen/item_friend_avatar_width"
+        tools:src="@drawable/default_avatar"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/item_icon_padding"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 发送消息的用户名称 -->
+            <TextView
+                android:textSize="@dimen/topic_count_text_size"
+                android:id="@+id/tv_nickname_conversation"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="云音乐小秘书"
+                android:textColor="@color/text" />
+
+            <!-- 消息时间 -->
+            <TextView
+                android:id="@+id/tv_time_conversation"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                tools:text="10分钟前"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_small" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/button_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- 未读消息内容 -->
+            <TextView
+                android:id="@+id/tv_info_conversation"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                tools:text="欢迎使用我的云音乐，有任何问题可以@我的云音乐"
+                android:textColor="@color/text_grey"
+                android:textSize="@dimen/text_small" />
+
+            <!-- 未读消息条数 -->
+            <TextView
+                android:id="@+id/tv_count_conversation"
+                android:layout_width="@dimen/message_count_width"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_main_color_circle"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_small"
+                android:visibility="gone"
+                tools:text="99+" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.luckyliuqs.mymusic.AppContext;
 import com.luckyliuqs.mymusic.R;
+import com.luckyliuqs.mymusic.domain.event.LogoutSuccessEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,8 +36,13 @@ public class SettingActivity extends BaseTitleActivity {
         //清除储存在本地的信息
         sp.logout();
 
-        //跳转到登录界面
-        startActivityAfterFinishThis(LoginActivity.class);
+        AppContext.logout();
+
+
+        //发布退出登陆的信息，因为首页要根据登陆状态显示
+        EventBus.getDefault().post(new LogoutSuccessEvent());
+        startActivity(LoginActivity.class);
+        finish();
     }
 
 

@@ -32,6 +32,7 @@ public class LoginPhoneActivity extends BaseTitleActivity {
      */
     @BindView(R.id.et_phone)
     EditText et_phone;
+
     /**
      * 账户密码信息
      */

@@ -346,7 +346,7 @@ public class UserDetailActivity extends BaseTitleActivity {
 
     @OnClick(R.id.bt_send_message)
     public void bt_send_message(){
-
+        ConversationActivity.start(this, user.getId());
     }
 }
 

@@ -18,6 +18,8 @@ import com.luckyliuqs.mymusic.Util.UserUtil;
 import com.luckyliuqs.mymusic.activity.BaseMusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.LoginActivity;
 import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
+import com.luckyliuqs.mymusic.activity.MyFriendActivity;
+import com.luckyliuqs.mymusic.activity.MyMessageActivity;
 import com.luckyliuqs.mymusic.activity.SearchActivity;
 import com.luckyliuqs.mymusic.activity.SettingActivity;
 import com.luckyliuqs.mymusic.activity.UserDetailActivity;
@@ -57,9 +59,19 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
 //    @BindView(R.id.user_info)
 //    LinearLayout ll_userInfo;
 
-    //包含设置及图标的LinearLayout
+    /**
+     * 包含设置及图标的LinearLayout
+     */
     private LinearLayout ll_settings;
+
+    /**
+     * 包含我的好友及图标的LinearLayout
+     */
     private LinearLayout ll_my_friend;
+
+    /**
+     * 包含我的消息及图标的LinearLayout
+     */
     private LinearLayout ll_message_container;
 
     @Override
@@ -85,6 +97,8 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
         iv_video = findViewById(R.id.iv_video);
 
         ll_settings = findViewById(R.id.ll_settings);
+        ll_my_friend = findViewById(R.id.ll_my_friend);
+        ll_message_container = findViewById(R.id.ll_message_container);
 
         viewPager = findViewById(R.id.vp);
         //缓存三个页面
@@ -127,6 +141,8 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
         iv_video.setOnClickListener(this);
 
         ll_settings.setOnClickListener(this);
+        ll_my_friend.setOnClickListener(this);
+        ll_message_container.setOnClickListener(this);
 
         //为ViewPager翻动Fragment页面添加监听器
         viewPager.addOnPageChangeListener(this);
@@ -185,6 +201,11 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
                 startActivity(SettingActivity.class);
                 //closeDrawer();
                 break;
+            case R.id.ll_my_friend:   //点击侧滑菜单栏的我的好友，跳转到我的好友界面
+                startActivity(MyFriendActivity.class);
+                break;
+            case R.id.ll_message_container:   //点击侧滑菜单栏的我的消息，跳转到我的消息界面
+                startActivity(MyMessageActivity.class);
             default:
                 //如果当前界面可以处理，就调用父类的方法
                 super.onClick(v);
@@ -194,6 +215,7 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
     }
 
     /**

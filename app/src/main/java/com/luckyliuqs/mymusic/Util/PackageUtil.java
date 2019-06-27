@@ -1,7 +1,11 @@
 package com.luckyliuqs.mymusic.Util;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Package工具类
@@ -44,5 +48,34 @@ public class PackageUtil {
         return -1;
     }
 
+    /**
+     * 根据pid获取当前进程的名称，一般就是当前APP的包名
+     * @param context 上下文
+     * @param pid 进程的id
+     * @return 返回进程的名称
+     */
+    public static String getAppName(Context context, int pid){
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List list = activityManager.getRunningAppProcesses();
+        Iterator i = list.iterator();
+        while (i.hasNext())
+        {
+            ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
+            try
+            {
+                if (info.pid == pid)
+                {
+                    // 根据进程的信息获取当前进程的名字
+                    return info.processName;
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+        // 没有匹配的项，返回为null
+        return null;
+    }
 
 }

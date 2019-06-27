@@ -131,9 +131,13 @@ dependencies {
     //flow layout
     implementation 'com.nex3z:flow-layout:1.2.3'
 
+    // image select
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
     //download
     implementation project(':downloader')
     implementation 'org.jetbrains:annotations-java5:15.0'
     implementation files('libs/lite-orm-1.9.2.jar')
     implementation files('libs/joda-time-2.9.9.jar')
+    implementation project(':IMLib')
 }
