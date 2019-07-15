@@ -261,7 +261,6 @@ public class ConversationActivity extends BaseTitleActivity implements TextWatch
             public void onAttached(Message message) {
                 // 消息成功存到本地数据库的回调
                  Log.d(TAG, "onAttached: " + message +"   消息成功保存到本地");
-
             }
 
             @Override

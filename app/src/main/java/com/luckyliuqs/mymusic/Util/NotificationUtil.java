@@ -177,7 +177,7 @@ public class NotificationUtil {
                             .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_logo))
                             .setCustomContentView(contentView)
                             .setCustomBigContentView(contentBigView)
-                            .setPriority(NotificationCompat.PRIORITY_MAX)
+                            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                             .setContentIntent(contentPendingIntent);
 
                     NotificationUtil.notify(context, NOTIFICATION_MUSIC_ID, builder.build());
@@ -212,15 +212,17 @@ public class NotificationUtil {
         notificationManager.createNotificationChannel(channel);
     }
 
-
     /**
-     * 显示聊天消息（不再聊天界面才显示）
+     * 显示聊天消息（不在聊天界面才显示）
      *
      * @param context
      * @param userId
      * @param content
      */
     public static void showMessageNotification(final Context context, final String userId, final String content, final int unreadCount) {
+        Log.i("Notification", "进入聊天消息发送方法，接收到消息内容为：" + content);
+        Log.i("Notification", "用户id为: " + userId);
+        //Log.i("Notification", "用户id: " + userId + "    hashcode:" + userId.hashCode());
         UserManager userManager = UserManagerImpl.getInstance(context);
         //获取消息发送者的的信息
         userManager.getUser(userId, new UserManager.OnUserListener() {
@@ -230,44 +232,92 @@ public class NotificationUtil {
                 //这里的嵌套可以通过RxJava转换成链式
                 RequestOptions options = new RequestOptions();
                 options.circleCrop();
-                Glide.with(context).asBitmap().load(user.getAvatar()).apply(options).into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
-                        RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_message);
-                        contentView.setImageViewBitmap(R.id.iv_icon, resource);
 
-                        if (unreadCount > 1) {
-                            contentView.setTextViewText(R.id.tv_title, String.format("%s（%d条消息）",user.getNickname(),unreadCount));
-                        } else {
-                            contentView.setTextViewText(R.id.tv_title, user.getNickname());
+                final RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.notification_message_online);
+
+
+                if(user.getAvatar() != null) {
+                    Glide.with(context).asBitmap().load(user.getAvatar()).apply(options).into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                            //如果用户头像信息不为null，则填充用户头像
+                            contentView.setImageViewBitmap(R.id.iv_message_avatar, resource);
                         }
+                    });
 
-                        contentView.setTextViewText(R.id.tv_info, content);
+                }else{
+                    //如果用户头像信息为null，则填充默认的头像
+                    contentView.setImageViewResource(R.id.iv_message_avatar, R.drawable.default_avatar);
+                }
 
-                        //点击通知，跳转到聊天界面
-                        Intent intent = new Intent(context, MainActivity.class);
-                        intent.putExtra(Consts.ID, userId);
-                        intent.setAction(Consts.ACTION_MESSAGE);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        PendingIntent contentPendingIntent = PendingIntent.getActivity(context, Consts.ACTION_LYRIC.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                //填充用户及未读信息
+                if (unreadCount > 1) {
+                    //多条未读消息
+                    contentView.setTextViewText(R.id.tv_message_user_info, String.format("%s（%d条消息）", user.getNickname(), unreadCount));
+                } else {
+                    //单条未读消息
+                    contentView.setTextViewText(R.id.tv_message_user_info, user.getNickname());
+                }
 
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                                .setSmallIcon(R.drawable.ic_logo)
-                                .setCustomContentView(contentView)
-                                .setAutoCancel(true)
-                                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_logo))
-                                .setContentIntent(contentPendingIntent);
+                //填充聊天消息
+                contentView.setTextViewText(R.id.tv_message_info, content);
 
-                        //用发送者的id来显示通知
-                        NotificationUtil.notify(context, userId.hashCode(), builder.build());
+                //点击通知，跳转到聊天界面
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.putExtra(Consts.ID, userId);
+                intent.setAction(Consts.ACTION_MESSAGE);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                PendingIntent contentPendingIntent = PendingIntent.getActivity(context, Consts.ACTION_LYRIC.hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+//                        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"messageNotification")
+//                                .setSmallIcon(R.drawable.ic_logo)
+//                                .setCustomContentView(contentView)
+//                                .setAutoCancel(true)
+//                                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_logo))
+//                                .setContentIntent(contentPendingIntent);
 
 
-                    }
-                });
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"messageNotification")
+                        .setAutoCancel(false)
+                        .setSmallIcon(R.drawable.ic_logo)
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_logo))
+                        .setCustomContentView(contentView)
+                        .setPriority(NotificationCompat.PRIORITY_HIGH)
+                        .setContentIntent(contentPendingIntent);
+
+                //用发送者的id来显示通知
+                NotificationUtil.notifyMessage(context, userId.hashCode(), builder.build());
+
             }
         });
 
+    }
 
+
+    //Message
+    private static void notifyMessage(Context context, int id, Notification notification){
+        initMessageNotificationManager(context);
+        notificationManager.notify(id, notification);
+    }
+
+    private static void initMessageNotificationManager(Context context){
+        if (notificationManager == null){
+            notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "messageNotification";
+            String channelName = "聊天消息通知栏";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            createMessageNotificationChannel(context, channelId, channelName, importance);
+        }
+    }
+    //Message
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private static void createMessageNotificationChannel(Context context, String channelId, String channelName, int importance) {
+        NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+        notificationManager.createNotificationChannel(channel);
     }
 
 }

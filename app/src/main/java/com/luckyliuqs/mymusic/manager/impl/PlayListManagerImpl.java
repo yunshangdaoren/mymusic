@@ -552,7 +552,7 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
         if (currentSong != null){
             stateBuilder.setState(PlaybackStateCompat.STATE_PAUSED, getPlayList().indexOf(currentSong), 1.0f);
             mediaSessionCompat.setPlaybackState(stateBuilder.build());
-            NotificationUtil.showMusicNotification(context, currentSong, false);
+           // NotificationUtil.showMusicNotification(context, currentSong, false);
 
         }
     }
@@ -561,7 +561,7 @@ public class PlayListManagerImpl implements PlayListManager, OnMusicPlayerListen
     public void onPlaying(Song data) {
         stateBuilder.setState(PlaybackStateCompat.STATE_PLAYING, getPlayList().indexOf(currentSong), 1.0f);
         mediaSessionCompat.setPlaybackState(stateBuilder.build());
-        NotificationUtil.showMusicNotification(context, currentSong, true);
+        //NotificationUtil.showMusicNotification(context, currentSong, true);
 
 
     }

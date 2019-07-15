@@ -54,7 +54,7 @@ public class UserManagerImpl implements UserManager {
                         super.onNext(userDetailResponse);
                         if (userDetailResponse != null && userDetailResponse.getData() != null) {
                             onUserListener.onUser(userDetailResponse.getData());
-                            userCaches.put(userId,userDetailResponse.getData());
+                            userCaches.put(userId, userDetailResponse.getData());
                         }
                     }
                 });

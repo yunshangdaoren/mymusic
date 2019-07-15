@@ -108,12 +108,13 @@ public class AppContext extends Application {
                 @Override
                 public boolean onReceived(Message message, int i) {
                     //该方法的调用不再主线程
-                    Log.d(TAG, "im onReceived: " + message + "," + i+","+(Looper.myLooper() == Looper.getMainLooper()));
+                    Log.d(TAG, "ImClient onReceivedMessage: " + message + "," + i + "," + (Looper.myLooper() == Looper.getMainLooper()));
 
                     if (EventBus.getDefault().hasSubscriberForEvent(OnMessageEvent.class)) {
                         //如果有监听该事件，表示在聊天界面
                         EventBus.getDefault().post(new OnMessageEvent(message));
                     } else {
+                        Log.i(TAG, "Imclient let handler obtainMessage: ");
                         handler.obtainMessage(0,message).sendToTarget();
                     }
 
@@ -157,6 +158,7 @@ public class AppContext extends Application {
             imClient.getUnreadCount(Conversation.ConversationType.PRIVATE, message.getSenderUserId(), new RongIMClient.ResultCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
+                    Log.i(TAG, "Handler onSuccess receive message " + message.getContent());
                     NotificationUtil.showMessageNotification(context.getApplicationContext(),message.getSenderUserId(), MessageUtil.getContent(message.getContent()),integer);
                 }
 

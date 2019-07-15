@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.luckyliuqs.mymusic.Util.Consts;
 import com.luckyliuqs.mymusic.Util.UserUtil;
 import com.luckyliuqs.mymusic.activity.BaseMusicPlayerActivity;
+import com.luckyliuqs.mymusic.activity.ConversationActivity;
 import com.luckyliuqs.mymusic.activity.LoginActivity;
 import com.luckyliuqs.mymusic.activity.MusicPlayerActivity;
 import com.luckyliuqs.mymusic.activity.MyFriendActivity;
@@ -170,7 +171,8 @@ public class MainActivity extends BaseMusicPlayerActivity implements View.OnClic
     private void processIntent(Intent intent){
         if (Consts.ACTION_MESSAGE.equals(intent.getAction())){
             //要跳转到聊天页面
-
+            String id = getIntent().getStringExtra(Consts.ID);
+            ConversationActivity.start(getActivity(), id);
         }else{
             //跳转到音乐播放页面
             startActivity(MusicPlayerActivity.class);
