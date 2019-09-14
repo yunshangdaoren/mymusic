@@ -794,7 +794,7 @@ public class LyricView extends View {
     }
 
     /**
-     *有内存泄漏
+     * 有内存泄漏
      */
     private Handler handler = new Handler(){
         @Override

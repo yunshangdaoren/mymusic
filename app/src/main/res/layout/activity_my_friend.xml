@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.MyFriendActivity">
+    tools:context=".activity.MyFriendActivity"
+    android:background="@color/bg">
 
     <include layout="@layout/tool_bar"/>
 

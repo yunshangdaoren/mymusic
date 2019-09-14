@@ -16,20 +16,17 @@ public class BaseActivity extends AppCompatActivity{
     /**
      * 初始化控件
      */
-    protected void initViews(){
-    }
+    protected void initViews(){ }
 
     /**
      * 初始化数据
      */
-    protected void initDatas(){
-    }
+    protected void initDatas(){}
 
     /**
      * 绑定监听器
      */
-    protected void initListener(){
-    }
+    protected void initListener(){}
 
     /**
      * 调用初始化方法进行初始化操作
